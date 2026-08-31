@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
 import ScrollProgress from "@/components/fx/ScrollProgress";
@@ -65,6 +66,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Nav />
         <main className="relative">{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
