@@ -69,14 +69,11 @@ export default function Hero() {
         <EmberField />
       </div>
       <div
-        className="absolute inset-0 z-[1] opacity-[0.22] mix-blend-luminosity"
+        className="absolute inset-0 z-[1]"
         aria-hidden="true"
         style={{
-          backgroundImage: "url(/media/ember-field.jpg)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          maskImage: "radial-gradient(120% 80% at 60% 30%, #000 20%, transparent 75%)",
-          WebkitMaskImage: "radial-gradient(120% 80% at 60% 30%, #000 20%, transparent 75%)",
+          backgroundImage:
+            "radial-gradient(90% 70% at 62% 28%, rgba(226,118,47,0.16), transparent 68%), radial-gradient(70% 60% at 30% 70%, rgba(124,90,214,0.13), transparent 70%)",
         }}
       />
       {/* parallax forge plate */}

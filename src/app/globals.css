@@ -80,6 +80,13 @@
   --grain-opacity: 0.045;
 }
 
+/* Paint the dark surface before any stylesheet loads so the browser never
+   flashes the default white/black canvas while assets stream in. */
+html,
+body {
+  background-color: #070510;
+}
+
 html {
   scroll-behavior: smooth;
   -webkit-tap-highlight-color: transparent;
@@ -92,6 +99,22 @@ body {
   overflow-x: hidden;
   font-synthesis-weight: none;
   text-rendering: optimizeLegibility;
+}
+
+/* Keep client-side route transitions from blanking between paints. */
+main {
+  animation: pageFade 0.5s ease both;
+}
+
+@keyframes pageFade {
+  from {
+    opacity: 0.001;
+    transform: translate3d(0, 6px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 ::selection {
@@ -287,5 +310,6 @@ body {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1 !important; transform: none !important; filter: none !important; }
   .marquee-track, .grain::before, .text-ember-gradient { animation: none !important; }
+  main { animation: none !important; }
   *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
 }

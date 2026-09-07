@@ -5,10 +5,11 @@ import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
 import ScrollProgress from "@/components/fx/ScrollProgress";
 import CursorEmbers from "@/components/fx/CursorEmbers";
+import { SITE } from "@/lib/content";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://orrtechnologies.netlify.app"),
+  metadataBase: new URL(SITE.url),
   title: {
     default: "Orr Technologies — AI B2B website engineering at a fair price",
     template: "%s · Orr Technologies",

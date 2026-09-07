@@ -2,6 +2,7 @@ export const SITE = {
   name: "Orr Technologies",
   legalName: "Orr Technologies",
   domain: "orrtechnologies.netlify.app",
+  url: "https://orrtechnologies.netlify.app",
   email: "service@orrbiologicals.com",
   emailDisplay: "service@orrbiologicals.com",
   tagline: "Enterprise-grade AI web engineering. Priced for the businesses actually building it.",
