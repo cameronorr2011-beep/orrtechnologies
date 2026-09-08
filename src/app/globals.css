@@ -62,6 +62,17 @@
   0% { transform: translate3d(0, 0, 0); }
   100% { transform: translate3d(-50%, 0, 0); }
 }
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes orbitReverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
 @keyframes emberRise {
   0% { transform: translate3d(0, 0, 0) scale(0.6); opacity: 0; }
   15% { opacity: 0.9; }
@@ -99,22 +110,6 @@ body {
   overflow-x: hidden;
   font-synthesis-weight: none;
   text-rendering: optimizeLegibility;
-}
-
-/* Keep client-side route transitions from blanking between paints. */
-main {
-  animation: pageFade 0.5s ease both;
-}
-
-@keyframes pageFade {
-  from {
-    opacity: 0.001;
-    transform: translate3d(0, 6px, 0);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
 }
 
 ::selection {
@@ -265,7 +260,6 @@ main {
   opacity: var(--grain-opacity);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: drift 18s steps(6) infinite;
-  mix-blend-mode: overlay;
 }
 
 .vignette::after {
@@ -310,6 +304,5 @@ main {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1 !important; transform: none !important; filter: none !important; }
   .marquee-track, .grain::before, .text-ember-gradient { animation: none !important; }
-  main { animation: none !important; }
   *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
 }

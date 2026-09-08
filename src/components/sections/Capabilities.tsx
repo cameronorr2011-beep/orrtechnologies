@@ -13,13 +13,13 @@ export default function Capabilities() {
         <div className="grid gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
           <div className="lg:sticky lg:top-32 lg:self-start">
             <SectionHeading
-              kicker="The platform"
+              kicker="What you get"
               title={
                 <>
-                  Four layers that make the price <span className="text-ember-gradient">hard to argue with</span>
+                  Everything a small business needs, <span className="text-ember-gradient">nothing it doesn&apos;t</span>
                 </>
               }
-              body="Most agencies charge for throughput. We built machinery so throughput is the cheap part — and spent the difference on judgement, motion and data integrity."
+              body="We keep the promises simple: a site that looks professional, loads fast, belongs to you, and respects your visitors' privacy."
             />
 
             <Reveal delay={200}>
@@ -28,21 +28,21 @@ export default function Capabilities() {
                 <div className="pointer-events-none absolute inset-0 noise-panel opacity-60" />
                 <div className="pointer-events-none absolute inset-0 flex flex-col justify-between p-6">
                   <div className="flex items-center justify-between font-mono text-[0.58rem] uppercase tracking-[0.26em] text-ember-100/70">
-                    <span>atmosphere core · webgl</span>
+                    <span>built fresh for you</span>
                     <span className="flex items-center gap-2">
                       <span className="h-1 w-1 animate-pulse rounded-full bg-ember-300" />
-                      60 fps
+                      not a template
                     </span>
                   </div>
                   <div className="flex items-end justify-between">
                     <div>
                       <p className="font-mono text-[0.58rem] uppercase tracking-[0.26em] text-bone/40">
-                        cursor-reactive · diurnal palette
+                        designed around your business
                       </p>
-                      <p className="font-display mt-2 text-2xl text-bone">Move your pointer.</p>
+                      <p className="font-display mt-2 text-2xl text-bone">Yours, not rented.</p>
                     </div>
                     <span className="font-mono text-[0.58rem] uppercase tracking-[0.26em] text-bone/35">
-                      ~14 kb gzipped
+                      $100 flat
                     </span>
                   </div>
                 </div>

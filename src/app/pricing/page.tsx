@@ -11,20 +11,20 @@ import { SITE, purchaseMailto } from "@/lib/content";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Pricing — flat builds, Bitcoin settlement",
+  title: "Pricing — $100 flat during beta, you own the site",
   description:
-    "Ignition $1,200 · Forge $3,400 · Sovereign $8,900. Fixed scope, fixed price, no processor fees. Every engagement closes onchain in Bitcoin and hands over the full repository.",
+    "Cheap website, Premium website, or All-in — every package is $100 flat during beta. Paid once in Bitcoin, code delivered to your GitHub, no monthly fees.",
   alternates: { canonical: "/pricing" },
 };
 
 const COMPARISON = [
-  { row: "Turnaround", ignition: "5–8 days", forge: "2–3 weeks", sovereign: "4–7 weeks" },
-  { row: "Human review", ignition: "Senior sign-off", forge: "Named engineer", sovereign: "Engineering pod" },
-  { row: "Motion system", ignition: "Curated", forge: "Bespoke WebGL", sovereign: "Design system + shaders" },
-  { row: "Data layer", ignition: "Forms + analytics", forge: "CMS + typed API", sovereign: "Postgres + admin console" },
-  { row: "Compliance pack", ignition: "—", forge: "Accessibility report", sovereign: "Full documentation set" },
-  { row: "Post-launch", ignition: "Handover recording", forge: "30 days support", sovereign: "Quarterly retainer" },
-  { row: "Payment", ignition: "BTC", forge: "BTC", sovereign: "BTC (milestones available)" },
+  { row: "Ready in", ignition: "About 1 week", forge: "About 2 weeks", sovereign: "2–4 weeks" },
+  { row: "Pages", ignition: "1 page", forge: "Up to 5 pages", sovereign: "As many as you need" },
+  { row: "Changes included", ignition: "2 rounds", forge: "4 rounds", sovereign: "Unlimited for 30 days" },
+  { row: "Blog setup", ignition: "—", forge: "Included", sovereign: "Included" },
+  { row: "We write the words", ignition: "You provide", forge: "We help", sovereign: "We write with you" },
+  { row: "After launch", ignition: "You own it", forge: "2 weeks free fixes", sovereign: "30 days free fixes" },
+  { row: "Price", ignition: "$100", forge: "$100", sovereign: "$100" },
 ];
 
 export default async function PricingPage() {
@@ -40,19 +40,19 @@ export default async function PricingPage() {
         <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-8">
           <Reveal>
             <span className="font-mono text-[0.62rem] uppercase tracking-[0.32em] text-ember-300/75">
-              Engagement tiers
+              Pricing
             </span>
           </Reveal>
           <Reveal delay={80}>
             <h1 className="font-display mt-6 max-w-4xl text-[clamp(2.4rem,5.4vw,4.2rem)] font-semibold leading-[1.02] tracking-[-0.03em]">
-              <span className="text-bone-gradient block">Three ways to engage.</span>
-              <span className="text-ember-gradient block">One honest price each.</span>
+              <span className="text-bone-gradient block">$100 flat.</span>
+              <span className="text-ember-gradient block">You own the website.</span>
             </h1>
           </Reveal>
           <Reveal delay={140}>
             <p className="mt-7 max-w-2xl text-[1.02rem] leading-relaxed text-bone/58">
-              Every tier includes senior human review, full source handover, and settlement on Bitcoin.
-              Optional care and hosting is quoted up front — never billed by surprise.
+              We&apos;re in beta, so every package is $100 — paid once, in Bitcoin. The finished code is
+              delivered to your own GitHub. No monthly fees, no hosting lock-in, no surprise bills.
             </p>
           </Reveal>
         </div>
@@ -75,7 +75,7 @@ export default async function PricingPage() {
                         <th key={p.slug} className="p-6">
                           <span className="font-display block text-[1.2rem] font-semibold text-bone">{p.name}</span>
                           <span className="font-mono text-[0.6rem] uppercase tracking-[0.18em] text-ember-200/70">
-                            ${p.priceUsd.toLocaleString("en-US")}
+                            $100 · one-time
                           </span>
                         </th>
                       ))}
@@ -105,19 +105,19 @@ export default async function PricingPage() {
             <div className="mt-10 flex flex-col items-start justify-between gap-6 rounded-3xl glass-warm p-8 sm:flex-row sm:items-center">
               <div>
                 <p className="font-display text-[1.4rem] font-semibold text-bone">
-                  Ready when you are — the invoice is one email away.
+                  Ready when you are — one email starts it.
                 </p>
                 <p className="mt-2 max-w-xl text-[0.9rem] text-bone/55">
-                  Write to {SITE.emailDisplay} with the tier you want. You&apos;ll receive a written scope,
-                  a launch date, and a Bitcoin invoice with an exact amount and address.
+                  Write to {SITE.emailDisplay} with the package you want. You&apos;ll get a simple plan, a
+                  start date, and the Bitcoin payment details.
                 </p>
               </div>
               <ActionButton
-                href={purchaseMailto({ planName: "Tier selection" })}
+                href={purchaseMailto({ planName: "Website request" })}
                 external
                 event={{ name: "purchase_click", label: "pricing_page_footer" }}
               >
-                Purchase by email
+                Get started
               </ActionButton>
             </div>
           </Reveal>

@@ -8,9 +8,9 @@ import { getPlans } from "@/db/queries";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Checkout — Bitcoin invoice flow",
+  title: "Pay in Bitcoin — $100 flat during beta",
   description:
-    "Select a tier, open a Bitcoin invoice, and send the purchase request to service@orrbiologicals.com. No card processor, no auto-charge, no surprises.",
+    "Pick your package, get a Bitcoin invoice, and pay once. $100 flat during beta. No cards, no subscriptions, no surprise charges.",
   robots: { index: false, follow: false },
 };
 
@@ -27,20 +27,20 @@ export default async function CheckoutPage() {
         <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-8">
           <Reveal>
             <span className="font-mono text-[0.62rem] uppercase tracking-[0.32em] text-ember-300/75">
-              Purchase & settlement
+              Payment
             </span>
           </Reveal>
           <Reveal delay={80}>
             <h1 className="font-display mt-6 max-w-4xl text-[clamp(2.3rem,5vw,3.9rem)] font-semibold leading-[1.03] tracking-[-0.03em]">
-              <span className="text-bone-gradient block">One email opens the invoice.</span>
-              <span className="text-ember-gradient block">One transaction closes it.</span>
+              <span className="text-bone-gradient block">$100, paid once,</span>
+              <span className="text-ember-gradient block">in Bitcoin.</span>
             </h1>
           </Reveal>
           <Reveal delay={140}>
             <p className="mt-6 max-w-2xl text-[1rem] leading-relaxed text-bone/58">
-              Pick the tier, open the invoice, and the purchase request is pre-addressed to
-              service@orrbiologicals.com with your invoice code and indicative BTC amount. The desk replies
-              with the binding amount and a single-use address.
+              Pick your package below and we&apos;ll email you a Bitcoin invoice: the exact amount and a
+              payment address created just for your order. You pay from your own wallet — no cards, no
+              account with us, nothing auto-charged, ever.
             </p>
           </Reveal>
         </div>

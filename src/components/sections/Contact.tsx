@@ -27,11 +27,11 @@ export default function Contact() {
       const data = (await res.json()) as { ok?: boolean; error?: string };
       if (!res.ok || !data.ok) throw new Error(data.error ?? "failed");
       setState("done");
-      setFeedback("Received. You'll get a written reply from a senior engineer within one business day.");
+      setFeedback("Got it. We'll reply within one business day with a plan and next steps.");
       setForm({ name: "", email: "", company: "", message: "" });
     } catch {
       setState("error");
-      setFeedback("Something blocked that. Email service@orrbiologicals.com directly.");
+      setFeedback("Something went wrong. Email us directly at service@orrbiologicals.com.");
     }
   };
 
@@ -47,7 +47,7 @@ export default function Contact() {
               kicker="Questions"
               title={
                 <>
-                  The things buyers <span className="text-ember-gradient">actually ask</span>
+                  Straight answers to <span className="text-ember-gradient">honest questions</span>
                 </>
               }
             />
@@ -93,34 +93,34 @@ export default function Contact() {
             <Reveal delay={120}>
               <form onSubmit={submit} className="glass edge-glow rounded-[1.75rem] p-8">
                 <p className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-ember-300/75">
-                  Open a build slot
+                  Start here
                 </p>
                 <h3 className="font-display mt-4 text-[1.6rem] font-semibold leading-tight text-bone">
-                  Tell us what the site has to do.
+                  Tell us about your business.
                 </h3>
 
                 <div className="mt-7 space-y-3.5">
                   <div className="grid gap-3.5 sm:grid-cols-2">
-                    <input required value={form.name} onChange={set("name")} placeholder="Name" className={field} aria-label="Name" />
+                    <input required value={form.name} onChange={set("name")} placeholder="Your name" className={field} aria-label="Your name" />
                     <input
                       required
                       type="email"
                       value={form.email}
                       onChange={set("email")}
-                      placeholder="Work email"
+                      placeholder="Your email"
                       className={field}
-                      aria-label="Work email"
+                      aria-label="Your email"
                     />
                   </div>
-                  <input value={form.company} onChange={set("company")} placeholder="Company" className={field} aria-label="Company" />
+                  <input value={form.company} onChange={set("company")} placeholder="Business name" className={field} aria-label="Business name" />
                   <textarea
                     required
                     value={form.message}
                     onChange={set("message")}
                     rows={4}
-                    placeholder="What are you selling, and to whom? Any deadline?"
+                    placeholder="What does your business do? What do you need the website to do for you?"
                     className={`${field} resize-none`}
-                    aria-label="Brief"
+                    aria-label="What you need"
                   />
                 </div>
 
@@ -130,7 +130,7 @@ export default function Contact() {
                     disabled={state === "loading"}
                     event={{ name: "lead_submit", label: "contact_section" }}
                   >
-                    {state === "loading" ? "Sending" : "Send brief"}
+                    {state === "loading" ? "Sending" : "Send message"}
                   </ActionButton>
                   <ActionButton
                     href={purchaseMailto({ planName: PLANS[1].name, amountUsd: PLANS[1].priceUsd })}
@@ -138,7 +138,7 @@ export default function Contact() {
                     variant="ghost"
                     event={{ name: "purchase_click", label: "contact_purchase" }}
                   >
-                    Email purchase desk
+                    Email us instead
                   </ActionButton>
                 </div>
 

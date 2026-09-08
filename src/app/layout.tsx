@@ -11,20 +11,20 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: "Orr Technologies — AI B2B website engineering at a fair price",
+    default: "Orr Technologies — $100 flat websites, you own the code",
     template: "%s · Orr Technologies",
   },
   description:
-    "Orr Technologies composes enterprise-grade B2B websites with an AI architecture pipeline and senior human review. Shader-grade motion, a real Postgres data layer, fixed flat pricing, settled in Bitcoin.",
+    "Fast, modern websites for small and growing businesses. $100 flat during beta — you own the code, it's delivered to your own GitHub, and it's private by default. Pay once in Bitcoin.",
   applicationName: "Orr Technologies",
   keywords: [
-    "AI website builder",
-    "B2B web development",
-    "premium website design",
-    "bitcoin payment web agency",
-    "Next.js engineering",
-    "WebGL shader websites",
-    "affordable enterprise web design",
+    "affordable website design",
+    "$100 website",
+    "small business website",
+    "you own your website",
+    "privacy focused website",
+    "pay in bitcoin",
+    "website design blog",
   ],
   authors: [{ name: "Orr Technologies" }],
   alternates: { canonical: "/" },
@@ -32,14 +32,14 @@ export const metadata: Metadata = {
     type: "website",
     title: "Orr Technologies — big-business calibre, small-business invoice",
     description:
-      "AI-assisted B2B website engineering with senior human oversight. Fixed pricing, Bitcoin settlement, full IP handover.",
+      "$100 flat websites during beta. You own the code, it lives in your GitHub, and your visitors' privacy is respected. Paid in Bitcoin.",
     siteName: "Orr Technologies",
     images: [{ url: "/media/forge-hero.jpg", width: 1200, height: 630, alt: "Orr Technologies forge" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Orr Technologies — AI B2B website engineering",
-    description: "Enterprise calibre builds, flat pricing, Bitcoin settlement.",
+    description: "$100 flat websites during beta. You own the code. Private by default. Paid in Bitcoin.",
     images: ["/media/forge-hero.jpg"],
   },
   robots: { index: true, follow: true },
@@ -52,7 +52,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ backgroundColor: "#070510", colorScheme: "dark" }}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

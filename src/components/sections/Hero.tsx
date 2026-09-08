@@ -6,28 +6,15 @@ import { useEffect, useState } from "react";
 import EmberField from "@/components/fx/EmberField";
 import Parallax from "@/components/fx/Parallax";
 import Reveal from "@/components/fx/Reveal";
-import CountUp from "@/components/fx/CountUp";
 import ActionButton from "@/components/ui/ActionButton";
 import { STATS, purchaseMailto } from "@/lib/content";
 
 const ROTATOR = [
-  "clinical suppliers",
-  "freight alliances",
-  "family offices",
-  "precision manufacturers",
-  "regulated B2B teams",
-];
-
-const SECTORS = [
-  "Clinical supply",
-  "Logistics",
-  "Industrial",
-  "Finance",
-  "Energy",
-  "Legal",
-  "Aerospace",
-  "Agri-tech",
-  "Insurance",
+  "your business",
+  "your services",
+  "your customers",
+  "your products",
+  "your story",
 ];
 
 export default function Hero() {
@@ -84,7 +71,7 @@ export default function Hero() {
         >
           <Image
             src="/media/forge-hero.jpg"
-            alt="Abstract render of a website wireframe being forged from molten glass inside a dark royal hall"
+            alt="Abstract render of a website being built for a small business"
             fill
             priority
             sizes="(max-width: 1024px) 0px, 46vw"
@@ -92,9 +79,9 @@ export default function Hero() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-void via-void/25 to-transparent" />
           <div className="absolute inset-x-6 bottom-6 flex items-center justify-between font-mono text-[0.6rem] uppercase tracking-[0.24em] text-ember-100/70">
-            <span>composition · live</span>
+            <span>your site · being built</span>
             <span className="flex items-center gap-2">
-              <span className="h-1 w-1 animate-pulse rounded-full bg-ember-300" /> gpu shader
+              <span className="h-1 w-1 animate-pulse rounded-full bg-ember-300" /> delivered to your github
             </span>
           </div>
           <div className="pointer-events-none absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-ember-200/70 to-transparent animate-scan" />
@@ -107,49 +94,48 @@ export default function Hero() {
             <div className="inline-flex items-center gap-3 rounded-full border border-ember-200/20 bg-ember-500/[0.07] px-4 py-2 backdrop-blur-md">
               <span className="h-1.5 w-1.5 animate-pulse-glow rounded-full bg-ember-300" />
               <span className="font-mono text-[0.62rem] uppercase tracking-[0.28em] text-ember-100/80">
-                AI B2B website engineering · bitcoin settlement
+                $100 flat during beta · you own the site
               </span>
             </div>
           </Reveal>
 
           <Reveal delay={90}>
             <h1 className="font-display mt-8 text-[clamp(2.6rem,6.4vw,5.1rem)] font-semibold leading-[0.98] tracking-[-0.03em]">
-              <span className="text-bone-gradient block">Big-business calibre.</span>
-              <span className="text-ember-gradient block">Small-business invoice.</span>
+              <span className="text-bone-gradient block">A real website for</span>
+              <span className="text-ember-gradient block">your business.</span>
             </h1>
           </Reveal>
 
           <Reveal delay={170}>
             <p className="mt-8 max-w-xl text-[1.06rem] leading-relaxed text-bone/62">
-              Orr Technologies composes production websites with an AI architecture pipeline and a
-              senior human engineer holding the pen. Shader-grade motion, a real Postgres data layer,
-              and a fixed price — built for{" "}
+              We build clean, fast websites for{" "}
               <span className="text-ember-200">
                 {typed}
                 <span className="ml-0.5 inline-block w-[2px] translate-y-[2px] bg-ember-300 align-middle" style={{ height: "1em", animation: "pulseGlow 1.1s steps(2) infinite" }} />
               </span>
+              . $100 flat while we&apos;re in beta. When we&apos;re done, the whole site is delivered to your
+              own GitHub — you own it, no monthly rent, no hidden costs.
             </p>
           </Reveal>
 
           <Reveal delay={240}>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <ActionButton
-                href={purchaseMailto({ planName: "Forge plan", amountUsd: 3400 })}
+                href={purchaseMailto({ planName: "Premium website", amountUsd: 100 })}
                 external
-                event={{ name: "purchase_click", label: "hero_purchase", meta: { plan: "forge" } }}
+                event={{ name: "purchase_click", label: "hero_purchase", meta: { plan: "premium" } }}
               >
-                Purchase a build
+                Get your website — $100
               </ActionButton>
-              <ActionButton href="/studio" variant="ghost" event={{ name: "studio_open", label: "hero_studio" }}>
-                Enter the studio
+              <ActionButton href="/#pricing" variant="ghost" event={{ name: "nav", label: "hero_pricing" }}>
+                See what&apos;s included
               </ActionButton>
             </div>
           </Reveal>
 
           <Reveal delay={300}>
             <p className="mt-6 max-w-md font-mono text-[0.66rem] uppercase leading-relaxed tracking-[0.16em] text-bone/35">
-              Orders open by email → service@orrbiologicals.com · settled onchain in BTC · no card
-              fees, no processor, no surprises
+              Pay once in Bitcoin · delivered to your GitHub · privacy focused · no subscriptions
             </p>
           </Reveal>
 
@@ -157,8 +143,8 @@ export default function Hero() {
             <dl className="mt-14 grid grid-cols-2 gap-x-8 gap-y-7 border-t border-royal-300/10 pt-10 sm:grid-cols-4">
               {STATS.map((s) => (
                 <div key={s.label}>
-                  <dt className="font-display text-[2rem] font-semibold leading-none text-bone">
-                    <CountUp value={s.value} suffix={s.suffix} />
+                  <dt className="font-display text-[clamp(1.5rem,2.6vw,2rem)] font-semibold leading-none text-bone">
+                    {s.value}
                   </dt>
                   <dd className="mt-2 font-mono text-[0.6rem] uppercase leading-relaxed tracking-[0.2em] text-bone/40">
                     {s.label}
@@ -174,13 +160,14 @@ export default function Hero() {
             <Reveal delay={200}>
               <div className="glass edge-glow rounded-3xl p-6">
                 <p className="font-mono text-[0.6rem] uppercase tracking-[0.28em] text-bone/40">
-                  Live pipeline
+                  How it works
                 </p>
                 <ul className="mt-5 space-y-4">
                   {[
-                    { k: "Compose", v: "layout grammar assembled", pct: 100 },
-                    { k: "Temper", v: "motion + shader pass", pct: 78 },
-                    { k: "Verify", v: "human senior review", pct: 41 },
+                    { k: "You tell us", v: "what your business does", pct: 100 },
+                    { k: "We build it", v: "design, text, all of it", pct: 78 },
+                    { k: "You review", v: "changes until you're happy", pct: 41 },
+                    { k: "It's yours", v: "code delivered to your GitHub", pct: 100 },
                   ].map((row) => (
                     <li key={row.k}>
                       <div className="flex items-baseline justify-between">
@@ -200,7 +187,7 @@ export default function Hero() {
                   ))}
                 </ul>
                 <p className="mt-6 border-t border-royal-300/10 pt-5 text-[0.78rem] leading-relaxed text-bone/45">
-                  Every stage is observable in your client console. Nothing ships unreviewed.
+                  No meetings required. No jargon. You get a finished website and the code.
                 </p>
               </div>
             </Reveal>
@@ -209,18 +196,18 @@ export default function Hero() {
           <Parallax speed={0.14} className="absolute right-0 top-[62%] w-[76%]">
             <Reveal delay={280}>
               <Link
-                href="/pricing"
+                href="/#pricing"
                 className="glass-warm edge-glow group block rounded-3xl p-6 transition-transform duration-500 hover:-translate-y-1"
               >
                 <p className="font-mono text-[0.6rem] uppercase tracking-[0.28em] text-ember-100/70">
-                  Most engaged tier
+                  During beta
                 </p>
-                <p className="font-display mt-3 text-3xl font-semibold text-bone">$3,400</p>
+                <p className="font-display mt-3 text-3xl font-semibold text-bone">$100 flat</p>
                 <p className="mt-1 text-[0.86rem] text-bone/55">
-                  Forge — 6 pages, bespoke motion, CMS, full audit.
+                  Any package. You own the site. Paid once in Bitcoin.
                 </p>
                 <span className="mt-5 inline-flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-ember-200">
-                  See all tiers
+                  Compare packages
                   <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                 </span>
               </Link>
@@ -231,7 +218,14 @@ export default function Hero() {
 
       <div className="marquee-mask relative z-10 border-y border-royal-300/10 bg-void/45 py-4 backdrop-blur-sm">
         <div className="marquee-track gap-10">
-          {[...SECTORS, ...SECTORS].map((s, i) => (
+          {[
+            "You own the website",
+            "Delivered to your GitHub",
+            "Privacy focused",
+            "No high costs",
+            "Pay in Bitcoin",
+            "No subscriptions",
+          ].map((s, i) => (
             <span
               key={`${s}-${i}`}
               className="flex items-center gap-10 whitespace-nowrap font-mono text-[0.66rem] uppercase tracking-[0.28em] text-bone/35"

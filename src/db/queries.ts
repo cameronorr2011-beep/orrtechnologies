@@ -7,7 +7,11 @@ import type { PlanView } from "@/components/sections/PricingTable";
 
 let seeded = false;
 
-/** Idempotent plan catalog seed so any fresh database self-heals. */
+/**
+ * Idempotent plan catalog seed so any fresh database self-heals.
+ * Uses upsert semantics so price/copy changes (e.g. the $100 beta price)
+ * propagate to existing databases instead of being ignored.
+ */
 export async function ensureSeed() {
   if (seeded) return;
   await db
@@ -29,7 +33,23 @@ export async function ensureSeed() {
         sortOrder: p.sortOrder,
       })),
     )
-    .onConflictDoNothing({ target: plans.slug });
+    .onConflictDoUpdate({
+      target: plans.slug,
+      set: {
+        name: sql`excluded.name`,
+        tagline: sql`excluded.tagline`,
+        priceUsd: sql`excluded.price_usd`,
+        renewalUsd: sql`excluded.renewal_usd`,
+        turnaround: sql`excluded.turnaround`,
+        bestFor: sql`excluded.best_for`,
+        pages: sql`excluded.pages`,
+        revisions: sql`excluded.revisions`,
+        features: sql`excluded.features`,
+        accent: sql`excluded.accent`,
+        featured: sql`excluded.featured`,
+        sortOrder: sql`excluded.sort_order`,
+      },
+    });
   seeded = true;
 }
 

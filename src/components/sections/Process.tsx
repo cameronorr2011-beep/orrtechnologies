@@ -9,13 +9,13 @@ export default function Process() {
     <section id="process" className="relative z-10 border-t border-royal-300/10 py-28 sm:py-36">
       <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
         <SectionHeading
-          kicker="Method"
+          kicker="How it works"
           title={
             <>
-              A forge runs on <span className="text-ember-gradient">sequence, not inspiration</span>
+              Four steps, <span className="text-ember-gradient">no jargon</span>
             </>
           }
-          body="Seventeen days from signed invoice to a live, monitored, documented site. Every phase has a deliverable you can point at."
+          body="From your first email to owning your finished site, usually inside two weeks. You always know what's happening and what you get next."
         />
 
         <div className="relative mt-16">

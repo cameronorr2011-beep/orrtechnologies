@@ -14,13 +14,13 @@ export default function Work() {
       <div className="pointer-events-none absolute left-1/2 top-0 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-royal-600/12 blur-[130px]" />
       <div className="relative mx-auto max-w-[1280px] px-5 sm:px-8">
         <SectionHeading
-          kicker="Selected work"
+          kicker="Our work"
           title={
             <>
-              Builds that had to survive <span className="text-ember-gradient">real scrutiny</span>
+              Real businesses, <span className="text-ember-gradient">real results</span>
             </>
           }
-          body="Four engagements where the site was load-bearing: regulated buyers, seven-figure decisions, plant-floor hardware. Names are used with permission."
+          body="A few recent builds. Every one delivered to the client's own GitHub, paid once in Bitcoin, no monthly fees after launch."
         />
 
         <div className="mt-16 grid gap-8 lg:grid-cols-2">
@@ -32,7 +32,7 @@ export default function Work() {
                     <Parallax speed={0.035} className="absolute inset-[-12%]">
                       <Image
                         src={cs.image}
-                        alt={`Abstract visual language built for ${cs.client}`}
+                        alt={`Website design built for ${cs.client}`}
                         fill
                         sizes="(max-width: 1024px) 100vw, 50vw"
                         className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.04]"
@@ -76,19 +76,19 @@ export default function Work() {
           <div className="mt-14 flex flex-col items-start justify-between gap-6 rounded-3xl glass-warm p-8 sm:flex-row sm:items-center">
             <div>
               <p className="font-display text-[1.5rem] font-semibold text-bone">
-                Your sector is probably the one we didn&apos;t list.
+                Your business could be next.
               </p>
               <p className="mt-2 max-w-xl text-[0.92rem] text-bone/55">
-                Send the brief. We reply with a scoped plan, a fixed number, and a launch date — within one
+                Send us a short message about what you do. We reply with a plan and a start date — within one
                 business day.
               </p>
             </div>
             <ActionButton
-              href={purchaseMailto({ planName: "Scoped engagement", notes: "Sending a brief for review." })}
+              href={purchaseMailto({ planName: "Website request", notes: "I'd like to talk about a website for my business." })}
               external
               event={{ name: "purchase_click", label: "work_cta" }}
             >
-              Start the brief
+              Get started
             </ActionButton>
           </div>
         </Reveal>

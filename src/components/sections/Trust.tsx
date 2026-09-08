@@ -6,10 +6,10 @@ import ActionButton from "@/components/ui/ActionButton";
 import { SITE, TRUST, purchaseMailto } from "@/lib/content";
 
 const RAIL = [
-  { k: "01", t: "Request", d: "Email the plan you want. You get a written scope and a launch date back." },
-  { k: "02", t: "Invoice", d: "A BTC amount and receiving address are issued for that invoice only." },
-  { k: "03", t: "Broadcast", d: "You send from your own wallet. One confirmation starts the build slot." },
-  { k: "04", t: "Receipt", d: "We confirm settlement in writing and the repo opens in your name." },
+  { k: "01", t: "You email us", d: "Tell us about your business and what you need. We reply within one business day." },
+  { k: "02", t: "We send the invoice", d: "A Bitcoin amount and payment address, written down clearly for your order only." },
+  { k: "03", t: "You pay once", d: "You send the payment from your own wallet. That's the whole cost — $100 during beta." },
+  { k: "04", t: "We build and hand over", d: "Your site goes live and the full code is delivered to your GitHub. It's yours." },
 ];
 
 export default function Trust() {
@@ -20,14 +20,13 @@ export default function Trust() {
         <div className="grid gap-16 lg:grid-cols-[1fr_1fr] lg:gap-20">
           <div>
             <SectionHeading
-              kicker="Trust & settlement"
+              kicker="Fair deal"
               title={
                 <>
-                  We settle on Bitcoin because{" "}
-                  <span className="text-ember-gradient">trust should be verifiable</span>
+                  Simple terms, <span className="text-ember-gradient">no fine print</span>
                 </>
               }
-              body="No processor sitting between us, no chargeback leverage, no card fees baked into your quote. Just a signed invoice, an onchain payment, and a written receipt."
+              body="One price, paid once. You own what we build. Your visitors' privacy is respected. Here's exactly how it works, step by step."
             />
 
             <Reveal delay={160}>
@@ -52,18 +51,18 @@ export default function Trust() {
             <Reveal delay={220}>
               <div className="mt-10 rounded-3xl border border-ember-200/15 bg-gradient-to-br from-royal-900/70 to-void p-7">
                 <p className="font-mono text-[0.6rem] uppercase tracking-[0.28em] text-ember-200/70">
-                  Settlement rail
+                  Paying in Bitcoin
                 </p>
                 <p className="mt-3 font-mono text-[0.92rem] text-bone/85">{SITE.btcNetwork}</p>
                 <p className="mt-4 text-[0.88rem] leading-relaxed text-bone/50">{SITE.btcMemo}</p>
                 <div className="mt-6 flex flex-wrap gap-3">
                   <ActionButton
-                    href={purchaseMailto({ planName: "Bitcoin invoice request" })}
+                    href={purchaseMailto({ planName: "Website request" })}
                     external
                     event={{ name: "purchase_click", label: "trust_btc_invoice" }}
                     className="!px-5 !py-3 !text-[0.7rem]"
                   >
-                    Request invoice
+                    Get started
                   </ActionButton>
                   <ActionButton
                     href="/checkout"
@@ -71,7 +70,7 @@ export default function Trust() {
                     event={{ name: "checkout_open", label: "trust_checkout" }}
                     className="!px-5 !py-3 !text-[0.7rem]"
                   >
-                    How checkout works
+                    How payment works
                   </ActionButton>
                 </div>
               </div>

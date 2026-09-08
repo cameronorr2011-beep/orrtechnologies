@@ -30,10 +30,10 @@ export default function PricingTable({ plans }: { plans: PlanView[] }) {
           kicker="Pricing"
           title={
             <>
-              Flat numbers. <span className="text-ember-gradient">No discovery-fee theatre.</span>
+              $100 flat. <span className="text-ember-gradient">That&apos;s the whole price.</span>
             </>
           }
-          body="Pick a tier, email the purchase request, and we return a Bitcoin invoice with an exact amount and address. What you see is the whole price."
+          body="During beta, every package is $100 — paid once, in Bitcoin. No hourly billing, no monthly fees, no surprise invoices. When beta ends, the price goes up for new customers."
         />
 
         <div className="mt-16 grid gap-6 lg:grid-cols-3">
@@ -49,7 +49,7 @@ export default function PricingTable({ plans }: { plans: PlanView[] }) {
                     <>
                       <div className="pointer-events-none absolute inset-0 noise-panel opacity-70" />
                       <span className="absolute right-6 top-6 rounded-full border border-ember-200/35 bg-ember-500/12 px-3 py-1 font-mono text-[0.56rem] uppercase tracking-[0.22em] text-ember-100">
-                        Most chosen
+                        Most popular
                       </span>
                     </>
                   ) : null}
@@ -60,24 +60,22 @@ export default function PricingTable({ plans }: { plans: PlanView[] }) {
 
                     <div className="mt-8 flex items-end gap-2">
                       <span className="font-display text-[3.1rem] font-semibold leading-none text-bone">
-                        ${plan.priceUsd.toLocaleString("en-US")}
+                        $100
                       </span>
                       <span className="pb-2 font-mono text-[0.6rem] uppercase tracking-[0.2em] text-bone/40">
-                        / build
+                        / one-time
                       </span>
                     </div>
                     <p className="mt-2 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-ember-200/70">
-                      {plan.renewalUsd > 0
-                        ? `optional care + hosting $${plan.renewalUsd}/yr`
-                        : "no recurring charges"}
+                      beta price · no recurring charges
                     </p>
 
                     <dl className="mt-7 grid grid-cols-2 gap-3 border-y border-royal-300/10 py-5">
                       {[
-                        { k: "Turnaround", v: plan.turnaround },
-                        { k: "Scope", v: plan.pages },
-                        { k: "Built for", v: plan.bestFor },
-                        { k: "Revisions", v: plan.revisions > 50 ? "Unlimited" : `${plan.revisions} rounds` },
+                        { k: "Ready in", v: plan.turnaround },
+                        { k: "Size", v: plan.pages },
+                        { k: "Good for", v: plan.bestFor },
+                        { k: "Changes", v: plan.revisions > 50 ? "Unlimited for 30 days" : `${plan.revisions} rounds included` },
                       ].map((row) => (
                         <div key={row.k}>
                           <dt className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-bone/35">
@@ -113,23 +111,23 @@ export default function PricingTable({ plans }: { plans: PlanView[] }) {
 
                     <div className="mt-9 flex flex-col gap-3">
                       <ActionButton
-                        href={purchaseMailto({ planName: `${plan.name} plan`, amountUsd: plan.priceUsd })}
+                        href={purchaseMailto({ planName: `${plan.name} package`, amountUsd: 100 })}
                         external
                         variant={plan.featured ? "primary" : "ghost"}
                         event={{
                           name: "purchase_click",
                           label: `pricing_${plan.slug}`,
-                          meta: { plan: plan.slug, amountUsd: plan.priceUsd },
+                          meta: { plan: plan.slug, amountUsd: 100 },
                         }}
                         className="w-full"
                       >
-                        Purchase {plan.name}
+                        Get started — $100
                       </ActionButton>
                       <Link
                         href={`/checkout?plan=${plan.slug}`}
                         className="text-center font-mono text-[0.6rem] uppercase tracking-[0.2em] text-bone/40 transition-colors hover:text-ember-200"
                       >
-                        Bitcoin invoice flow →
+                        Pay in Bitcoin →
                       </Link>
                     </div>
                   </div>
@@ -141,8 +139,8 @@ export default function PricingTable({ plans }: { plans: PlanView[] }) {
 
         <Reveal delay={120}>
           <p className="mx-auto mt-12 max-w-2xl text-center text-[0.86rem] leading-relaxed text-bone/45">
-            Need something between tiers, or a multi-brand rollout? Quote it as a custom scope — same fixed-price
-            terms, same onchain settlement, same handover of every asset.
+            Not sure which package fits? Email us what your business does and we&apos;ll tell you straight —
+            same $100 flat, same &ldquo;you own it&rdquo; handover, every time.
           </p>
         </Reveal>
       </div>
