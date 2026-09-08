@@ -61,77 +61,33 @@ export type PlanSeed = {
 };
 
 /**
- * Three packages, one flat price during beta: $100.
- * Slugs stay stable (they appear in checkout URLs and the database);
- * the display names are the plain-language deliverables.
+ * One package, one flat price during beta: $100.
+ * The slug stays stable (it appears in checkout URLs and the database).
  */
 export const PLANS: PlanSeed[] = [
   {
-    slug: "ignition",
-    name: "Cheap website",
-    tagline: "A clean, simple site that makes your business look legit.",
+    slug: "website",
+    name: "Your website",
+    tagline: "A complete website for your business — designed, built, and delivered to your GitHub.",
     priceUsd: 100,
     renewalUsd: 0,
-    turnaround: "About 1 week",
-    bestFor: "New businesses and side projects",
-    pages: "1 page, everything on it",
-    revisions: 2,
+    turnaround: "About 1–2 weeks",
+    bestFor: "Every small business",
+    pages: "1–5 pages, whatever you need",
+    revisions: 99,
     accent: "ember",
-    featured: false,
+    featured: true,
     sortOrder: 1,
     features: [
-      "One page that works great on phones and computers",
-      "Your text, photos and logo placed for you",
+      "Up to 5 pages — home, services, about, pricing, contact, or just one",
+      "Custom design matched to your colours and logo",
+      "Your text and photos placed for you — we help write the words",
       "Contact form that emails you directly",
-      "Shows up on Google search",
-      "Fast loading, no clutter",
-      "Delivered to your own GitHub — you own it",
-    ],
-  },
-  {
-    slug: "forge",
-    name: "Premium website",
-    tagline: "A proper multi-page site with a design that fits your brand.",
-    priceUsd: 100,
-    renewalUsd: 0,
-    turnaround: "About 2 weeks",
-    bestFor: "Growing businesses that need more than one page",
-    pages: "Up to 5 pages",
-    revisions: 4,
-    accent: "copper",
-    featured: true,
-    sortOrder: 2,
-    features: [
-      "Everything in the Cheap website",
-      "Up to 5 pages: home, services, about, pricing, contact",
-      "Custom design matched to your brand colours",
       "Blog set up so you can post updates yourself",
-      "Smooth animations that don't slow the site down",
       "Set up so customers can find you on Google",
-      "2 weeks of free fixes after launch",
-    ],
-  },
-  {
-    slug: "sovereign",
-    name: "All-in",
-    tagline: "The whole package: site, content, hosting setup, and a month of tweaks.",
-    priceUsd: 100,
-    renewalUsd: 0,
-    turnaround: "2–4 weeks",
-    bestFor: "Busy owners who want it handled end to end",
-    pages: "As many pages as you need",
-    revisions: 99,
-    accent: "royal",
-    featured: false,
-    sortOrder: 3,
-    features: [
-      "Everything in the Premium website",
-      "We write the words for every page with you",
-      "Simple logo and colour scheme if you don't have one",
-      "Hosting set up for you (cheap or free options)",
-      "Your email and forms tested and working",
-      "Unlimited small changes for 30 days",
-      "A simple guide so you can edit things yourself",
+      "Fast on phones and computers, no clutter",
+      "Delivered to your own GitHub — you own it",
+      "Unlimited small changes for 30 days after launch",
     ],
   },
 ];
@@ -275,7 +231,7 @@ export const TRUST = [
 export const FAQ = [
   {
     q: "What do I actually get for $100?",
-    a: "A finished website, built for you: designed, written, tested on phones and computers, and put online. The complete code is delivered to your own GitHub account. Pick the package that fits — Cheap website, Premium website, or All-in — all $100 during beta.",
+    a: "A finished website, built for you: designed, written, tested on phones and computers, and put online. The complete code is delivered to your own GitHub account. One package, one price — $100 during beta.",
   },
   {
     q: "Do I really own the website?",
@@ -291,7 +247,7 @@ export const FAQ = [
   },
   {
     q: "What if I need changes after launch?",
-    a: "Every package includes free changes for a window after launch (2 weeks for Premium, 30 days for All-in). After that, small tweaks are cheap and quoted up front — never a surprise bill.",
+    a: "Every website includes unlimited small changes for 30 days after launch. After that, tweaks are cheap and always quoted up front — never a surprise bill.",
   },
   {
     q: "Will my site show up on Google?",

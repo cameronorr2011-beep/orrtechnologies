@@ -3,34 +3,66 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const PREF_KEY = "orr-ambient-sound";
-const CHORD_SECONDS = 20;
-const CHORD_EVERY = 12;
-const TARGET_VOLUME = 0.06;
+const TARGET_VOLUME = 0.8;
+const CHORD_SECONDS = 16;
 
 function mtof(midi: number) {
   return 440 * Math.pow(2, (midi - 69) / 12);
 }
 
 /**
- * Warm, open-voiced chord bed: Am9 → Fmaj7 → Cmaj7 → G(add9).
- * Sine voices only (no chiptune squares) with slow 6s attacks so chords
- * melt into each other instead of stepping.
+ * Chord roots cycling Am → F → C → G (low register), and a shared
+ * A-minor-pentatonic pool for the sparse melody notes above them.
  */
-const CHORDS = [
-  [45, 52, 60, 64, 71],
-  [41, 48, 57, 64, 69],
-  [48, 55, 59, 64, 72],
-  [43, 50, 59, 62, 69],
-];
-
-/** Sparse pentatonic bells for texture — A minor pentatonic, high register. */
-const BELLS = [69, 72, 74, 76, 79, 81];
+const ROOTS = [45, 41, 48, 43]; // A2, F2, C3, G2
+const MELODY = [57, 60, 62, 64, 67, 69, 72, 74, 76, 79]; // A3 … G5
 
 type Engine = {
   ctx: AudioContext;
   setAudible: (on: boolean) => void;
   teardown: () => void;
 };
+
+/**
+ * Render one plucked string with the Karplus–Strong algorithm, offline into a
+ * buffer: a softened burst of noise circulates through a damped averaging
+ * loop, producing the natural decay and body of a real string. No sine
+ * oscillators, no stepped arpeggios — nothing that sounds synthetic.
+ */
+function renderPluck(ctx: AudioContext, midi: number, seconds = 7): AudioBuffer {
+  const sr = ctx.sampleRate;
+  const freq = mtof(midi);
+  const n = Math.max(2, Math.round(sr / freq));
+  const len = Math.floor(sr * seconds);
+  const buf = ctx.createBuffer(1, len, sr);
+  const data = buf.getChannelData(0);
+
+  // Seed the delay line with a low-passed noise burst (the "pick").
+  const line = new Float32Array(n);
+  let prev = 0;
+  for (let i = 0; i < n; i++) {
+    prev = 0.55 * prev + 0.45 * (Math.random() * 2 - 1);
+    line[i] = prev;
+  }
+
+  // Lower strings ring longer; higher notes decay faster, like real strings.
+  const damp = Math.min(0.998, 0.9955 + 0.0035 * Math.max(0, 1 - freq / 900));
+  let idx = 0;
+  for (let i = 0; i < len; i++) {
+    const nextIdx = (idx + 1) % n;
+    const out = damp * 0.5 * (line[idx] + line[nextIdx]);
+    line[idx] = out;
+    data[i] = out;
+    idx = nextIdx;
+  }
+
+  // Fade the final second so notes never click when they end.
+  const fade = Math.min(len, sr);
+  for (let i = 0; i < fade; i++) {
+    data[len - 1 - i] *= i / fade;
+  }
+  return buf;
+}
 
 function createEngine(): Engine | null {
   const Ctor =
@@ -44,90 +76,109 @@ function createEngine(): Engine | null {
   const master = ctx.createGain();
   master.gain.value = 0.0001;
 
-  // Soft lowpass so nothing is harsh; a very slow LFO makes it "breathe".
-  const filter = ctx.createBiquadFilter();
-  filter.type = "lowpass";
-  filter.frequency.value = 950;
-  filter.Q.value = 0.4;
+  // Warm the tone: gentle lowpass so plucks stay soft, never sharp.
+  const tone = ctx.createBiquadFilter();
+  tone.type = "lowpass";
+  tone.frequency.value = 1500;
+  tone.Q.value = 0.3;
 
-  const lfo = ctx.createOscillator();
-  lfo.frequency.value = 0.05;
-  const lfoGain = ctx.createGain();
-  lfoGain.gain.value = 180;
-  lfo.connect(lfoGain).connect(filter.frequency);
-  lfo.start();
-
-  // Feedback delay gives the pads space without any convolution reverb.
+  // Space: one soft feedback delay instead of synthetic reverb.
   const delay = ctx.createDelay(1);
-  delay.delayTime.value = 0.42;
+  delay.delayTime.value = 0.38;
   const fb = ctx.createGain();
-  fb.gain.value = 0.38;
+  fb.gain.value = 0.42;
   const wet = ctx.createGain();
-  wet.gain.value = 0.5;
+  wet.gain.value = 0.4;
   delay.connect(fb).connect(delay);
   delay.connect(wet).connect(master);
 
-  filter.connect(master);
-  filter.connect(delay);
+  tone.connect(master);
+  tone.connect(delay);
   master.connect(ctx.destination);
 
+  // A very quiet filtered-noise bed (like distant air) so the space never
+  // feels empty between notes.
+  const noiseLen = 4 * ctx.sampleRate;
+  const noiseBuf = ctx.createBuffer(1, noiseLen, ctx.sampleRate);
+  const nd = noiseBuf.getChannelData(0);
+  let brown = 0;
+  for (let i = 0; i < noiseLen; i++) {
+    brown = (brown + (Math.random() * 2 - 1) * 0.02) * 0.998;
+    nd[i] = brown * 3;
+  }
+  const noise = ctx.createBufferSource();
+  noise.buffer = noiseBuf;
+  noise.loop = true;
+  const noiseFilter = ctx.createBiquadFilter();
+  noiseFilter.type = "lowpass";
+  noiseFilter.frequency.value = 420;
+  const noiseGain = ctx.createGain();
+  noiseGain.gain.value = 0.012;
+  noise.connect(noiseFilter).connect(noiseGain).connect(master);
+  noise.start();
+
+  const bufferCache = new Map<number, AudioBuffer>();
+  const PANS = [-0.35, 0.3, -0.15, 0.4, 0, -0.4];
+  let panIdx = 0;
   let chordIdx = 0;
-  let chordTimer = 0;
-  let bellTimer = 0;
   let stopped = false;
+  let noteTimer = 0;
+  let chordTimer = 0;
 
-  const scheduleChord = () => {
-    if (stopped) return;
-    const chord = CHORDS[chordIdx % CHORDS.length];
-    chordIdx += 1;
-    const now = ctx.currentTime;
-
-    const bed = ctx.createGain();
-    bed.gain.setValueAtTime(0.0001, now);
-    bed.gain.exponentialRampToValueAtTime(0.55, now + 6);
-    bed.gain.setValueAtTime(0.55, now + CHORD_SECONDS - 8);
-    bed.gain.exponentialRampToValueAtTime(0.0001, now + CHORD_SECONDS);
-    bed.connect(filter);
-
-    chord.forEach((midi, i) => {
-      const osc = ctx.createOscillator();
-      osc.type = "sine";
-      // Tiny random detune per voice keeps the pad warm, not synthetic.
-      osc.frequency.value = mtof(midi) * (1 + (Math.random() - 0.5) * 0.003);
-      const g = ctx.createGain();
-      g.gain.value = Math.max(0.03, 0.16 - i * 0.025);
-      osc.connect(g).connect(bed);
-      osc.start(now);
-      osc.stop(now + CHORD_SECONDS + 0.5);
-    });
-
-    chordTimer = window.setTimeout(scheduleChord, CHORD_EVERY * 1000);
+  const pluck = (midi: number, vel: number, when: number) => {
+    let buf = bufferCache.get(midi);
+    if (!buf) {
+      buf = renderPluck(ctx, midi);
+      bufferCache.set(midi, buf);
+    }
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    // Tiny random detune so repeats never sound machine-made.
+    src.playbackRate.value = 1 + (Math.random() - 0.5) * 0.004;
+    const g = ctx.createGain();
+    g.gain.value = vel;
+    src.connect(g);
+    let out: AudioNode = g;
+    if (typeof ctx.createStereoPanner === "function") {
+      const pan = ctx.createStereoPanner();
+      pan.pan.value = PANS[panIdx % PANS.length];
+      panIdx += 1;
+      g.connect(pan);
+      out = pan;
+    }
+    out.connect(tone);
+    src.start(when);
   };
 
-  const playBell = () => {
+  // Bass root (plus a soft fifth) at each chord change, every 16 seconds.
+  const scheduleChord = () => {
     if (stopped) return;
-    if (Math.random() < 0.55) {
-      const now = ctx.currentTime;
-      const osc = ctx.createOscillator();
-      osc.type = "sine";
-      osc.frequency.value =
-        mtof(BELLS[Math.floor(Math.random() * BELLS.length)]) *
-        (1 + (Math.random() - 0.5) * 0.002);
-      const g = ctx.createGain();
-      g.gain.setValueAtTime(0.0001, now);
-      g.gain.exponentialRampToValueAtTime(0.028, now + 0.06);
-      g.gain.exponentialRampToValueAtTime(0.0001, now + 5);
-      osc.connect(g);
-      g.connect(filter);
-      g.connect(delay);
-      osc.start(now);
-      osc.stop(now + 5.5);
+    const root = ROOTS[chordIdx % ROOTS.length];
+    chordIdx += 1;
+    const now = ctx.currentTime;
+    pluck(root, 0.32, now + 0.05);
+    pluck(root + 7, 0.16, now + 0.9 + Math.random() * 0.6);
+    chordTimer = window.setTimeout(scheduleChord, CHORD_SECONDS * 1000);
+  };
+
+  // Sparse melody: mostly silence, sometimes one note, rarely a two-note phrase.
+  const scheduleNote = () => {
+    if (stopped) return;
+    if (Math.random() < 0.6) {
+      const midi = MELODY[Math.floor(Math.random() * MELODY.length)];
+      const vel = 0.1 + Math.random() * 0.12;
+      const now = ctx.currentTime + 0.03;
+      pluck(midi, vel, now);
+      if (Math.random() < 0.3) {
+        const second = MELODY[Math.floor(Math.random() * MELODY.length)];
+        pluck(second, vel * 0.8, now + 0.28 + Math.random() * 0.25);
+      }
     }
-    bellTimer = window.setTimeout(playBell, 7000 + Math.random() * 8000);
+    noteTimer = window.setTimeout(scheduleNote, 2400 + Math.random() * 2600);
   };
 
   scheduleChord();
-  bellTimer = window.setTimeout(playBell, 6000);
+  noteTimer = window.setTimeout(scheduleNote, 1500);
 
   return {
     ctx,
@@ -137,15 +188,15 @@ function createEngine(): Engine | null {
       master.gain.setValueAtTime(Math.max(master.gain.value, 0.0001), now);
       master.gain.exponentialRampToValueAtTime(
         on ? TARGET_VOLUME : 0.0001,
-        now + (on ? 4 : 0.8),
+        now + (on ? 3 : 0.8),
       );
     },
     teardown: () => {
       stopped = true;
       window.clearTimeout(chordTimer);
-      window.clearTimeout(bellTimer);
+      window.clearTimeout(noteTimer);
       try {
-        lfo.stop();
+        noise.stop();
       } catch {
         /* already stopped */
       }

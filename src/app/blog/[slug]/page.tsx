@@ -119,7 +119,7 @@ export default async function BlogPostPage({
                   Get started — $100
                 </ActionButton>
                 <ActionButton href="/pricing" variant="ghost" event={{ name: "nav", label: `blog_${post.slug}_pricing` }}>
-                  See packages
+                  Get your website — $100
                 </ActionButton>
               </div>
             </div>

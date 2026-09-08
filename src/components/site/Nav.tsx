@@ -87,9 +87,9 @@ export default function Nav() {
             </div>
 
             <ActionButton
-              href={purchaseMailto({ planName: "Forge plan" })}
+              href={purchaseMailto({ planName: "Your website" })}
               external
-              event={{ name: "purchase_click", label: "nav_purchase_forge" }}
+              event={{ name: "purchase_click", label: "nav_purchase_website" }}
               className="!px-5 !py-3 !text-[0.7rem]"
             >
               Purchase

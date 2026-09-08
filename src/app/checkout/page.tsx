@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Pay in Bitcoin — $100 flat during beta",
   description:
-    "Pick your package, get a Bitcoin invoice, and pay once. $100 flat during beta. No cards, no subscriptions, no surprise charges.",
+    "Get a Bitcoin invoice and pay once. $100 flat during beta. No cards, no subscriptions, no surprise charges.",
   robots: { index: false, follow: false },
 };
 
@@ -38,8 +38,8 @@ export default async function CheckoutPage() {
           </Reveal>
           <Reveal delay={140}>
             <p className="mt-6 max-w-2xl text-[1rem] leading-relaxed text-bone/58">
-              Pick your package below and we&apos;ll email you a Bitcoin invoice: the exact amount and a
-              payment address created just for your order. You pay from your own wallet — no cards, no
+              Tell us about your business below and we&apos;ll email you a Bitcoin invoice: the exact amount
+              and a payment address created just for your order. You pay from your own wallet — no cards, no
               account with us, nothing auto-charged, ever.
             </p>
           </Reveal>

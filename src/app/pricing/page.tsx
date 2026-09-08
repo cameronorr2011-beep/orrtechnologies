@@ -5,7 +5,6 @@ import Contact from "@/components/sections/Contact";
 import Reveal from "@/components/fx/Reveal";
 import EmberField from "@/components/fx/EmberField";
 import ActionButton from "@/components/ui/ActionButton";
-import { getPlans } from "@/db/queries";
 import { SITE, purchaseMailto } from "@/lib/content";
 
 export const dynamic = "force-dynamic";
@@ -13,23 +12,11 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Pricing — $100 flat during beta, you own the site",
   description:
-    "Cheap website, Premium website, or All-in — every package is $100 flat during beta. Paid once in Bitcoin, code delivered to your GitHub, no monthly fees.",
+    "One package, one price: a complete website for $100 flat during beta. Paid once in Bitcoin, code delivered to your GitHub, no monthly fees.",
   alternates: { canonical: "/pricing" },
 };
 
-const COMPARISON = [
-  { row: "Ready in", ignition: "About 1 week", forge: "About 2 weeks", sovereign: "2–4 weeks" },
-  { row: "Pages", ignition: "1 page", forge: "Up to 5 pages", sovereign: "As many as you need" },
-  { row: "Changes included", ignition: "2 rounds", forge: "4 rounds", sovereign: "Unlimited for 30 days" },
-  { row: "Blog setup", ignition: "—", forge: "Included", sovereign: "Included" },
-  { row: "We write the words", ignition: "You provide", forge: "We help", sovereign: "We write with you" },
-  { row: "After launch", ignition: "You own it", forge: "2 weeks free fixes", sovereign: "30 days free fixes" },
-  { row: "Price", ignition: "$100", forge: "$100", sovereign: "$100" },
-];
-
-export default async function PricingPage() {
-  const plans = await getPlans();
-
+export default function PricingPage() {
   return (
     <>
       <section className="relative overflow-hidden pt-36 pb-16 sm:pt-44">
@@ -51,69 +38,52 @@ export default async function PricingPage() {
           </Reveal>
           <Reveal delay={140}>
             <p className="mt-7 max-w-2xl text-[1.02rem] leading-relaxed text-bone/58">
-              We&apos;re in beta, so every package is $100 — paid once, in Bitcoin. The finished code is
+              We&apos;re in beta, so a complete website is $100 — paid once, in Bitcoin. The finished code is
               delivered to your own GitHub. No monthly fees, no hosting lock-in, no surprise bills.
             </p>
           </Reveal>
         </div>
       </section>
 
-      <PricingTable plans={plans} />
+      <PricingTable plans={[{
+        slug: "website",
+        name: "Your website",
+        tagline: "A complete website for your business — designed, built, and delivered to your GitHub.",
+        priceUsd: 100,
+        renewalUsd: 0,
+        turnaround: "About 1–2 weeks",
+        bestFor: "Every small business",
+        pages: "1–5 pages, whatever you need",
+        revisions: 99,
+        features: [
+          "Up to 5 pages — home, services, about, pricing, contact, or just one",
+          "Custom design matched to your colours and logo",
+          "Your text and photos placed for you — we help write the words",
+          "Contact form that emails you directly",
+          "Blog set up so you can post updates yourself",
+          "Set up so customers can find you on Google",
+          "Fast on phones and computers, no clutter",
+          "Delivered to your own GitHub — you own it",
+          "Unlimited small changes for 30 days after launch",
+        ],
+        featured: true,
+      }]} />
 
       <section className="relative z-10 py-20">
         <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
-          <Reveal>
-            <div className="glass overflow-hidden rounded-3xl">
-              <div className="overflow-x-auto">
-                <table className="w-full min-w-[720px] border-collapse text-left">
-                  <thead>
-                    <tr className="border-b border-royal-300/12">
-                      <th className="p-6 font-mono text-[0.6rem] uppercase tracking-[0.24em] text-bone/40">
-                        Compare
-                      </th>
-                      {plans.map((p) => (
-                        <th key={p.slug} className="p-6">
-                          <span className="font-display block text-[1.2rem] font-semibold text-bone">{p.name}</span>
-                          <span className="font-mono text-[0.6rem] uppercase tracking-[0.18em] text-ember-200/70">
-                            $100 · one-time
-                          </span>
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {COMPARISON.map((r, i) => (
-                      <tr
-                        key={r.row}
-                        className={`border-b border-royal-300/8 transition-colors hover:bg-royal-900/30 ${
-                          i % 2 ? "bg-royal-950/20" : ""
-                        }`}
-                      >
-                        <th className="p-6 text-[0.86rem] font-medium text-bone/70">{r.row}</th>
-                        <td className="p-6 text-[0.86rem] text-bone/60">{r.ignition}</td>
-                        <td className="p-6 text-[0.86rem] text-bone/60">{r.forge}</td>
-                        <td className="p-6 text-[0.86rem] text-bone/60">{r.sovereign}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </Reveal>
-
           <Reveal delay={120}>
-            <div className="mt-10 flex flex-col items-start justify-between gap-6 rounded-3xl glass-warm p-8 sm:flex-row sm:items-center">
+            <div className="flex flex-col items-start justify-between gap-6 rounded-3xl glass-warm p-8 sm:flex-row sm:items-center">
               <div>
                 <p className="font-display text-[1.4rem] font-semibold text-bone">
                   Ready when you are — one email starts it.
                 </p>
                 <p className="mt-2 max-w-xl text-[0.9rem] text-bone/55">
-                  Write to {SITE.emailDisplay} with the package you want. You&apos;ll get a simple plan, a
+                  Write to {SITE.emailDisplay} with what your business does. You&apos;ll get a simple plan, a
                   start date, and the Bitcoin payment details.
                 </p>
               </div>
               <ActionButton
-                href={purchaseMailto({ planName: "Website request" })}
+                href={purchaseMailto({ planName: "Your website" })}
                 external
                 event={{ name: "purchase_click", label: "pricing_page_footer" }}
               >

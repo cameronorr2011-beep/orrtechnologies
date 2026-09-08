@@ -1,7 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Reveal from "@/components/fx/Reveal";
 import ActionButton from "@/components/ui/ActionButton";
 import { SITE, purchaseMailto } from "@/lib/content";
@@ -28,16 +27,12 @@ const STEPS = [
 ];
 
 export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
-  const params = useSearchParams();
-  const initialSlug = params.get("plan") ?? plans.find((p) => p.featured)?.slug ?? plans[0]?.slug ?? "";
-  const [slug, setSlug] = useState(initialSlug);
+  const plan = plans[0];
   const [form, setForm] = useState({ contactName: "", contactEmail: "", company: "", notes: "" });
   const [invoice, setInvoice] = useState<Invoice | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [copied, setCopied] = useState("");
-
-  const plan = useMemo(() => plans.find((p) => p.slug === slug) ?? plans[0], [plans, slug]);
 
   const field =
     "w-full rounded-2xl border border-royal-300/15 bg-royal-950/60 px-5 py-3.5 text-[0.92rem] text-bone placeholder:text-bone/25 transition-colors focus:border-ember-300/55 focus:outline-none";
@@ -184,35 +179,13 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
         <Reveal>
           <form onSubmit={submit} className="glass edge-glow rounded-[1.75rem] p-8">
             <p className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-ember-300/75">
-              Choose your package
+              Your website — $100
             </p>
 
-            <div className="mt-6 space-y-3">
-              {plans.map((p) => {
-                const active = p.slug === slug;
-                return (
-                  <button
-                    key={p.slug}
-                    type="button"
-                    onClick={() => setSlug(p.slug)}
-                    className={`w-full rounded-2xl border p-5 text-left transition-all duration-300 ${
-                      active
-                        ? "border-ember-300/50 bg-ember-500/10"
-                        : "border-royal-300/12 bg-royal-950/40 hover:border-royal-300/30"
-                    }`}
-                  >
-                    <div className="flex items-baseline justify-between gap-4">
-                      <span className="font-display text-[1.2rem] font-semibold text-bone">{p.name}</span>
-                      <span className="font-mono text-[0.8rem] text-ember-200">$100 · one-time</span>
-                    </div>
-                    <p className="mt-1.5 text-[0.84rem] leading-relaxed text-bone/50">{p.tagline}</p>
-                    <p className="mt-3 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-bone/35">
-                      {p.turnaround} · {p.pages}
-                    </p>
-                  </button>
-                );
-              })}
-            </div>
+            <p className="mt-4 text-[0.9rem] leading-relaxed text-bone/55">
+              One package, one price. Tell us about your business below and we&apos;ll email your Bitcoin
+              invoice.
+            </p>
 
             <div className="mt-7 space-y-3.5">
               <div className="grid gap-3.5 sm:grid-cols-2">
@@ -255,7 +228,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
               <ActionButton
                 type="submit"
                 disabled={loading}
-                event={{ name: "checkout_submit", label: slug }}
+                event={{ name: "checkout_submit", label: "website" }}
               >
                 {loading ? "Creating your order" : "Get my Bitcoin invoice"}
               </ActionButton>

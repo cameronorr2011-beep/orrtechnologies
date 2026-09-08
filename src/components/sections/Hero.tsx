@@ -121,9 +121,9 @@ export default function Hero() {
           <Reveal delay={240}>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <ActionButton
-                href={purchaseMailto({ planName: "Premium website", amountUsd: 100 })}
+                href={purchaseMailto({ planName: "Your website", amountUsd: 100 })}
                 external
-                event={{ name: "purchase_click", label: "hero_purchase", meta: { plan: "premium" } }}
+                event={{ name: "purchase_click", label: "hero_purchase", meta: { plan: "website" } }}
               >
                 Get your website — $100
               </ActionButton>
@@ -204,10 +204,10 @@ export default function Hero() {
                 </p>
                 <p className="font-display mt-3 text-3xl font-semibold text-bone">$100 flat</p>
                 <p className="mt-1 text-[0.86rem] text-bone/55">
-                  Any package. You own the site. Paid once in Bitcoin.
+                  One price. You own the site. Paid once in Bitcoin.
                 </p>
                 <span className="mt-5 inline-flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-ember-200">
-                  Compare packages
+                  See what&apos;s included
                   <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                 </span>
               </Link>

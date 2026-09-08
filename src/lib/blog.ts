@@ -103,7 +103,7 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: "When you DO need more pages",
         paragraphs: [
           "A second page earns its place when a group of customers needs different information. A plumber might add a page for commercial clients. A bakery might add a page for wedding cakes with photos and a enquiry form.",
-          "A blog earns its place when you'll actually write on it — even once a month. It helps Google find you for more searches, and it gives customers a reason to come back. We set up a blog for you in the Premium and All-in packages so it's one click to post.",
+          "A blog earns its place when you'll actually write on it — even once a month. It helps Google find you for more searches, and it gives customers a reason to come back. We set up a blog for you so it's one click to post.",
         ],
       },
       {
