@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
+import AmbientAudio from "@/components/site/AmbientAudio";
 import ScrollProgress from "@/components/fx/ScrollProgress";
 import CursorEmbers from "@/components/fx/CursorEmbers";
 import { SITE } from "@/lib/content";
@@ -67,6 +68,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Nav />
         <main className="relative">{children}</main>
         <Footer />
+        <AmbientAudio />
         <Analytics />
       </body>
     </html>
