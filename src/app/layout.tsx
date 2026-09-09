@@ -22,6 +22,7 @@ export const metadata: Metadata = {
   keywords: [
     "affordable website design",
     "$100 website",
+    "dynamic website with backend",
     "small business website",
     "you own your website",
     "free promo video",

@@ -10,9 +10,9 @@ import { SITE, purchaseMailto } from "@/lib/content";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Pricing — $100 flat during beta, you own the site",
+  title: "Pricing — $100 websites, $500 dynamic websites, paid once",
   description:
-    "One package, one price: a complete website for $100 flat during beta. Paid once in Bitcoin, code delivered to your GitHub, no monthly fees.",
+    "A complete website for $100 flat during beta. Need backend functionality, databases, user accounts, or APIs? The Dynamic Website plan is $500, and only for sites that need that. Paid once in Bitcoin, code delivered to your GitHub, no monthly fees.",
   alternates: { canonical: "/pricing" },
 };
 
@@ -39,35 +39,64 @@ export default function PricingPage() {
           <Reveal delay={140}>
             <p className="mt-7 max-w-2xl text-[1.02rem] leading-relaxed text-bone/58">
               We&apos;re in beta, so a complete website is $100 — paid once, in Bitcoin. The finished code is
-              delivered to your own GitHub. No monthly fees, no hosting lock-in, no surprise bills.
+              delivered to your own GitHub. No monthly fees, no hosting lock-in, no surprise bills. If your
+              site needs dynamic functionality (backend, database, user accounts, APIs), there&apos;s a
+              separate $500 plan for that below.
             </p>
           </Reveal>
         </div>
       </section>
 
-      <PricingTable plans={[{
-        slug: "website",
-        name: "Your website",
-        tagline: "A complete website for your business — designed, built, and delivered to your GitHub.",
-        priceUsd: 100,
-        renewalUsd: 0,
-        turnaround: "About 1–2 weeks",
-        bestFor: "Every small business",
-        pages: "1–5 pages, whatever you need",
-        revisions: 99,
-        features: [
-          "Up to 5 pages — home, services, about, pricing, contact, or just one",
-          "Custom design matched to your colours and logo",
-          "Your text and photos placed for you — we help write the words",
-          "Contact form that emails you directly",
-          "Blog set up so you can post updates yourself",
-          "Set up so customers can find you on Google",
-          "Fast on phones and computers, no clutter",
-          "Delivered to your own GitHub — you own it",
-          "Unlimited small changes for 30 days after launch",
-        ],
-        featured: true,
-      }]} />
+      <PricingTable plans={[
+        {
+          slug: "website",
+          name: "Your website",
+          tagline: "A complete website for your business — designed, built, and delivered to your GitHub.",
+          priceUsd: 100,
+          renewalUsd: 0,
+          turnaround: "About 1–2 weeks",
+          bestFor: "Every small business",
+          pages: "1–5 pages, whatever you need",
+          revisions: 99,
+          features: [
+            "Up to 5 pages — home, services, about, pricing, contact, or just one",
+            "Custom design matched to your colours and logo",
+            "Your text and photos placed for you — we help write the words",
+            "Contact form that emails you directly",
+            "Blog set up so you can post updates yourself",
+            "Set up so customers can find you on Google",
+            "Fast on phones and computers, no clutter",
+            "Delivered to your own GitHub — you own it",
+            "Unlimited small changes for 30 days after launch",
+          ],
+          featured: true,
+        },
+        {
+          slug: "dynamic-website",
+          name: "Dynamic Website",
+          tagline: "Only for websites that need interactive functionality, data processing, or features that require a backend.",
+          priceUsd: 500,
+          renewalUsd: 0,
+          turnaround: "Quoted per project",
+          bestFor: "Sites that need a backend",
+          pages: "Scoped to what your features need",
+          revisions: 2,
+          features: [
+            "Custom dynamic website development",
+            "Backend functionality",
+            "Database integration when required",
+            "Interactive forms and data handling",
+            "User accounts/login systems when required",
+            "Admin functionality when required",
+            "API integrations when required",
+            "Deployment and configuration of the dynamic functionality",
+            "Responsive design for desktop, tablet, and mobile",
+            "Testing of the website's dynamic features",
+            "Basic post-launch technical support",
+          ],
+          featured: false,
+        },
+      ]} />
 
       <section className="relative z-10 py-20">
         <div className="mx-auto max-w-[1280px] px-5 sm:px-8">

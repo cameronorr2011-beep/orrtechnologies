@@ -6,7 +6,7 @@ export const SITE = {
   email: "service@orrbiologicals.com",
   emailDisplay: "service@orrbiologicals.com",
   tagline:
-    "We build clean, fast websites for small businesses. $100 flat during beta. You own everything.",
+    "We build clean, fast websites for small businesses. $100 flat during beta — and a $500 plan if your site needs a backend. You own everything.",
   btcNetwork: "Bitcoin",
   btcAddress: process.env.NEXT_PUBLIC_BTC_ADDRESS ?? "bc1q-issued-per-invoice",
   btcMemo:
@@ -44,6 +44,16 @@ export function purchaseMailto(params: {
   return `mailto:${MAILTO.to}?subject=${subject}&body=${body}`;
 }
 
+/**
+ * Plain-language note so nobody buys the wrong package: the Dynamic plan is
+ * strictly for sites that need backend/interactive functionality. The standard
+ * $100 website covers most small businesses and is unchanged.
+ */
+export const DYNAMIC_PLAN_POSITIONING = {
+  kicker: "Is this plan for you?",
+  body: "Need more than a standard website? The Dynamic Website plan is designed for businesses that need backend functionality, databases, user accounts, APIs, data processing, or other interactive features. If you need a straightforward website for your business, the standard plan above is the right fit — most businesses don't need this plan.",
+} as const;
+
 export type PlanSeed = {
   slug: string;
   name: string;
@@ -61,8 +71,10 @@ export type PlanSeed = {
 };
 
 /**
- * One package, one flat price during beta: $100.
- * The slug stays stable (it appears in checkout URLs and the database).
+ * Two packages, one flat price each during beta:
+ *  - website: the standard static website ($100) — unchanged
+ *  - dynamic-website: for sites that need backend/interactive functionality ($500)
+ * Slugs stay stable (they appear in checkout URLs and the database).
  */
 export const PLANS: PlanSeed[] = [
   {
@@ -90,6 +102,33 @@ export const PLANS: PlanSeed[] = [
       "Fast on phones and computers, no clutter",
       "Delivered to your own GitHub — you own it",
       "Unlimited small changes for 30 days after launch",
+    ],
+  },
+  {
+    slug: "dynamic-website",
+    name: "Dynamic Website",
+    tagline: "Only for websites that need interactive functionality, data processing, or features that require a backend.",
+    priceUsd: 500,
+    renewalUsd: 0,
+    turnaround: "Quoted per project",
+    bestFor: "Sites that need a backend",
+    pages: "Scoped to what your features need",
+    revisions: 2,
+    accent: "royal",
+    featured: false,
+    sortOrder: 2,
+    features: [
+      "Custom dynamic website development",
+      "Backend functionality",
+      "Database integration when required",
+      "Interactive forms and data handling",
+      "User accounts/login systems when required",
+      "Admin functionality when required",
+      "API integrations when required",
+      "Deployment and configuration of the dynamic functionality",
+      "Responsive design for desktop, tablet, and mobile",
+      "Testing of the website's dynamic features",
+      "Basic post-launch technical support",
     ],
   },
 ];
@@ -307,6 +346,7 @@ export const NAV_LINKS = [
 /** Plain-language stats for the hero. Rendered as text, not counted up. */
 export const STATS = [
   { value: "$100", label: "flat price during beta" },
+  { value: "$500", label: "dynamic plan, if you need a backend" },
   { value: "100%", label: "code you own" },
   { value: "Free", label: "promo video with every site" },
   { value: "BTC", label: "how you pay — once" },

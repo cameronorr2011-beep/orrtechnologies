@@ -22,10 +22,10 @@ export default async function HomePage() {
     "@type": "ProfessionalService",
     name: "Orr Technologies",
     description:
-      "We build clean, fast websites for small businesses at $100 flat during beta. You own the code — delivered to your own GitHub. Privacy focused, paid once in Bitcoin.",
+      "We build clean, fast websites for small businesses at $100 flat during beta, plus a $500 dynamic website plan for sites that need backend functionality. You own the code — delivered to your own GitHub. Privacy focused, paid once in Bitcoin.",
     email: SITE.email,
     url: SITE.url,
-    priceRange: "$100",
+    priceRange: "$100 - $500",
     paymentAccepted: "Bitcoin",
     areaServed: "Worldwide",
     makesOffer: plans.map((p) => ({
