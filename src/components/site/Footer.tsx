@@ -100,6 +100,29 @@ export default function Footer() {
               </Link>
             </li>
           </ul>
+          <h3 className="mt-8 font-mono text-[0.62rem] uppercase tracking-[0.3em] text-bone/40">Legal</h3>
+          <ul className="mt-5 space-y-3 text-[0.9rem] text-bone/60">
+            <li>
+              <Link href="/privacy" className="ember-underline transition-colors hover:text-ember-200">
+                Privacy Policy
+              </Link>
+            </li>
+            <li>
+              <Link href="/terms" className="ember-underline transition-colors hover:text-ember-200">
+                Terms of Use
+              </Link>
+            </li>
+            <li>
+              <a
+                href="https://github.com/cameronorr2011-beep/orrtechnologies/blob/main/LICENSE"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ember-underline transition-colors hover:text-ember-200"
+              >
+                MIT License
+              </a>
+            </li>
+          </ul>
         </div>
 
         <div>
@@ -133,9 +156,13 @@ export default function Footer() {
 
       <div className="relative mx-auto flex max-w-[1280px] flex-col gap-3 border-t border-royal-300/10 px-5 py-7 font-mono text-[0.66rem] uppercase tracking-[0.2em] text-bone/35 sm:flex-row sm:items-center sm:justify-between sm:px-8">
         <span>© {new Date().getFullYear()} {SITE.legalName} · All rights reserved</span>
-        <span className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-ember-400 animate-pulse-glow" />
-          {SITE.domain}
+        <span className="flex flex-wrap items-center gap-4">
+          <Link href="/privacy" className="transition-colors hover:text-ember-200">Privacy</Link>
+          <Link href="/terms" className="transition-colors hover:text-ember-200">Terms</Link>
+          <span className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-ember-400 animate-pulse-glow" />
+            {SITE.domain}
+          </span>
         </span>
       </div>
     </footer>
