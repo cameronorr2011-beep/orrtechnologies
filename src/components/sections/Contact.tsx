@@ -4,7 +4,7 @@ import { useState } from "react";
 import Reveal from "@/components/fx/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ActionButton from "@/components/ui/ActionButton";
-import { FAQ, PLANS, SITE, purchaseMailto } from "@/lib/content";
+import { FAQ, SITE, purchaseMailto } from "@/lib/content";
 
 export default function Contact() {
   const [open, setOpen] = useState<number | null>(0);
@@ -133,7 +133,7 @@ export default function Contact() {
                     {state === "loading" ? "Sending" : "Send message"}
                   </ActionButton>
                   <ActionButton
-                    href={purchaseMailto({ planName: PLANS[1].name, amountUsd: PLANS[1].priceUsd })}
+                    href={purchaseMailto({ planName: "Your website", amountUsd: 100 })}
                     external
                     variant="ghost"
                     event={{ name: "purchase_click", label: "contact_purchase" }}

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/fx/Reveal";
 import EmberField from "@/components/fx/EmberField";
@@ -55,6 +56,17 @@ export default function BlogIndexPage() {
               <span className="font-mono text-[0.6rem] uppercase tracking-[0.24em] text-ember-300/75">
                 {featured.tag} · {formatDate(featured.date)} · {featured.readMinutes} min read
               </span>
+              {featured.image ? (
+                <div className="relative mt-6 aspect-[16/7] overflow-hidden rounded-2xl border border-royal-300/10">
+                  <Image
+                    src={featured.image}
+                    alt={featured.imageAlt ?? featured.title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 1180px"
+                    className="object-cover"
+                  />
+                </div>
+              ) : null}
               <h2 className="font-display mt-5 max-w-3xl text-[clamp(1.5rem,3vw,2.2rem)] font-semibold leading-tight text-bone">
                 {featured.title}
               </h2>
@@ -78,6 +90,17 @@ export default function BlogIndexPage() {
                   <span className="font-mono text-[0.56rem] uppercase tracking-[0.22em] text-ember-300/70">
                     {post.tag}
                   </span>
+                  {post.image ? (
+                    <div className="relative mt-4 aspect-[16/6] overflow-hidden rounded-xl border border-royal-300/10">
+                      <Image
+                        src={post.image}
+                        alt={post.imageAlt ?? post.title}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  ) : null}
                   <h2 className="font-display mt-4 text-[1.25rem] font-semibold leading-snug text-bone">
                     {post.title}
                   </h2>

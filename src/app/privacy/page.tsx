@@ -105,6 +105,23 @@ export default function PrivacyPage() {
 
           <div>
             <h2 className="font-display text-[1.4rem] font-semibold tracking-tight text-bone">
+              Photos, videos, and other materials you send us
+            </h2>
+            <p className="mt-4">
+              To build your website and your free promo video, you may send us photos, video clips,
+              logos, menus, price lists, or notes. We use these materials for one purpose only:
+              building your website and your video. We never sell them, never use them in anyone
+              else&apos;s website or video, and never publish them outside your own project.
+            </p>
+            <p className="mt-4">
+              After your project is delivered, we remove your materials from our working storage,
+              keeping only what is part of the website we handed over to you. You can ask us to
+              delete working copies at any time.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="font-display text-[1.4rem] font-semibold tracking-tight text-bone">
               Data sharing
             </h2>
             <p className="mt-4">

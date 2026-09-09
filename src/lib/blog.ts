@@ -5,6 +5,9 @@ export type BlogPost = {
   date: string;
   readMinutes: number;
   tag: string;
+  /** Optional illustration shown on the blog cards and at the top of the article. */
+  image?: string;
+  imageAlt?: string;
   /** Rendered as simple sections: heading + paragraphs. */
   sections: { heading: string; paragraphs: string[] }[];
 };
@@ -18,6 +21,9 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "2026-08-12",
     readMinutes: 4,
     tag: "Design basics",
+    image: "/media/blog-professional-site.svg",
+    imageAlt:
+      "Illustration of a clean business homepage with a clear headline, one button, and real photos",
     sections: [
       {
         heading: "First impressions are made in about 3 seconds",
@@ -53,6 +59,9 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "2026-08-24",
     readMinutes: 5,
     tag: "Ownership",
+    image: "/media/blog-own-your-site.svg",
+    imageAlt:
+      "Illustration of a website folder being handed from one person to another, with a key on it",
     sections: [
       {
         heading: "The quiet trap of website rentals",
@@ -143,6 +152,141 @@ export const BLOG_POSTS: BlogPost[] = [
         paragraphs: [
           "A privacy-focused site loads faster (fewer scripts), avoids consent-popup clutter in many cases, and sends a quiet signal to visitors that you treat them with respect.",
           "For most small businesses this is a competitive advantage hiding in plain sight: you're not doing anything creepy, and you can say so plainly. If you'd like that on your side, it's included in every package — including the $100 beta ones.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "send-us-your-photos-and-notes",
+    title: "Send us your photos, videos, and notes — that's all we need",
+    description:
+      "You don't need professional photos or polished writing to get a website. Here's what to send us, and what we do with it.",
+    date: "2026-09-06",
+    readMinutes: 4,
+    tag: "How we work",
+    image: "/media/send-what-you-have.svg",
+    imageAlt:
+      "Illustration of phone photos, notes and a rough video going in, and a finished website plus promo video coming out",
+    sections: [
+      {
+        heading: "The blank-page problem",
+        paragraphs: [
+          "A lot of businesses put off getting a website for the same reason: they think they need to have everything ready first. Professional photos. Polished text. A logo. A video. So the project sits on the to-do list for months.",
+          "Here's the truth: everything on that list is our job, not yours. You already know your business — that's the only ingredient that has to come from you.",
+        ],
+      },
+      {
+        heading: "What to send us",
+        paragraphs: [
+          "Anything, honestly. In practice these are the things people send:",
+          "• Photos from your phone — your work, your shop, your van, your products. Slightly dark or slightly blurry is fine; we tidy them up.",
+          "• Video clips, however rough. A shaky 20-second clip of you doing the job is perfect raw material.",
+          "• A menu, price list, or old leaflet. Even a photo of a whiteboard.",
+          "• A few sentences about what you do and who buys from you. Voice notes and bullet points count.",
+          "• Nothing at all — just tell us what your business does in your own words and we'll plan the rest with you.",
+        ],
+      },
+      {
+        heading: "What we do with it",
+        paragraphs: [
+          "We organise your materials, write every word on the site, source sharp extra images where yours aren't enough, and design the pages around what your customers need to see first.",
+          "Then we make your promo video: your photos and clips cut together with clean text, music, and smooth movement. You get a copy to post on social media or send to customers — it's included with the website at no extra cost.",
+          "Your materials are used for your project only. We never reuse a client's photos or video anywhere else, and working copies are removed after your site is delivered.",
+        ],
+      },
+      {
+        heading: "How to start",
+        paragraphs: [
+          "Email us what you have — attachments welcome, messy is fine. Within one business day you'll get a simple plan and a start date, and about two weeks later you have a finished website and a video, with the code delivered to your GitHub.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "your-website-should-come-with-a-video",
+    title: "Your website should come with a video — so ours do",
+    description:
+      "A short video sells better than any block of text. Here's why every website we build now includes a promo video at no extra cost.",
+    date: "2026-09-07",
+    readMinutes: 4,
+    tag: "Free video",
+    image: "/media/free-promo-video.svg",
+    imageAlt:
+      "Illustration of a promo video for a small business, with music and captions, playing inside a video frame",
+    sections: [
+      {
+        heading: "People watch before they read",
+        paragraphs: [
+          "Give a visitor a page of text and a 30-second video about the same business, and most will watch the video first. Video shows the work, the premises, the person — instantly, and in a way text has to work hard to match.",
+          "A good promo video doesn't need actors or a film crew. For a small business, the formula is simple: real photos and clips of your work, a few words of on-screen text, music, and a clear ending that tells people how to contact you.",
+        ],
+      },
+      {
+        heading: "Why we include one free",
+        paragraphs: [
+          "We started making these videos for clients because the raw material was already there — everyone has photos and clips on their phone. It felt wrong to charge extra for assembling something we already had the pieces for.",
+          "So we made it part of the package. Every website we build for $100 includes a promo video made from your photos and clips. It plays on your website, and you get a copy to post on social media, embed in your Google profile, or send to customers.",
+          "You also own it outright, like the website — no watermarks, no licensing traps, no monthly fee to keep using it.",
+        ],
+      },
+      {
+        heading: "What makes a small-business video work",
+        paragraphs: [
+          "• Short. Thirty seconds beats three minutes. Show, don't explain.",
+          "• Real. Phone footage of actual work builds more trust than polished stock footage.",
+          "• One message. We do X, here's proof, and here's how to contact us — resist the urge to say everything.",
+          "• A clear end frame. Your name, what you do, and one way to contact you, held on screen long enough to note down.",
+        ],
+      },
+      {
+        heading: "What we need from you",
+        paragraphs: [
+          "Whatever you have — that's genuinely it. Photos from your phone, a rough clip or two, and a sentence about what your business does. If you have nothing yet, we plan the shots together and you film them in an afternoon.",
+          "If that sounds useful, our $100 beta package includes the full website and the video. Send us what you have and we'll take it from there.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "how-to-choose-a-website-price",
+    title: "Website prices explained: what's cheap, what's fair, what's a trap",
+    description:
+      "Free, $100, $5,000 — website quotes are all over the place. Here's what you actually get at each price, and how not to overpay.",
+    date: "2026-09-08",
+    readMinutes: 6,
+    tag: "Pricing",
+    sections: [
+      {
+        heading: "Why the quotes vary so much",
+        paragraphs: [
+          "Ask three web companies for a price and you'll get three wildly different numbers. That's because \"a website\" can mean anything from a one-page online card to a custom-built online store — and because some companies sell ongoing management, not just the build.",
+          "The price usually reflects three things: how much is custom-made, who's writing the words, and whether you're buying the site or renting it.",
+        ],
+      },
+      {
+        heading: "The three price bands",
+        paragraphs: [
+          "• Free or near-free (DIY builders). You do all the work: design, text, photos, settings. It can work for tiny projects, but many people stall halfway and the site never launches. Your time is the hidden cost.",
+          "• Low flat fee (what we charge: $100). Someone else does the work — design, writing, images, even a promo video — and you get the finished files. During beta we're building our portfolio, which is why the price is this low.",
+          "• The thousands band (agencies). Custom everything, project managers, weeks of meetings. Right for complex online shops and booking systems; heavy overkill for most small businesses.",
+        ],
+      },
+      {
+        heading: "The trap: monthly fees for a site you never own",
+        paragraphs: [
+          "The most expensive website is rarely the one with the biggest price tag — it's the $40-a-month one you pay for five years and can never leave. That's $2,400 for a site you can't download, can't move, and can't hand to another developer.",
+          "Before you sign anything, ask one question: \"Can I download the finished files and take them anywhere?\" If the answer is no, you're not buying a website — you're renting one, indefinitely.",
+        ],
+      },
+      {
+        heading: "Five questions that reveal a fair quote",
+        paragraphs: [
+          "1. Is this a one-time price or are there monthly fees after launch?",
+          "2. Do I own the finished site, and can I prove it by downloading the files?",
+          "3. Who writes the text, and what happens if I don't have photos?",
+          "4. Is anything extra likely to be suggested later — and what will it cost?",
+          "5. How long until launch, and what happens if I want changes after?",
+          "A fair deal answers all five plainly. That's the standard we hold ourselves to: $100 once, you own it, we write the words and make the video, unlimited small changes for 30 days after launch.",
         ],
       },
     ],

@@ -1,8 +1,8 @@
 export const SITE = {
   name: "Orr Technologies",
   legalName: "Orr Technologies",
-  domain: "orrtechnologies.netlify.app",
-  url: "https://orrtechnologies.netlify.app",
+  domain: "orrtechnologies.vercel.app",
+  url: "https://orrtechnologies.vercel.app",
   email: "service@orrbiologicals.com",
   emailDisplay: "service@orrbiologicals.com",
   tagline:
@@ -81,7 +81,9 @@ export const PLANS: PlanSeed[] = [
     features: [
       "Up to 5 pages — home, services, about, pricing, contact, or just one",
       "Custom design matched to your colours and logo",
-      "Your text and photos placed for you — we help write the words",
+      "A free promo video for your business, made by us",
+      "Send whatever you have — photos, videos, a menu, or just notes",
+      "Your text written for you — no writing skills needed",
       "Contact form that emails you directly",
       "Blog set up so you can post updates yourself",
       "Set up so customers can find you on Google",
@@ -120,6 +122,20 @@ export const CAPABILITIES = [
     title: "No creepy tracking",
     body: "We don't bolt on advertising trackers or data-harvesting scripts. Your visitors' information stays between you and them — which also keeps the site fast and legal in every country.",
     points: ["No ad trackers", "No selling visitor data", "Simple, privacy-respecting analytics if you want them"],
+  },
+  {
+    id: "video",
+    kicker: "05 — Free promo video",
+    title: "A video for your business, free",
+    body: "Every website includes a short promo video we make for you — built from your photos and clips, with clean text and music. It plays on your site and you can post it anywhere: social media, Google, messages to customers.",
+    points: ["Made from your photos and clips", "Ready to post on social media", "Included at no extra cost"],
+  },
+  {
+    id: "bring-anything",
+    kicker: "06 — You bring what you have",
+    title: "Send us anything, we'll do the rest",
+    body: "You don't need to prepare anything special. Photos from your phone, a video you already made, a price list, or a few rough notes — whatever you have is enough. We organise it, write the words, and build the full website around it.",
+    points: ["Phone photos are fine", "We write all the text for you", "Got nothing ready? We'll plan it together"],
   },
 ];
 
@@ -223,6 +239,14 @@ export const TRUST = [
     body: "$100 flat during beta. That's the whole price — no hourly billing, no surprise invoices, no mandatory monthly plan. Optional extras are quoted up front and you can always say no.",
   },
   {
+    title: "Free promo video included",
+    body: "Every website comes with a short promo video for your business, made by us from your photos and clips. It's included in the $100 — never an add-on bill.",
+  },
+  {
+    title: "You don't need anything ready",
+    body: "Send whatever you have — photos, an old leaflet, a price list, or a few ideas in an email. We organise it, write the text, and build the full website for you.",
+  },
+  {
     title: "Pay in Bitcoin",
     body: "One payment, in Bitcoin, when the work starts. No card fees, no subscriptions, no auto-renewals. We email you the exact amount and address before you send anything.",
   },
@@ -231,7 +255,15 @@ export const TRUST = [
 export const FAQ = [
   {
     q: "What do I actually get for $100?",
-    a: "A finished website, built for you: designed, written, tested on phones and computers, and put online. The complete code is delivered to your own GitHub account. One package, one price — $100 during beta.",
+    a: "A finished website, built for you: designed, written, tested on phones and computers, and put online — plus a free promo video for your business. The complete code is delivered to your own GitHub account. One package, one price — $100 during beta.",
+  },
+  {
+    q: "What if I don't have any photos or text ready?",
+    a: "That's normal, and it's fine. Send whatever you have — phone photos, a price list, an old advert, or just a few sentences about what you do. We write all the website text for you and can use high-quality stock images where needed. You don't need anything prepared before you contact us.",
+  },
+  {
+    q: "How does the free promo video work?",
+    a: "Once your website is nearly done, we build a short video from your photos and video clips — with clean text, smooth movement, and music. It plays on your website, and you also get a copy to post on social media or send to customers. It's included with every website at no extra cost.",
   },
   {
     q: "Do I really own the website?",
@@ -266,6 +298,7 @@ export const FAQ = [
 export const NAV_LINKS = [
   { href: "/#capabilities", label: "What you get" },
   { href: "/#work", label: "Work" },
+  { href: "/#media", label: "Free video" },
   { href: "/#pricing", label: "Pricing" },
   { href: "/blog", label: "Blog" },
   { href: "/#contact", label: "Contact" },
@@ -275,6 +308,27 @@ export const NAV_LINKS = [
 export const STATS = [
   { value: "$100", label: "flat price during beta" },
   { value: "100%", label: "code you own" },
-  { value: "GitHub", label: "where your site is delivered" },
+  { value: "Free", label: "promo video with every site" },
   { value: "BTC", label: "how you pay — once" },
 ];
+
+/** The "send us whatever you have" section: what customers can hand over, and what we give back. */
+export const MEDIA_OFFER = {
+  kicker: "Free video · full website",
+  title: "You give us what you have. We make the video and build the whole site.",
+  body: "Most people think they need polished photos, professional writing, and a video before they can get a website. You don't. Send us whatever you have — even a few notes typed on your phone — and we turn it into a complete website plus a promo video for your business, at no extra cost.",
+  youHave: [
+    "Photos from your phone — slightly blurry is fine, we tidy them up",
+    "A video you already filmed, however rough",
+    "A menu, price list, or old leaflet",
+    "Just a few sentences about what you do",
+    "Nothing at all yet — we'll plan it together",
+  ],
+  weMake: [
+    "A complete website, written and designed for you",
+    "A free promo video built from your photos and clips",
+    "Clean text that explains your business clearly",
+    "Sharp images throughout — sourced by us where needed",
+    "Everything delivered to your GitHub, owned by you",
+  ],
+};

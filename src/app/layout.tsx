@@ -13,17 +13,18 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: "Orr Technologies — $100 flat websites, you own the code",
+    default: "Orr Technologies — $100 websites with a free promo video",
     template: "%s · Orr Technologies",
   },
   description:
-    "Fast, modern websites for small and growing businesses. $100 flat during beta — you own the code, it's delivered to your own GitHub, and it's private by default. Pay once in Bitcoin.",
+    "Complete websites for small businesses at $100 flat during beta — plus a free promo video made from your photos and clips. You own the code, it's delivered to your own GitHub, and it's private by default. Pay once in Bitcoin.",
   applicationName: "Orr Technologies",
   keywords: [
     "affordable website design",
     "$100 website",
     "small business website",
     "you own your website",
+    "free promo video",
     "privacy focused website",
     "pay in bitcoin",
     "website design blog",
@@ -32,16 +33,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    title: "Orr Technologies — big-business calibre, small-business invoice",
+    title: "Orr Technologies — a full website and a free promo video",
     description:
-      "$100 flat websites during beta. You own the code, it lives in your GitHub, and your visitors' privacy is respected. Paid in Bitcoin.",
+      "$100 flat websites during beta, with a free promo video made from your photos and clips. You own the code, it lives in your GitHub, and your visitors' privacy is respected. Paid in Bitcoin.",
     siteName: "Orr Technologies",
     images: [{ url: "/media/forge-hero.jpg", width: 1200, height: 630, alt: "Orr Technologies forge" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Orr Technologies — AI B2B website engineering",
-    description: "$100 flat websites during beta. You own the code. Private by default. Paid in Bitcoin.",
+    title: "Orr Technologies — $100 websites with a free promo video",
+    description: "$100 flat websites during beta. You own the code. Free promo video included. Private by default. Paid in Bitcoin.",
     images: ["/media/forge-hero.jpg"],
   },
   robots: { index: true, follow: true },

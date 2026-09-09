@@ -220,6 +220,8 @@ export default function Hero() {
         <div className="marquee-track gap-10">
           {[
             "You own the website",
+            "Free promo video included",
+            "Send us whatever you have",
             "Delivered to your GitHub",
             "Privacy focused",
             "No high costs",

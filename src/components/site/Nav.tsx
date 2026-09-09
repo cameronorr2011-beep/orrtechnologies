@@ -58,7 +58,7 @@ export default function Nav() {
                 Orr<span className="text-ember-300">Technologies</span>
               </span>
               <span className="block font-mono text-[0.58rem] uppercase tracking-[0.34em] text-bone/40">
-                AI Web Engineering
+                Websites · Free promo video
               </span>
             </span>
           </Link>

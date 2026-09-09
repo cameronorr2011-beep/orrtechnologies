@@ -53,24 +53,23 @@ export default function LiveSignal() {
   }, []);
 
   const cards = [
-    { label: "Studio compositions", value: stats.builds, suffix: "" },
-    { label: "Open briefs", value: stats.leads, suffix: "" },
+    { label: "Websites built here", value: stats.builds, suffix: "" },
+    { label: "Enquiries received", value: stats.leads, suffix: "" },
     { label: "Invoices issued", value: stats.orders, suffix: "" },
-    { label: "Dispatch list", value: stats.subscribers, suffix: "" },
+    { label: "Newsletter subscribers", value: stats.subscribers, suffix: "" },
   ];
 
   return (
     <section className="relative z-10 border-t border-royal-300/10 py-24 sm:py-28">
       <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-          <SectionHeading
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">            <SectionHeading
             kicker="Live signal"
             title={
               <>
-                The pipeline is <span className="text-ember-gradient">observable</span>, not promised
+                Real numbers, <span className="text-ember-gradient">not promises</span>
               </>
             }
-            body="This panel reads straight from the production database — compositions, briefs and invoices on this deployment, updating as they happen."
+            body="This panel reads straight from our database — websites built, enquiries and invoices here, updating as they happen."
           />
           <div className="flex items-center gap-3 rounded-full border border-royal-300/12 bg-royal-950/50 px-4 py-2">
             <span
@@ -102,12 +101,12 @@ export default function LiveSignal() {
           <Reveal delay={80}>
             <div className="glass h-full rounded-3xl p-7">
               <p className="font-mono text-[0.6rem] uppercase tracking-[0.28em] text-ember-300/75">
-                Recent compositions
+                Recent builds
               </p>
               <ul className="mt-5 space-y-3">
                 {stats.recentBuilds.length === 0 ? (
                   <li className="text-[0.88rem] text-bone/40">
-                    No compositions yet on this deployment — run one in the Studio and it lands here.
+                    Nothing here yet — new website projects will appear as they start.
                   </li>
                 ) : (
                   stats.recentBuilds.map((b, i) => (
@@ -129,7 +128,7 @@ export default function LiveSignal() {
           <Reveal delay={140}>
             <div className="glass h-full rounded-3xl p-7">
               <p className="font-mono text-[0.6rem] uppercase tracking-[0.28em] text-ember-300/75">
-                Event stream
+                Latest activity
               </p>
               <ul className="mt-5 space-y-3">
                 {stats.recentEvents.length === 0 ? (

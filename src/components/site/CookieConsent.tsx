@@ -56,8 +56,8 @@ export default function CookieConsent() {
     >
       <div className="pointer-events-auto flex w-full max-w-[720px] flex-col items-start gap-3 rounded-2xl border border-royal-300/20 bg-void/95 p-4 shadow-[0_18px_50px_rgba(0,0,0,0.6)] backdrop-blur-xl sm:flex-row sm:items-center sm:gap-4 sm:p-5">
         <p className="flex-1 text-[0.85rem] leading-relaxed text-bone/70">
-          We use strictly necessary storage to remember this choice. No ads, no trackers. Optional
-          local preferences need your OK — see our{" "}
+          This banner remembers your choice with one small entry in your browser — that is all it
+          stores. No ads, no trackers. See our{" "}
           <a href="/privacy" className="text-ember-200 underline underline-offset-4">
             privacy policy
           </a>{" "}

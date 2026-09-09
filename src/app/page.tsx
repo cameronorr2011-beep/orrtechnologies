@@ -1,6 +1,7 @@
 import Hero from "@/components/sections/Hero";
 import Capabilities from "@/components/sections/Capabilities";
 import Work from "@/components/sections/Work";
+import MediaOffer from "@/components/sections/MediaOffer";
 import SigilBand from "@/components/sections/SigilBand";
 import Voices from "@/components/sections/Voices";
 import Process from "@/components/sections/Process";
@@ -59,6 +60,7 @@ export default async function HomePage() {
       <Hero />
       <Capabilities />
       <Work />
+      <MediaOffer />
       <SigilBand />
       <Process />
       <Voices />

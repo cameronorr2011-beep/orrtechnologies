@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/fx/Reveal";
@@ -78,6 +79,20 @@ export default async function BlogPostPage({
           <Reveal delay={180}>
             <p className="mt-6 text-[1.08rem] leading-relaxed text-bone/60">{post.description}</p>
           </Reveal>
+          {post.image ? (
+            <Reveal delay={220}>
+              <div className="relative mt-10 aspect-[16/7] overflow-hidden rounded-3xl border border-royal-300/10">
+                <Image
+                  src={post.image}
+                  alt={post.imageAlt ?? post.title}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 760px"
+                  className="object-cover"
+                />
+              </div>
+            </Reveal>
+          ) : null}
 
           <div className="mt-12 space-y-12">
             {post.sections.map((section, si) => (

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Illustration of sending whatever you have: phone photos, notes and rough video going in, and a finished website plus promo video coming out">
+  <defs>
+    <linearGradient id="sw-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#140b1e"/>
+      <stop offset="1" stop-color="#070510"/>
+    </linearGradient>
+    <linearGradient id="sw-ember" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#E2762F"/>
+      <stop offset="1" stop-color="#FFD9A0"/>
+    </linearGradient>
+    <linearGradient id="sw-royal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5B3AA8"/>
+      <stop offset="1" stop-color="#7C5AD6"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" rx="24" fill="url(#sw-bg)"/>
+  <circle cx="120" cy="90" r="160" fill="#5B3AA8" opacity="0.10"/>
+  <circle cx="700" cy="430" r="170" fill="#E2762F" opacity="0.08"/>
+
+  <!-- LEFT: what you send -->
+  <g>
+    <text x="150" y="72" font-family="monospace" font-size="12" letter-spacing="3" fill="#FFD9A0" opacity="0.8">YOU SEND</text>
+    <!-- phone photo -->
+    <rect x="70" y="95" width="88" height="150" rx="14" fill="#160a20" stroke="#7C5AD6" stroke-opacity="0.55" stroke-width="1.5"/>
+    <rect x="80" y="112" width="68" height="86" rx="6" fill="#2a1533"/>
+    <circle cx="98" cy="134" r="9" fill="#FFD9A0" opacity="0.7"/>
+    <path d="M80 190l22-24 16 14 18-22 12 12v18z" fill="#5B3AA8" opacity="0.7"/>
+    <line x1="92" y1="214" x2="136" y2="214" stroke="#ffffff" stroke-opacity="0.25" stroke-width="4" stroke-linecap="round"/>
+    <line x1="102" y1="228" x2="126" y2="228" stroke="#ffffff" stroke-opacity="0.18" stroke-width="4" stroke-linecap="round"/>
+    <!-- notes -->
+    <rect x="86" y="272" width="150" height="104" rx="12" fill="#160a20" stroke="#7C5AD6" stroke-opacity="0.45" stroke-width="1.5" transform="rotate(-4 161 324)"/>
+    <line x1="104" y1="296" x2="216" y2="292" stroke="#FFD9A0" stroke-opacity="0.55" stroke-width="4" stroke-linecap="round" transform="rotate(-4 161 324)"/>
+    <line x1="104" y1="316" x2="206" y2="312" stroke="#ffffff" stroke-opacity="0.3" stroke-width="4" stroke-linecap="round" transform="rotate(-4 161 324)"/>
+    <line x1="104" y1="336" x2="212" y2="332" stroke="#ffffff" stroke-opacity="0.3" stroke-width="4" stroke-linecap="round" transform="rotate(-4 161 324)"/>
+    <line x1="104" y1="356" x2="176" y2="353" stroke="#ffffff" stroke-opacity="0.2" stroke-width="4" stroke-linecap="round" transform="rotate(-4 161 324)"/>
+    <!-- rough clip -->
+    <rect x="118" y="392" width="118" height="76" rx="10" fill="#160a20" stroke="#E2762F" stroke-opacity="0.5" stroke-width="1.5"/>
+    <circle cx="177" cy="430" r="20" fill="#070510" stroke="#E2762F" stroke-width="2"/>
+    <path d="M170 419l22 11-22 11z" fill="#E2762F"/>
+  </g>
+
+  <!-- CENTER: arrow through a polish node -->
+  <g>
+    <line x1="262" y1="250" x2="510" y2="250" stroke="url(#sw-ember)" stroke-width="3" stroke-dasharray="10 8" stroke-linecap="round"/>
+    <path d="M510 236l30 14-30 14z" fill="#E2762F"/>
+    <circle cx="386" cy="250" r="34" fill="#070510" stroke="#7C5AD6" stroke-opacity="0.6" stroke-width="1.5"/>
+    <path d="M370 250c5-12 27-12 32 0-5 12-27 12-32 0z" fill="none" stroke="#FFD9A0" stroke-width="2.2"/>
+    <circle cx="386" cy="250" r="4" fill="#FFD9A0"/>
+    <text x="386" y="308" text-anchor="middle" font-family="monospace" font-size="11" letter-spacing="2" fill="#ffffff" opacity="0.5">WE DO THE WORK</text>
+  </g>
+
+  <!-- RIGHT: what you get -->
+  <g>
+    <text x="655" y="72" font-family="monospace" font-size="12" letter-spacing="3" fill="#FFD9A0" opacity="0.8">YOU GET</text>
+    <!-- finished website -->
+    <rect x="560" y="95" width="190" height="140" rx="12" fill="#160a20" stroke="#E2762F" stroke-opacity="0.55" stroke-width="1.5"/>
+    <rect x="560" y="95" width="190" height="26" rx="12" fill="#1c1128"/>
+    <circle cx="576" cy="108" r="3.5" fill="#E2762F"/>
+    <circle cx="588" cy="108" r="3.5" fill="#FFD9A0" opacity="0.7"/>
+    <circle cx="600" cy="108" r="3.5" fill="#7C5AD6"/>
+    <rect x="576" y="136" width="92" height="9" rx="4.5" fill="#FFD9A0" opacity="0.9"/>
+    <rect x="576" y="154" width="140" height="6" rx="3" fill="#ffffff" opacity="0.35"/>
+    <rect x="576" y="168" width="120" height="6" rx="3" fill="#ffffff" opacity="0.28"/>
+    <rect x="576" y="188" width="56" height="18" rx="9" fill="#E2762F"/>
+    <rect x="584" y="194" width="40" height="6" rx="3" fill="#070510" opacity="0.6"/>
+    <rect x="646" y="136" width="88" height="70" rx="8" fill="#2a1533"/>
+    <path d="M646 196l24-26 18 15 20-24 26 20v15z" fill="#5B3AA8" opacity="0.8"/>
+    <!-- promo video card -->
+    <rect x="588" y="262" width="150" height="92" rx="12" fill="#160a20" stroke="#E2762F" stroke-opacity="0.6" stroke-width="1.5"/>
+    <circle cx="663" cy="302" r="22" fill="#070510" stroke="url(#sw-ember)" stroke-width="2"/>
+    <path d="M655 290l26 12-26 12z" fill="url(#sw-ember)"/>
+    <rect x="614" y="334" width="98" height="6" rx="3" fill="#ffffff" opacity="0.3"/>
+    <g>
+      <rect x="620" y="368" width="86" height="26" rx="13" fill="#5B3AA8" fill-opacity="0.4"/>
+      <text x="663" y="385" text-anchor="middle" font-family="monospace" font-size="11" letter-spacing="1.5" fill="#FFD9A0">FREE</text>
+    </g>
+  </g>
+
+  <text x="400" y="470" text-anchor="middle" font-family="Georgia, serif" font-size="19" fill="#F4EEE4" opacity="0.9">Send whatever you have — get a full website and a promo video back</text>
+</svg>

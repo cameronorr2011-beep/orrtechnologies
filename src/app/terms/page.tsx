@@ -54,8 +54,9 @@ export default function TermsPage() {
               <li>Work begins after the invoice is issued and payment is received.</li>
               <li>Payment is one-time, in Bitcoin. There are no subscriptions or recurring fees.</li>
               <li>
-                Bitcoin payments are final once confirmed on-chain; we cannot reverse a confirmed
-                transaction, so we make sure you are happy with the scope before you send anything.
+                Bitcoin payments are final once confirmed on the network; we cannot reverse a
+                confirmed payment, so we make sure you are happy with the scope before you send
+                anything.
               </li>
             </ul>
           </div>
@@ -69,6 +70,19 @@ export default function TermsPage() {
               you: it is your website and your intellectual property. Orr Technologies retains the
               right to reuse its own general-purpose tooling, components, and know-how. This website
               itself is open source under the MIT License — see the LICENSE file in the repository.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="font-display text-[1.4rem] font-semibold tracking-tight text-bone">
+              Materials you send us
+            </h2>
+            <p className="mt-4">
+              You may send us photos, video clips, text, or other materials for your website and
+              promo video. We only use those materials for your project, we never sell them or use
+              them in anyone else&apos;s website, and we remove them from our working storage when
+              your project is delivered. If we source extra images or music for you, we use
+              appropriately licensed material.
             </p>
           </div>
 

@@ -126,7 +126,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="font-mono text-[0.62rem] uppercase tracking-[0.3em] text-bone/40">Settlement & contact</h3>
+          <h3 className="font-mono text-[0.62rem] uppercase tracking-[0.3em] text-bone/40">Payment & contact</h3>
           <ul className="mt-5 space-y-4 text-[0.9rem] text-bone/60">
             <li>
               <span className="block text-bone/35">Purchase & invoicing</span>
@@ -139,8 +139,8 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <span className="block text-bone/35">Rail</span>
-              <span className="text-bone/80">Bitcoin mainnet only</span>
+              <span className="block text-bone/35">Payment</span>
+              <span className="text-bone/80">Bitcoin, one payment</span>
             </li>
             <li>
               <span className="block text-bone/35">Response window</span>
@@ -148,7 +148,7 @@ export default function Footer() {
             </li>
             <li>
               <span className="block text-bone/35">Ownership</span>
-              <span className="text-bone/80">Repo, IP & domains transfer to you</span>
+              <span className="text-bone/80">Code and content transfer to you</span>
             </li>
           </ul>
         </div>

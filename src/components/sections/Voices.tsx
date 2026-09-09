@@ -14,10 +14,10 @@ const VOICES = [
   },
   {
     quote:
-      "Our buyers are hospital procurement teams. The documentation structure they shipped is the first one our reviewers did not push back on.",
+      "Our buyers are hospital procurement teams. The document layout they shipped is the first one our reviewers did not push back on.",
     name: "Priya Raghunathan",
     role: "Head of Commercial, Veridian Diagnostics",
-    stat: "WCAG 2.2 AA audited",
+    stat: "Accessibility checked",
   },
   {
     quote:
@@ -28,7 +28,7 @@ const VOICES = [
   },
   {
     quote:
-      "The shader work is the reason people assume we spent ten times what we did. Nobody believes it was three weeks.",
+      "The animations are the reason people assume we spent ten times what we did. Nobody believes it was three weeks.",
     name: "Tomas Bergström",
     role: "Founder, Nordic Seed Works",
     stat: "Live in 19 days",

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Illustration of a promo video being made for a small business: a video frame with a play button, music, and captions">
+  <defs>
+    <linearGradient id="fv-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#140b1e"/>
+      <stop offset="1" stop-color="#070510"/>
+    </linearGradient>
+    <linearGradient id="fv-screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a1533"/>
+      <stop offset="1" stop-color="#160a20"/>
+    </linearGradient>
+    <linearGradient id="fv-ember" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#E2762F"/>
+      <stop offset="1" stop-color="#FFD9A0"/>
+    </linearGradient>
+    <linearGradient id="fv-royal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5B3AA8"/>
+      <stop offset="1" stop-color="#7C5AD6"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" rx="24" fill="url(#fv-bg)"/>
+  <circle cx="680" cy="80" r="180" fill="#5B3AA8" opacity="0.10"/>
+  <circle cx="110" cy="440" r="150" fill="#E2762F" opacity="0.08"/>
+
+  <!-- video frame -->
+  <rect x="120" y="90" width="560" height="320" rx="20" fill="url(#fv-screen)" stroke="#E2762F" stroke-opacity="0.35" stroke-width="1.5"/>
+  <!-- skyline inside the frame -->
+  <g opacity="0.55">
+    <rect x="170" y="270" width="46" height="120" rx="3" fill="#7C5AD6" opacity="0.5"/>
+    <rect x="226" y="230" width="58" height="160" rx="3" fill="#5B3AA8" opacity="0.6"/>
+    <rect x="294" y="300" width="40" height="90" rx="3" fill="#7C5AD6" opacity="0.45"/>
+    <rect x="470" y="250" width="52" height="140" rx="3" fill="#5B3AA8" opacity="0.55"/>
+    <rect x="532" y="290" width="44" height="100" rx="3" fill="#7C5AD6" opacity="0.5"/>
+    <rect x="586" y="240" width="60" height="150" rx="3" fill="#5B3AA8" opacity="0.65"/>
+    <circle cx="420" cy="160" r="34" fill="#FFD9A0" opacity="0.5"/>
+  </g>
+  <!-- play button -->
+  <circle cx="400" cy="250" r="52" fill="#070510" fill-opacity="0.55" stroke="url(#fv-ember)" stroke-width="2.5"/>
+  <path d="M384 224l48 26-48 26z" fill="url(#fv-ember)"/>
+  <!-- progress bar -->
+  <rect x="160" y="376" width="480" height="6" rx="3" fill="#ffffff" opacity="0.12"/>
+  <rect x="160" y="376" width="300" height="6" rx="3" fill="url(#fv-ember)"/>
+  <circle cx="460" cy="379" r="7" fill="#FFD9A0"/>
+  <!-- timestamps -->
+  <text x="160" y="402" font-family="monospace" font-size="13" fill="#ffffff" opacity="0.45">0:12</text>
+  <text x="608" y="402" font-family="monospace" font-size="13" fill="#ffffff" opacity="0.45">0:30</text>
+
+  <!-- music note chip -->
+  <g>
+    <rect x="140" y="112" width="118" height="38" rx="19" fill="#5B3AA8" fill-opacity="0.35" stroke="#7C5AD6" stroke-opacity="0.5"/>
+    <path d="M164 138v-16l14-4v16" fill="none" stroke="#FFD9A0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="161" cy="139" r="3.4" fill="#FFD9A0"/>
+    <circle cx="175" cy="135" r="3.4" fill="#FFD9A0"/>
+    <text x="188" y="137" font-family="monospace" font-size="12" fill="#ffffff" opacity="0.8">MUSIC</text>
+  </g>
+  <!-- captions chip -->
+  <g>
+    <rect x="486" y="112" width="160" height="38" rx="19" fill="#E2762F" fill-opacity="0.22" stroke="#E2762F" stroke-opacity="0.5"/>
+    <rect x="504" y="124" width="52" height="7" rx="3.5" fill="#FFD9A0" opacity="0.9"/>
+    <rect x="562" y="124" width="66" height="7" rx="3.5" fill="#ffffff" opacity="0.5"/>
+    <rect x="504" y="136" width="94" height="5" rx="2.5" fill="#ffffff" opacity="0.35"/>
+  </g>
+
+  <!-- caption text under frame -->
+  <text x="400" y="452" text-anchor="middle" font-family="Georgia, serif" font-size="19" fill="#F4EEE4" opacity="0.9">Your business, on film — made for you, free with every website</text>
+</svg>
