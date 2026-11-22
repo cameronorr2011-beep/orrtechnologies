@@ -13,7 +13,7 @@ import { SITE, purchaseMailto } from "@/lib/content";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Client console",
+  title: { absolute: "Client Console | Orr Technologies" },
   description: "Operational view of briefs, invoices, compositions and the event stream.",
   robots: { index: false, follow: false },
 };

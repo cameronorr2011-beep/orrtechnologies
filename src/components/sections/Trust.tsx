@@ -3,12 +3,12 @@
 import Reveal from "@/components/fx/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ActionButton from "@/components/ui/ActionButton";
-import { SITE, TRUST, purchaseMailto } from "@/lib/content";
+import { PAYMENT_METHODS, SITE, TRUST, purchaseMailto } from "@/lib/content";
 
 const RAIL = [
   { k: "01", t: "You email us", d: "Tell us about your business and what you need. We reply within one business day." },
-  { k: "02", t: "We send the invoice", d: "A Bitcoin amount and payment address, written down clearly for your order only." },
-  { k: "03", t: "You pay once", d: "You send the payment from your own wallet. That's the whole cost — $100 during beta." },
+  { k: "02", t: "We send the invoice", d: "A fixed amount and the details for the method you chose — crypto or gift cards." },
+  { k: "03", t: "You pay once", d: "You send crypto from your wallet, or the gift-card codes. That's the whole cost — $100." },
   { k: "04", t: "We build and hand over", d: "Your site goes live and the full code is delivered to your GitHub. It's yours." },
 ];
 
@@ -51,9 +51,18 @@ export default function Trust() {
             <Reveal delay={220}>
               <div className="mt-10 rounded-3xl border border-ember-200/15 bg-gradient-to-br from-royal-900/70 to-void p-7">
                 <p className="font-mono text-[0.6rem] uppercase tracking-[0.28em] text-ember-200/70">
-                  Paying in Bitcoin
+                  Paying your way
                 </p>
-                <p className="mt-3 font-mono text-[0.92rem] text-bone/85">{SITE.btcNetwork}</p>
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {PAYMENT_METHODS.map((method) => (
+                    <span
+                      key={method.id}
+                      className="rounded-full border border-royal-300/20 px-2.5 py-1 font-mono text-[0.55rem] uppercase tracking-[0.12em] text-bone/65"
+                    >
+                      {method.name}
+                    </span>
+                  ))}
+                </div>
                 <p className="mt-4 text-[0.88rem] leading-relaxed text-bone/50">{SITE.btcMemo}</p>
                 <div className="mt-6 flex flex-wrap gap-3">
                   <ActionButton

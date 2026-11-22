@@ -12,7 +12,7 @@ export default function Process() {
           kicker="How it works"
           title={
             <>
-              Four steps, <span className="text-ember-gradient">no jargon</span>
+              How we build your website <span className="text-ember-gradient">in four steps</span>
             </>
           }
           body="From your first email to owning your finished site, usually inside two weeks. You always know what's happening and what you get next."

@@ -1,15 +1,43 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import JsonLd from "@/components/seo/JsonLd";
+import { SITE } from "@/lib/content";
+import { DEFAULT_OG_IMAGE, breadcrumbSchema, webPageSchema } from "@/lib/seo";
+
+const DESCRIPTION =
+  "Terms for using the Orr Technologies website and buying a build: services, one-time crypto or gift-card payment, code ownership, client materials and liability.";
 
 export const metadata: Metadata = {
-  title: "Terms of Use",
-  description:
-    "Terms governing use of the Orr Technologies website: services, payment, ownership, licensing, and limitation of liability.",
+  title: { absolute: "Terms of Use | Orr Technologies" },
+  description: DESCRIPTION,
   alternates: { canonical: "/terms" },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/terms",
+    siteName: SITE.name,
+    title: "Terms of Use",
+    description: DESCRIPTION,
+    images: [DEFAULT_OG_IMAGE],
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function TermsPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      webPageSchema({ path: "/terms", name: "Terms of Use", description: DESCRIPTION }),
+      breadcrumbSchema([
+        { name: "Home", path: "/" },
+        { name: "Terms of Use", path: "/terms" },
+      ]),
+    ],
+  };
+
   return (
+    <>
+      <JsonLd data={jsonLd} />
     <section className="relative overflow-hidden pt-36 pb-24 sm:pt-44">
       <div className="absolute inset-0 z-0 opacity-50" aria-hidden="true">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-void/60 to-void" />
@@ -27,7 +55,7 @@ export default function TermsPage() {
 
         <div className="mt-12 space-y-10 text-[1rem] leading-relaxed text-bone/70">
           <p>
-            By using orrtechnologies.netlify.app you agree to these terms. If you do not agree,
+            By using {SITE.domain} you agree to these terms. If you do not agree,
             please don&apos;t use the site.
           </p>
 
@@ -37,7 +65,7 @@ export default function TermsPage() {
             </h2>
             <p className="mt-4">
               Orr Technologies builds websites for small businesses. During beta, a complete website
-              is offered at a flat price, paid once in Bitcoin. Details of what is included are on
+              is offered at a flat price, paid once in crypto or with gift cards. Details of what is included are on
               the{" "}
               <Link href="/pricing" className="text-ember-200 underline underline-offset-4">
                 pricing page
@@ -52,10 +80,13 @@ export default function TermsPage() {
             </h2>
             <ul className="mt-4 list-disc space-y-2 pl-6">
               <li>Work begins after the invoice is issued and payment is received.</li>
-              <li>Payment is one-time, in Bitcoin. There are no subscriptions or recurring fees.</li>
               <li>
-                Bitcoin payments are final once confirmed on the network; we cannot reverse a
-                confirmed payment, so we make sure you are happy with the scope before you send
+                Payment is one-time, in crypto or gift cards. There are no subscriptions or recurring
+                fees.
+              </li>
+              <li>
+                Crypto payments are final once confirmed on-chain, and gift-card codes are treated as
+                cash once checked. We cannot reverse either, so we agree the scope before you send
                 anything.
               </li>
             </ul>
@@ -159,5 +190,6 @@ export default function TermsPage() {
         </div>
       </div>
     </section>
+    </>
   );
 }

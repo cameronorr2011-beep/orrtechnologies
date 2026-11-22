@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Reveal from "@/components/fx/Reveal";
 import ActionButton from "@/components/ui/ActionButton";
-import { SITE, purchaseMailto } from "@/lib/content";
+import { PAYMENT_METHODS, SITE, purchaseMailto, type PaymentMethodId } from "@/lib/content";
 import type { PlanView } from "@/components/sections/PricingTable";
 import { trackEvent } from "@/lib/track";
 
@@ -17,22 +17,29 @@ type Invoice = {
   network: string;
   memo: string;
   contactEmail: string;
+  payment: {
+    id: PaymentMethodId;
+    name: string;
+    amount: string;
+    note: string;
+    accepted: string[];
+  };
 };
-
-const STEPS = [
-  "Send the request below — it opens an email thread with us.",
-  "We reply with the exact Bitcoin amount and a payment address for your order.",
-  "You pay from your own wallet. That's the whole cost: $100.",
-  "We start building. Your finished site is delivered to your GitHub.",
-];
 
 export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
   const plan = plans[0];
   const [form, setForm] = useState({ contactName: "", contactEmail: "", company: "", notes: "" });
+  const [methodId, setMethodId] = useState<PaymentMethodId>("bitcoin");
   const [invoice, setInvoice] = useState<Invoice | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [copied, setCopied] = useState("");
+
+  const method = PAYMENT_METHODS.find((m) => m.id === methodId) ?? PAYMENT_METHODS[0];
+  const invoiceMethod = invoice
+    ? PAYMENT_METHODS.find((m) => m.id === invoice.payment.id) ?? method
+    : method;
+  const steps = invoice ? invoiceMethod.steps : method.steps;
 
   const field =
     "w-full rounded-2xl border border-royal-300/15 bg-royal-950/60 px-5 py-3.5 text-[0.92rem] text-bone placeholder:text-bone/25 transition-colors focus:border-ember-300/55 focus:outline-none";
@@ -56,12 +63,16 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
       const res = await fetch("/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ planSlug: plan.slug, ...form }),
+        body: JSON.stringify({ planSlug: plan.slug, paymentMethod: methodId, ...form }),
       });
       const data = (await res.json()) as { ok?: boolean; invoice?: Invoice; error?: string };
       if (!res.ok || !data.invoice) throw new Error(data.error ?? "Could not open the invoice.");
       setInvoice(data.invoice);
-      trackEvent("order_opened", data.invoice.code, { plan: plan.slug, amountUsd: plan.priceUsd });
+      trackEvent("order_opened", data.invoice.code, {
+        plan: plan.slug,
+        amountUsd: plan.priceUsd,
+        method: data.invoice.payment.id,
+      });
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
@@ -75,11 +86,14 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
         planName: invoice.planName,
         invoiceCode: invoice.code,
         amountUsd: invoice.amountUsd,
+        payment: invoice.payment.name,
         company: form.company,
         name: form.contactName,
         notes: [
           form.notes,
-          `Indicative BTC amount at issue: ${invoice.btcAmount} BTC (rate $${invoice.rate.toLocaleString("en-US")}).`,
+          invoice.payment.id === "giftcard"
+            ? `Preferred payment: gift cards (${invoice.payment.accepted.join(", ")}).`
+            : `Preferred payment: ${invoice.payment.name}. Indicative BTC amount at issue: ${invoice.btcAmount} BTC (rate $${invoice.rate.toLocaleString("en-US")}).`,
         ]
           .filter(Boolean)
           .join("\n"),
@@ -87,6 +101,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
     : purchaseMailto({
         planName: plan?.name ?? "Website request",
         amountUsd: plan?.priceUsd,
+        payment: method.name,
         company: form.company,
         name: form.contactName,
         notes: form.notes,
@@ -113,12 +128,15 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
                 </div>
                 <div className="rounded-2xl border border-ember-200/20 bg-void/40 px-5 py-4 text-right">
                   <p className="font-mono text-[0.56rem] uppercase tracking-[0.22em] text-bone/40">
-                    Roughly, in Bitcoin
+                    {invoice.payment.id === "giftcard" ? "In gift cards" : "Roughly, in Bitcoin"}
                   </p>
-                  <p className="font-display mt-2 text-2xl text-ember-100">{invoice.btcAmount} BTC</p>
+                  <p className="font-display mt-2 text-2xl text-ember-100">
+                    {invoice.payment.id === "giftcard" ? `$${invoice.amountUsd}` : `${invoice.btcAmount} BTC`}
+                  </p>
                   <p className="mt-1 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-bone/35">
-                    {invoice.rateLive ? "today's rate" : "reference rate"} $
-                    {invoice.rate.toLocaleString("en-US")}
+                    {invoice.payment.id === "giftcard"
+                      ? "$25 / $50 / $100 cards"
+                      : `${invoice.rateLive ? "today's rate" : "reference rate"} $${invoice.rate.toLocaleString("en-US")}`}
                   </p>
                 </div>
               </div>
@@ -128,8 +146,23 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
                   <p className="font-mono text-[0.56rem] uppercase tracking-[0.22em] text-bone/40">
                     How you pay
                   </p>
-                  <p className="mt-2 text-[0.92rem] text-bone/80">{invoice.network}</p>
-                  <p className="mt-4 text-[0.84rem] leading-relaxed text-bone/50">{invoice.memo}</p>
+                  <p className="mt-2 text-[0.92rem] text-bone/80">{invoice.payment.name}</p>
+                  <p className="mt-1 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-ember-200/70">
+                    {invoice.payment.amount}
+                  </p>
+                  <p className="mt-4 text-[0.84rem] leading-relaxed text-bone/50">{invoice.payment.note}</p>
+                  {invoice.payment.accepted.length ? (
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {invoice.payment.accepted.map((card) => (
+                        <span
+                          key={card}
+                          className="rounded-full border border-royal-300/20 px-2.5 py-1 font-mono text-[0.52rem] uppercase tracking-[0.12em] text-bone/50"
+                        >
+                          {card}
+                        </span>
+                      ))}
+                    </div>
+                  ) : null}
                 </div>
                 <div className="rounded-2xl border border-royal-300/12 bg-void/40 p-6">
                   <p className="font-mono text-[0.56rem] uppercase tracking-[0.22em] text-bone/40">
@@ -150,8 +183,8 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
 
               <div className="mt-8 rounded-2xl border border-ember-200/20 bg-gradient-to-br from-ember-500/12 to-royal-700/20 p-7">
                 <p className="text-[0.95rem] leading-relaxed text-bone/80">
-                  Next step: send the email below. It includes your order code and the rough Bitcoin amount —
-                  we reply with the final amount and the payment address on the same thread.
+                  Next step: send the email below. It includes your order code and your chosen payment
+                  method — we reply with the final details on the same thread.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-3">
                   <ActionButton
@@ -163,7 +196,14 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
                   </ActionButton>
                   <ActionButton
                     variant="ghost"
-                    onClick={() => void copy(`${invoice.code} · ${invoice.amountUsd} USD · ${invoice.btcAmount} BTC`, "inv")}
+                    onClick={() =>
+                      void copy(
+                        `${invoice.code} · ${invoice.amountUsd} USD · ${invoice.payment.name}${
+                          invoice.payment.id === "giftcard" ? "" : ` · ${invoice.btcAmount} BTC`
+                        }`,
+                        "inv",
+                      )
+                    }
                     event={{ name: "copy_invoice", label: invoice.code }}
                   >
                     {copied === "inv" ? "Copied" : "Copy order details"}
@@ -183,11 +223,43 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
             </p>
 
             <p className="mt-4 text-[0.9rem] leading-relaxed text-bone/55">
-              One package, one price. Tell us about your business below and we&apos;ll email your Bitcoin
-              invoice.
+              One package, one price. Tell us about your business and how you&apos;d like to pay, and
+              we&apos;ll email your invoice.
             </p>
 
-            <div className="mt-7 space-y-3.5">
+            <div className="mt-6">
+              <p className="font-mono text-[0.56rem] uppercase tracking-[0.22em] text-bone/40">
+                How you&apos;ll pay
+              </p>
+              <div className="mt-3 grid gap-2 sm:grid-cols-3">
+                {PAYMENT_METHODS.map((option) => {
+                  const on = option.id === methodId;
+                  return (
+                    <button
+                      key={option.id}
+                      type="button"
+                      onClick={() => setMethodId(option.id)}
+                      aria-pressed={on}
+                      className={`rounded-2xl border px-4 py-3 text-left transition-all duration-300 ${
+                        on
+                          ? "border-ember-300/50 bg-ember-500/10"
+                          : "border-royal-300/12 bg-royal-950/40 hover:border-royal-300/25"
+                      }`}
+                    >
+                      <span className={`block text-[0.82rem] font-semibold ${on ? "text-bone" : "text-bone/65"}`}>
+                        {option.name}
+                      </span>
+                      <span className="mt-1 block font-mono text-[0.52rem] uppercase leading-relaxed tracking-[0.1em] text-bone/40">
+                        {option.short}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="mt-3 text-[0.82rem] leading-relaxed text-bone/45">{method.blurb}</p>
+            </div>
+
+            <div className="mt-6 space-y-3.5">
               <div className="grid gap-3.5 sm:grid-cols-2">
                 <input
                   required
@@ -230,7 +302,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
                 disabled={loading}
                 event={{ name: "checkout_submit", label: "website" }}
               >
-                {loading ? "Creating your order" : "Get my Bitcoin invoice"}
+                {loading ? "Creating your order" : "Get my payment details"}
               </ActionButton>
               <ActionButton
                 href={mailto}
@@ -245,8 +317,8 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
             {error ? <p className="mt-5 font-mono text-[0.7rem] leading-relaxed text-maple">{error}</p> : null}
 
             <p className="mt-6 border-t border-royal-300/10 pt-5 font-mono text-[0.62rem] uppercase leading-relaxed tracking-[0.14em] text-bone/35">
-              Asking for an invoice costs nothing and commits you to nothing. You only ever pay from your own
-              wallet, to an address created for your order.
+              Asking for an invoice costs nothing and commits you to nothing. Nothing is ever
+              auto-charged, and there are no subscriptions to cancel.
             </p>
           </form>
         </Reveal>
@@ -258,7 +330,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
                 How payment works
               </p>
               <ol className="mt-6 space-y-5">
-                {STEPS.map((s, i) => (
+                {steps.map((s, i) => (
                   <li key={s} className="flex gap-4">
                     <span className="font-mono text-[0.7rem] text-ember-300/70">
                       {String(i + 1).padStart(2, "0")}
@@ -273,15 +345,18 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
           <Reveal delay={150}>
             <div className="glass rounded-[1.75rem] p-8">
               <p className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-ember-300/75">
-                Why Bitcoin
+                Why pay this way
               </p>
               <p className="mt-5 text-[0.92rem] leading-relaxed text-bone/60">
-                Card companies add fees and can reverse payments months later. Bitcoin is one payment,
-                straight between us — which is part of how the price stays at $100.
+                {invoiceMethod.id === "giftcard"
+                  ? "Gift cards are the easiest route if you don't use crypto: buy them anywhere, send the codes after we issue your order code, and the total has to match the invoice exactly."
+                  : invoiceMethod.id === "crypto"
+                    ? "Ethereum and USDT settle in minutes and keep the payment direct, without a card company taking a cut or reversing it months later. We name the network on your invoice so nothing goes astray."
+                    : "Card companies add fees and can reverse payments months later. Bitcoin is one payment, straight between us — which is part of how the price stays at $100."}
               </p>
               <p className="mt-5 text-[0.92rem] leading-relaxed text-bone/60">
-                The amount is confirmed by email before you send anything. Nothing is ever auto-charged, and
-                there are no subscriptions to cancel.
+                The amount is confirmed by email before you send anything. Nothing is ever
+                auto-charged, and there are no subscriptions to cancel.
               </p>
             </div>
           </Reveal>

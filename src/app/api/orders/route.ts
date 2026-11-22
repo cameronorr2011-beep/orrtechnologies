@@ -4,7 +4,7 @@ import { db } from "@/db";
 import { orders } from "@/db/schema";
 import { createOrder, getPlans } from "@/db/queries";
 import { getBtcRate, invoiceCode, toBtc } from "@/lib/btc";
-import { SITE } from "@/lib/content";
+import { PAYMENT_METHODS, SITE } from "@/lib/content";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -14,6 +14,8 @@ export async function POST(request: Request) {
     const planSlug = String(body.planSlug ?? "").trim();
     const contactName = String(body.contactName ?? "").trim().slice(0, 120);
     const contactEmail = String(body.contactEmail ?? "").trim().toLowerCase().slice(0, 160);
+    const methodId = String(body.paymentMethod ?? "bitcoin");
+    const method = PAYMENT_METHODS.find((m) => m.id === methodId) ?? PAYMENT_METHODS[0];
 
     if (!planSlug || !contactName || !EMAIL.test(contactEmail)) {
       return NextResponse.json(
@@ -40,7 +42,9 @@ export async function POST(request: Request) {
       contactName,
       contactEmail,
       company: body.company ? String(body.company).slice(0, 160) : null,
-      notes: body.notes ? String(body.notes).slice(0, 2000) : null,
+      notes: [body.notes ? String(body.notes).slice(0, 1800) : null, `Payment method: ${method.name}`]
+        .filter(Boolean)
+        .join("\n"),
     });
 
     return NextResponse.json({
@@ -54,6 +58,13 @@ export async function POST(request: Request) {
         rateLive: live,
         network: SITE.btcNetwork,
         memo: SITE.btcMemo,
+        payment: {
+          id: method.id,
+          name: method.name,
+          amount: method.amount,
+          note: method.note,
+          accepted: method.accepted ?? [],
+        },
         createdAt: row?.createdAt ?? new Date(),
         contactEmail: contactEmail,
       },

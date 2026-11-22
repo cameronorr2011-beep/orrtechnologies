@@ -2,6 +2,10 @@ import type { NextConfig } from "next";
 import path from "node:path";
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
+  images: {
+    formats: ["image/avif", "image/webp"],
+  },
   // Pin the workspace root so Turbopack doesn't mis-detect it when parent
   // folders (e.g. OneDrive) also contain lockfiles.
   turbopack: {

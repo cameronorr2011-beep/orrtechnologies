@@ -91,7 +91,12 @@ export default function Footer() {
             ))}
             <li>
               <Link href="/checkout" className="ember-underline transition-colors hover:text-ember-200">
-                Bitcoin checkout
+                Checkout — crypto or gift cards
+              </Link>
+            </li>
+            <li>
+              <Link href="/studio/editor" className="ember-underline transition-colors hover:text-ember-200">
+                Orr Cut · video editor
               </Link>
             </li>
             <li>
@@ -140,7 +145,7 @@ export default function Footer() {
             </li>
             <li>
               <span className="block text-bone/35">Payment</span>
-              <span className="text-bone/80">Bitcoin, one payment</span>
+              <span className="text-bone/80">Bitcoin, crypto or gift cards</span>
             </li>
             <li>
               <span className="block text-bone/35">Response window</span>

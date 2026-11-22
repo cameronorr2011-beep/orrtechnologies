@@ -1,5 +1,7 @@
+import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
 import Capabilities from "@/components/sections/Capabilities";
+import Creative from "@/components/sections/Creative";
 import Work from "@/components/sections/Work";
 import MediaOffer from "@/components/sections/MediaOffer";
 import SigilBand from "@/components/sections/SigilBand";
@@ -9,57 +11,82 @@ import PricingTable from "@/components/sections/PricingTable";
 import Trust from "@/components/sections/Trust";
 import LiveSignal from "@/components/sections/LiveSignal";
 import Contact from "@/components/sections/Contact";
+import JsonLd from "@/components/seo/JsonLd";
 import { getPlans } from "@/db/queries";
-import { FAQ, SITE } from "@/lib/content";
+import { FAQ } from "@/lib/content";
+import {
+  DEFAULT_OG_IMAGE,
+  faqPageSchema,
+  serviceSchema,
+  webPageSchema,
+} from "@/lib/seo";
 
-export const dynamic = "force-dynamic";
+// Prices live in Postgres but change rarely; ISR keeps the page fast while the
+// catalog still refreshes without a redeploy.
+export const revalidate = 3600;
+
+const TITLE = "Websites, Promo Films, Ads & Posters | Orr Technologies";
+const DESCRIPTION =
+  "Custom websites from $100 flat, plus cinematic promo films, ads and posters for small businesses. Pay in crypto or gift cards, and own the code.";
+
+export const metadata: Metadata = {
+  title: { absolute: TITLE },
+  description: DESCRIPTION,
+  keywords: [
+    "small business website design",
+    "affordable website design",
+    "$100 website",
+    "custom website for small business",
+    "website design and development",
+    "free promo video",
+    "cinematic promo video production",
+    "ad campaign design",
+    "poster design for small business",
+    "crypto and gift card payment",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    siteName: "Orr Technologies",
+    title: "Websites, Promo Films, Ads & Posters",
+    description:
+      "Custom websites from $100 flat, with a promo film included — plus ads and posters. Pay in crypto or gift cards, and own the code.",
+    images: [DEFAULT_OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Websites, Promo Films, Ads & Posters | Orr Technologies",
+    description:
+      "$100 flat during beta. You own the code, a promo film is included, and ads or posters are quoted per project. Pay in crypto or gift cards.",
+    images: [DEFAULT_OG_IMAGE.url],
+  },
+};
 
 export default async function HomePage() {
   const plans = await getPlans();
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    name: "Orr Technologies",
-    description:
-      "We build clean, fast websites for small businesses at $100 flat during beta, plus a $500 dynamic website plan for sites that need backend functionality. You own the code — delivered to your own GitHub. Privacy focused, paid once in Bitcoin.",
-    email: SITE.email,
-    url: SITE.url,
-    priceRange: "$100 - $500",
-    paymentAccepted: "Bitcoin",
-    areaServed: "Worldwide",
-    makesOffer: plans.map((p) => ({
-      "@type": "Offer",
-      name: `${p.name} package`,
-      price: p.priceUsd,
-      priceCurrency: "USD",
-      description: p.tagline,
-    })),
-  };
-
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: FAQ.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
-    })),
+    "@graph": [
+      webPageSchema({
+        path: "/",
+        name: "Websites, promo films, ads and posters",
+        description: DESCRIPTION,
+      }),
+      serviceSchema(plans),
+      faqPageSchema(FAQ),
+    ],
   };
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
       <Hero />
       <Capabilities />
       <Work />
+      <Creative />
       <MediaOffer />
       <SigilBand />
       <Process />

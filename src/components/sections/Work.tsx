@@ -17,10 +17,10 @@ export default function Work() {
           kicker="Our work"
           title={
             <>
-              Real businesses, <span className="text-ember-gradient">real results</span>
+              Small business websites, <span className="text-ember-gradient">real results</span>
             </>
           }
-          body="A few recent builds. Every one delivered to the client's own GitHub, paid once in Bitcoin, no monthly fees after launch."
+          body="A few recent builds. Every one delivered to the client's own GitHub, paid once in crypto or gift cards, no monthly fees after launch."
         />
 
         <div className="mt-16 grid gap-8 lg:grid-cols-2">

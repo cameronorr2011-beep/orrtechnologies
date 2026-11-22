@@ -1,21 +1,62 @@
 import type { MetadataRoute } from "next";
-import { SITE } from "@/lib/content";
 import { BLOG_POSTS } from "@/lib/blog";
+import { CONTENT_UPDATED, pageUrl } from "@/lib/seo";
+
+const updated = new Date(`${CONTENT_UPDATED}T12:00:00.000Z`);
+const latestPost = BLOG_POSTS.reduce(
+  (latest, post) => (post.date > latest ? post.date : latest),
+  "",
+);
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = SITE.url;
-  const now = new Date();
   return [
-    { url: base, lastModified: now, changeFrequency: "weekly", priority: 1 },
-    { url: `${base}/pricing`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${base}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${base}/privacy`, lastModified: now, changeFrequency: "yearly", priority: 0.5 },
-    { url: `${base}/terms`, lastModified: now, changeFrequency: "yearly", priority: 0.5 },
-    ...BLOG_POSTS.map((p) => ({
-      url: `${base}/blog/${p.slug}`,
-      lastModified: new Date(`${p.date}T12:00:00Z`),
+    {
+      url: pageUrl("/"),
+      lastModified: updated,
+      changeFrequency: "weekly",
+      priority: 1,
+    },
+    {
+      url: pageUrl("/pricing"),
+      lastModified: updated,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: pageUrl("/blog"),
+      lastModified: new Date(`${latestPost || CONTENT_UPDATED}T12:00:00.000Z`),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: pageUrl("/studio/editor"),
+      lastModified: updated,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
+      url: pageUrl("/studio"),
+      lastModified: updated,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    ...BLOG_POSTS.map((post) => ({
+      url: pageUrl(`/blog/${post.slug}`),
+      lastModified: new Date(`${post.date}T12:00:00.000Z`),
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
+    {
+      url: pageUrl("/privacy"),
+      lastModified: updated,
+      changeFrequency: "yearly",
+      priority: 0.2,
+    },
+    {
+      url: pageUrl("/terms"),
+      lastModified: updated,
+      changeFrequency: "yearly",
+      priority: 0.2,
+    },
   ];
 }

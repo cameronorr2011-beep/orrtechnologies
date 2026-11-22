@@ -15,9 +15,9 @@ export type BlogPost = {
 export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "what-makes-a-website-look-professional",
-    title: "What makes a website look professional (it's less than you think)",
+    title: "What Makes a Website Look Professional?",
     description:
-      "Visitors decide in seconds whether to trust your business. Here are the five things that matter most — and none of them cost extra.",
+      "Visitors decide whether to trust your business in seconds. These five things make a small business website look professional, and none of them cost extra.",
     date: "2026-08-12",
     readMinutes: 4,
     tag: "Design basics",
@@ -53,9 +53,9 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "why-you-should-own-your-website",
-    title: "Why you should own your website (and how to tell if you don't)",
+    title: "Why You Should Own Your Website",
     description:
-      "Many small businesses rent their websites without knowing it. Here's how to check — and why we deliver every site to your own GitHub.",
+      "Many small businesses rent their website without knowing it. Here's how to check who owns the files, and why every Orr site is delivered to your GitHub.",
     date: "2026-08-24",
     readMinutes: 5,
     tag: "Ownership",
@@ -90,9 +90,9 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "what-a-small-business-website-actually-needs",
-    title: "What a small business website actually needs (and what it doesn't)",
+    title: "What a Small Business Website Needs",
     description:
-      "You don't need 20 pages or a custom web app. Here's the honest minimum that wins customers — typical for a 1-page and 5-page site.",
+      "You don't need 20 pages or a custom web app. Here's the honest minimum a small business website needs, what it should cost, and what you can skip for now.",
     date: "2026-09-02",
     readMinutes: 6,
     tag: "Planning",
@@ -126,9 +126,9 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "privacy-what-your-website-knows-about-visitors",
-    title: "Privacy: what your website knows about your visitors",
+    title: "What Your Website Knows About Visitors",
     description:
-      "Most websites quietly leak visitor data to advertising companies. Here's what that means for your business — and the cleaner approach we use.",
+      "Most websites quietly leak visitor data to advertising companies. Here's what that means for your business, and the cleaner approach we use instead.",
     date: "2026-09-05",
     readMinutes: 4,
     tag: "Privacy",
@@ -158,9 +158,9 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "send-us-your-photos-and-notes",
-    title: "Send us your photos, videos, and notes — that's all we need",
+    title: "What to Send Us for Your Website",
     description:
-      "You don't need professional photos or polished writing to get a website. Here's what to send us, and what we do with it.",
+      "You don't need professional photos or polished writing to get a website. Here's what to send us, what we do with it, and how little you actually need.",
     date: "2026-09-06",
     readMinutes: 4,
     tag: "How we work",
@@ -204,9 +204,9 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "your-website-should-come-with-a-video",
-    title: "Your website should come with a video — so ours do",
+    title: "Why Your Website Needs a Promo Video",
     description:
-      "A short video sells better than any block of text. Here's why every website we build now includes a promo video at no extra cost.",
+      "A short video sells better than a block of text. Here's why every Orr website includes a promo video made from your photos and clips, at no extra cost.",
     date: "2026-09-07",
     readMinutes: 4,
     tag: "Free video",
@@ -249,9 +249,9 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "how-to-choose-a-website-price",
-    title: "Website prices explained: what's cheap, what's fair, what's a trap",
+    title: "What a Website Should Cost in 2026",
     description:
-      "Free, $100, $5,000 — website quotes are all over the place. Here's what you actually get at each price, and how not to overpay.",
+      "Free, $100, $5,000: website quotes are all over the place. Here's what you actually get at each price, how to spot a rental trap, and how not to overpay.",
     date: "2026-09-08",
     readMinutes: 6,
     tag: "Pricing",

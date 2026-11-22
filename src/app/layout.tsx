@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import { Fraunces, JetBrains_Mono, Manrope } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
@@ -7,46 +8,84 @@ import AmbientAudio from "@/components/site/AmbientAudio";
 import CookieConsent from "@/components/site/CookieConsent";
 import ScrollProgress from "@/components/fx/ScrollProgress";
 import CursorEmbers from "@/components/fx/CursorEmbers";
+import JsonLd from "@/components/seo/JsonLd";
 import { SITE } from "@/lib/content";
+import {
+  DEFAULT_OG_IMAGE,
+  SITE_KEYWORDS,
+  SITE_URL,
+  organizationSchema,
+  websiteSchema,
+} from "@/lib/seo";
 import "./globals.css";
 
+const displayFont = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  display: "swap",
+  axes: ["opsz"],
+});
+
+const sansFont = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
+  display: "swap",
+});
+
+const monoFont = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
+});
+
+const HOME_TITLE = "Small Business Website Design for $100 | Orr Technologies";
+const HOME_DESCRIPTION =
+  "A complete custom website for your small business, written and built for you. $100 flat during beta, delivered to your GitHub, with a free promo video.";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE.url),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Orr Technologies — $100 websites with a free promo video",
-    template: "%s · Orr Technologies",
+    default: HOME_TITLE,
+    template: "%s | Orr Technologies",
   },
-  description:
-    "Complete websites for small businesses at $100 flat during beta — plus a free promo video made from your photos and clips. You own the code, it's delivered to your own GitHub, and it's private by default. Pay once in Bitcoin.",
-  applicationName: "Orr Technologies",
-  keywords: [
-    "affordable website design",
-    "$100 website",
-    "dynamic website with backend",
-    "small business website",
-    "you own your website",
-    "free promo video",
-    "privacy focused website",
-    "pay in bitcoin",
-    "website design blog",
-  ],
-  authors: [{ name: "Orr Technologies" }],
-  alternates: { canonical: "/" },
+  description: HOME_DESCRIPTION,
+  applicationName: SITE.name,
+  keywords: SITE_KEYWORDS,
+  authors: [{ name: SITE.name, url: SITE_URL }],
+  creator: SITE.name,
+  publisher: SITE.name,
+  category: "technology",
   openGraph: {
     type: "website",
-    title: "Orr Technologies — a full website and a free promo video",
+    locale: "en_US",
+    url: "/",
+    siteName: SITE.name,
+    title: "Small Business Website Design for $100",
     description:
-      "$100 flat websites during beta, with a free promo video made from your photos and clips. You own the code, it lives in your GitHub, and your visitors' privacy is respected. Paid in Bitcoin.",
-    siteName: "Orr Technologies",
-    images: [{ url: "/media/forge-hero.jpg", width: 1200, height: 630, alt: "Orr Technologies forge" }],
+      "A custom small business website, written and built for you. $100 flat during beta, delivered to your GitHub, with a free promo video. Paid once in Bitcoin.",
+    images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Orr Technologies — $100 websites with a free promo video",
-    description: "$100 flat websites during beta. You own the code. Free promo video included. Private by default. Paid in Bitcoin.",
-    images: ["/media/forge-hero.jpg"],
+    title: "Small Business Website Design for $100 | Orr Technologies",
+    description:
+      "$100 flat during beta. You own the code, the site loads fast, and a free promo video is included. Pay once in Bitcoin.",
+    images: [DEFAULT_OG_IMAGE.url],
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  formatDetection: { email: false, address: false, telephone: false },
+  icons: { icon: "/icon.svg" },
+  manifest: "/manifest.webmanifest",
 };
 
 export const viewport: Viewport = {
@@ -56,16 +95,26 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" style={{ backgroundColor: "#070510", colorScheme: "dark" }}>
+    <html
+      lang="en"
+      className={`${displayFont.variable} ${sansFont.variable} ${monoFont.variable}`}
+      style={{ backgroundColor: "#070510", colorScheme: "dark" }}
+    >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+          rel="alternate"
+          type="application/rss+xml"
+          title="Orr Technologies — small business website guides"
+          href={`${SITE_URL}/feed.xml`}
         />
       </head>
       <body className="grain vignette relative min-h-screen bg-void antialiased">
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@graph": [organizationSchema(), websiteSchema()],
+          }}
+        />
         <ScrollProgress />
         <CursorEmbers />
         <Nav />

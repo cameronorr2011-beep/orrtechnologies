@@ -33,10 +33,10 @@ export default function PricingTable({ plans }: { plans: PlanView[] }) {
           kicker="Pricing"
           title={
             <>
-              $100 flat. <span className="text-ember-gradient">That&apos;s the whole price.</span>
+              Website pricing, <span className="text-ember-gradient">without surprises.</span>
             </>
           }
-          body="One package, one price. During beta, a complete website is $100 — paid once, in Bitcoin. No hourly billing, no monthly fees, no surprise invoices. When beta ends, the price goes up for new customers."
+          body="One package, one price. During beta, a complete small business website is $100 — paid once, in Bitcoin. No hourly billing, no monthly fees, no surprise invoices. When beta ends, the price goes up for new customers."
         />
 
         {standard ? (

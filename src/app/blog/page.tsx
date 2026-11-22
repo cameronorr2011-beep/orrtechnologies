@@ -5,21 +5,69 @@ import Reveal from "@/components/fx/Reveal";
 import EmberField from "@/components/fx/EmberField";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ActionButton from "@/components/ui/ActionButton";
+import JsonLd from "@/components/seo/JsonLd";
 import { BLOG_POSTS, formatDate } from "@/lib/blog";
 import { purchaseMailto } from "@/lib/content";
+import {
+  blogCollectionSchema,
+  breadcrumbSchema,
+  webPageSchema,
+} from "@/lib/seo";
+
+const DESCRIPTION =
+  "Practical, plain-English guides on website design, ownership, privacy, pricing and promo videos for small business owners. No jargon, no sales pitch.";
 
 export const metadata: Metadata = {
-  title: "Blog — plain-language website advice for small businesses",
-  description:
-    "Short, jargon-free guides on what a good website needs, why you should own it, how privacy works, and what things should cost.",
+  title: { absolute: "Small Business Website Guides | Orr Technologies" },
+  description: DESCRIPTION,
+  keywords: [
+    "small business website guide",
+    "website design advice",
+    "website ownership",
+    "website pricing guide",
+    "privacy focused website",
+  ],
   alternates: { canonical: "/blog" },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/blog",
+    siteName: "Orr Technologies",
+    title: "Small Business Website Guides",
+    description: DESCRIPTION,
+    images: [{ url: "/media/forge-hero.jpg", width: 1200, height: 630, alt: "Orr Technologies website guides" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Small Business Website Guides | Orr Technologies",
+    description: DESCRIPTION,
+    images: ["/media/forge-hero.jpg"],
+  },
 };
 
 export default function BlogIndexPage() {
-  const [featured, ...rest] = BLOG_POSTS;
+  const sorted = [...BLOG_POSTS].sort((a, b) => b.date.localeCompare(a.date));
+  const [featured, ...rest] = sorted;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      webPageSchema({
+        path: "/blog",
+        name: "Small business website guides",
+        description: DESCRIPTION,
+      }),
+      blogCollectionSchema(sorted, DESCRIPTION),
+      breadcrumbSchema([
+        { name: "Home", path: "/" },
+        { name: "Blog", path: "/blog" },
+      ]),
+    ],
+  };
 
   return (
     <>
+      <JsonLd data={jsonLd} />
       <section className="relative overflow-hidden pt-36 pb-16 sm:pt-44">
         <div className="absolute inset-0 z-0 opacity-70" aria-hidden="true">
           <EmberField variant="core" />
@@ -33,8 +81,8 @@ export default function BlogIndexPage() {
           </Reveal>
           <Reveal delay={80}>
             <h1 className="font-display mt-6 max-w-4xl text-[clamp(2.4rem,5.4vw,4.2rem)] font-semibold leading-[1.02] tracking-[-0.03em]">
-              <span className="text-bone-gradient block">Website advice</span>
-              <span className="text-ember-gradient block">in plain English.</span>
+              <span className="text-bone-gradient block">Website advice for</span>
+              <span className="text-ember-gradient block">small businesses.</span>
             </h1>
           </Reveal>
           <Reveal delay={140}>

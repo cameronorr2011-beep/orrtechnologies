@@ -1,15 +1,42 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import JsonLd from "@/components/seo/JsonLd";
+import { SITE } from "@/lib/content";
+import { DEFAULT_OG_IMAGE, breadcrumbSchema, webPageSchema } from "@/lib/seo";
+
+const DESCRIPTION = `How ${SITE.name} handles information on ${SITE.domain}: what we collect, the cookies and local storage we use, and the choices you have.`;
 
 export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description:
-    "How Orr Technologies handles information on orrtechnologies.netlify.app: what we collect, the cookies and local storage we use, and the choices you have.",
+  title: { absolute: "Privacy Policy | Orr Technologies" },
+  description: DESCRIPTION,
   alternates: { canonical: "/privacy" },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/privacy",
+    siteName: SITE.name,
+    title: "Privacy Policy",
+    description: DESCRIPTION,
+    images: [DEFAULT_OG_IMAGE],
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function PrivacyPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      webPageSchema({ path: "/privacy", name: "Privacy Policy", description: DESCRIPTION }),
+      breadcrumbSchema([
+        { name: "Home", path: "/" },
+        { name: "Privacy Policy", path: "/privacy" },
+      ]),
+    ],
+  };
+
   return (
+    <>
+      <JsonLd data={jsonLd} />
     <section className="relative overflow-hidden pt-36 pb-24 sm:pt-44">
       <div className="absolute inset-0 z-0 opacity-50" aria-hidden="true">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-void/60 to-void" />
@@ -27,7 +54,7 @@ export default function PrivacyPage() {
 
         <div className="mt-12 space-y-10 text-[1rem] leading-relaxed text-bone/70">
           <p>
-            This policy covers orrtechnologies.netlify.app (the &ldquo;site&rdquo;), operated by
+            This policy covers {SITE.domain} (the &ldquo;site&rdquo;), operated by
             Orr Technologies. We built this site to respect privacy by default: no advertising
             trackers, no data sales, no social-media pixels.
           </p>
@@ -177,5 +204,6 @@ export default function PrivacyPage() {
         </div>
       </div>
     </section>
+    </>
   );
 }

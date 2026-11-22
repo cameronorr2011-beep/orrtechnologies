@@ -16,10 +16,10 @@ export default function Capabilities() {
               kicker="What you get"
               title={
                 <>
-                  Everything a small business needs, <span className="text-ember-gradient">nothing it doesn&apos;t</span>
+                  Everything a small business website needs, <span className="text-ember-gradient">nothing it doesn&apos;t</span>
                 </>
               }
-              body="We keep the promises simple: a site that looks professional, loads fast, belongs to you, and respects your visitors' privacy."
+              body="Custom website design that looks professional, loads fast, belongs to you, and respects your visitors' privacy."
             />
 
             <Reveal delay={200}>

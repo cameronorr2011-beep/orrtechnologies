@@ -1,17 +1,172 @@
+const DEFAULT_SITE_URL = "https://orrtechnologies.vercel.app";
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL?.trim() || DEFAULT_SITE_URL).replace(/\/+$/, "");
+
 export const SITE = {
   name: "Orr Technologies",
   legalName: "Orr Technologies",
-  domain: "orrtechnologies.vercel.app",
-  url: "https://orrtechnologies.vercel.app",
+  domain: new URL(siteUrl).host,
+  url: siteUrl,
+  github: "https://github.com/cameronorr2011-beep/orrtechnologies",
   email: "service@orrbiologicals.com",
   emailDisplay: "service@orrbiologicals.com",
   tagline:
-    "We build clean, fast websites for small businesses. $100 flat during beta — and a $500 plan if your site needs a backend. You own everything.",
+    "We build websites, cinematic promo films, ads and posters for small businesses. $100 flat during beta, or $500 if your site needs a backend. Pay in crypto or gift cards — you own everything.",
   btcNetwork: "Bitcoin",
   btcAddress: process.env.NEXT_PUBLIC_BTC_ADDRESS ?? "bc1q-issued-per-invoice",
   btcMemo:
-    "You pay in Bitcoin, once. We email you the exact amount and a payment address for your invoice before you send anything. No cards, no subscriptions, no surprise charges.",
+    "You pay once — in Bitcoin, another crypto, or gift cards. We email the exact amount, network and card details for your invoice before you send anything. No subscriptions, no surprise charges.",
 } as const;
+
+export type PaymentMethodId = "bitcoin" | "crypto" | "giftcard";
+
+export type PaymentMethod = {
+  id: PaymentMethodId;
+  name: string;
+  short: string;
+  blurb: string;
+  amount: string;
+  steps: string[];
+  accepted?: string[];
+  note: string;
+};
+
+/** How customers can pay. The invoice fixes the amount before anything is sent. */
+export const PAYMENT_METHODS: PaymentMethod[] = [
+  {
+    id: "bitcoin",
+    name: "Bitcoin",
+    short: "BTC",
+    blurb: "One payment, straight between us.",
+    amount: "Exact BTC amount on your invoice",
+    steps: [
+      "Send the request below — it opens an email thread with us.",
+      "We reply with the exact Bitcoin amount and an address created for your order.",
+      "You pay from your own wallet. That's the whole cost, once.",
+      "We start building. Your finished site is delivered to your GitHub.",
+    ],
+    note: "Bitcoin payments are final once confirmed on the network, so the amount and scope are agreed by email first.",
+  },
+  {
+    id: "crypto",
+    name: "Crypto",
+    short: "ETH · USDT",
+    blurb: "Ethereum or USDT on the network named on your invoice.",
+    amount: "USD, converted at the invoice rate",
+    steps: [
+      "Send the request below — it opens an email thread with us.",
+      "We reply with the exact coin, network and amount for your order.",
+      "You send from your own wallet, on that network only.",
+      "We confirm receipt on-chain and start building.",
+    ],
+    note: "Send only the coin and network printed on your invoice. Crypto payments are final once confirmed, so we fix the amount before you send anything.",
+  },
+  {
+    id: "giftcard",
+    name: "Gift cards",
+    short: "Amazon · Apple · Steam",
+    blurb: "Pay with cards you can buy anywhere.",
+    amount: "$100 in cards — $25, $50 or $100 each",
+    accepted: ["Amazon", "Apple", "Steam", "Google Play", "Visa prepaid"],
+    steps: [
+      "Send the request below — it opens an email thread with us.",
+      "We reply with your order code, the exact card types and the total needed.",
+      "Buy the cards, then email the codes only after that order code exists.",
+      "The card total must match the invoice exactly. We confirm and start building.",
+    ],
+    note: "Never send card codes before we issue an order code. Codes are checked as soon as they arrive, and any card that doesn't match the invoice is returned or replaced before work starts.",
+  },
+];
+
+export const PAYMENT_LINE = "Bitcoin, other crypto, or gift cards — you choose at checkout.";
+
+export type CreativeService = {
+  id: string;
+  name: string;
+  kicker: string;
+  line: string;
+  detail: string;
+  deliverables: string[];
+  price: string;
+  image: string;
+  alt: string;
+  cta: { href: string; label: string };
+};
+
+/** The four things the studio actually ships, in the order the scroll tells them. */
+export const CREATIVE_SERVICES: CreativeService[] = [
+  {
+    id: "websites",
+    name: "Websites",
+    kicker: "01 · Built",
+    line: "A site that looks like your business, not a template.",
+    detail:
+      "Designed, written and built from whatever you send us, then delivered to your own GitHub. $100 flat during beta; $500 when the site genuinely needs a backend.",
+    deliverables: [
+      "Up to 5 pages, designed around your business",
+      "All the copy written for you",
+      "Contact form and blog included",
+      "Code delivered to your GitHub — you own it",
+    ],
+    price: "$100 flat · one time",
+    image: "/media/forge-hero.jpg",
+    alt: "Dark studio render used for the Orr Technologies website build",
+    cta: { href: "/pricing", label: "Website pricing" },
+  },
+  {
+    id: "film",
+    name: "Cinematic video",
+    kicker: "02 · Shot and cut",
+    line: "Cinematic promo videos built around your product and brand story.",
+    detail:
+      "Send phone clips, photos, or nothing at all. We write the beat, cut the film, grade it, and hand you a widescreen cut plus a vertical one for social.",
+    deliverables: [
+      "30–90 second promo film",
+      "Vertical cut for social",
+      "Captions and soundtrack",
+      "Included free with every website",
+    ],
+    price: "Included with a website",
+    image: "/media/free-promo-video.svg",
+    alt: "Illustration of a cinematic promo video frame with captions and music",
+    cta: { href: "/studio/editor", label: "Open the cut room" },
+  },
+  {
+    id: "ads",
+    name: "Ads",
+    kicker: "03 · Cut for the feed",
+    line: "Ad campaigns designed to convert attention into sales.",
+    detail:
+      "Short-form cuts for Instagram, TikTok and YouTube, built from the same shoot as your film. One clear offer, one clear action, no filler.",
+    deliverables: [
+      "3–6 short cuts per campaign",
+      "Hook-first edits for the feed",
+      "Captions burned in",
+      "Every aspect ratio you post in",
+    ],
+    price: "Quoted per campaign",
+    image: "/media/showcase-resin.jpg",
+    alt: "Amber resin texture used as the backdrop for an Orr ad campaign",
+    cta: { href: "/#contact", label: "Brief an ad" },
+  },
+  {
+    id: "posters",
+    name: "Posters",
+    kicker: "04 · Print",
+    line: "Poster design for launches, events and campaigns.",
+    detail:
+      "One idea, one image, one line of type. Delivered print-ready and as a square for the feed, so the campaign looks the same on a wall as it does on a phone.",
+    deliverables: [
+      "A2 and A3 print files",
+      "Square social version",
+      "Your colours and logo",
+      "Print-ready PDF",
+    ],
+    price: "Quoted per set",
+    image: "/media/showcase-ribbon.jpg",
+    alt: "Copper ribbon detail used for an Orr poster design",
+    cta: { href: "/#contact", label: "Brief a poster" },
+  },
+];
 
 export const MAILTO = {
   to: SITE.email,
@@ -22,6 +177,7 @@ export function purchaseMailto(params: {
   planName: string;
   invoiceCode?: string;
   amountUsd?: number;
+  payment?: string;
   company?: string;
   name?: string;
   notes?: string;
@@ -29,7 +185,9 @@ export function purchaseMailto(params: {
   const lines = [
     `Package: ${params.planName}`,
     params.invoiceCode ? `Invoice: ${params.invoiceCode}` : null,
-    params.amountUsd ? `Amount: $${params.amountUsd.toLocaleString("en-US")} USD (paid in Bitcoin)` : null,
+    params.amountUsd
+      ? `Amount: $${params.amountUsd.toLocaleString("en-US")} USD${params.payment ? ` — ${params.payment}` : ""}`
+      : null,
     `Business name: ${params.company ?? ""}`,
     `Your name: ${params.name ?? ""}`,
     "",
@@ -286,8 +444,8 @@ export const TRUST = [
     body: "Send whatever you have — photos, an old leaflet, a price list, or a few ideas in an email. We organise it, write the text, and build the full website for you.",
   },
   {
-    title: "Pay in Bitcoin",
-    body: "One payment, in Bitcoin, when the work starts. No card fees, no subscriptions, no auto-renewals. We email you the exact amount and address before you send anything.",
+    title: "Crypto or gift cards",
+    body: "One payment when the work starts — Bitcoin, another crypto, or gift cards from Amazon, Apple, Steam, Google Play or Visa prepaid. The exact amount is fixed on your invoice, and there are no subscriptions or auto-renewals.",
   },
 ];
 
@@ -313,8 +471,8 @@ export const FAQ = [
     a: "We're testing our process and building a portfolio of happy customers. $100 covers our costs while we do that. When beta ends, the price goes up for new customers — early customers keep the simple deal they signed up for.",
   },
   {
-    q: "Why do you only take Bitcoin?",
-    a: "It's one payment, straight between us — no card company in the middle taking a cut or reversing payments months later. Before you send anything, we email you the exact amount and a payment address for your invoice only.",
+    q: "How can I pay?",
+    a: "Three ways: Bitcoin, other crypto (Ethereum or USDT), or gift cards from Amazon, Apple, Steam, Google Play or Visa prepaid. Crypto keeps it one payment straight between us with no card company taking a cut. Gift cards are the easiest option if you don't use crypto. Either way, we email the exact amount and details for your invoice before you send anything.",
   },
   {
     q: "What if I need changes after launch?",
@@ -325,17 +483,34 @@ export const FAQ = [
     a: "Yes — every site we build is set up so Google can find and read it properly: correct page titles, descriptions, fast loading, and a sitemap. We can't promise a #1 ranking (nobody honestly can), but the technical foundations are done right.",
   },
   {
+    q: "How much does a small business website cost?",
+    a: "During beta, a complete website is $100 flat: up to five pages, written and designed for you, with a contact form, a blog and a free promo video. The $500 Dynamic Website plan is only for sites that need a backend. Both are one-time prices, paid in Bitcoin, other crypto, or gift cards.",
+  },
+  {
+    q: "What is a dynamic website?",
+    a: "A dynamic website does more than display pages. It can store data, handle user accounts, take bookings, or connect to other systems through APIs. If you only need a clear brochure site with a contact form, the standard $100 plan covers everything you need.",
+  },
+  {
+    q: "How long does a website take?",
+    a: "Most websites are ready in about one to two weeks. You send your details on day one, preview the build during the first week, and review changes before launch. Dynamic projects with custom backend features are scoped separately.",
+  },
+  {
+    q: "Do you work with businesses outside the UK?",
+    a: "Yes. We work remotely with small businesses worldwide, so your location doesn't matter. Everything happens by email and file sharing, we reply within one business day, and the finished code is delivered to your own GitHub wherever you are.",
+  },
+  {
     q: "What does 'privacy focused' mean for my site?",
     a: "We don't install advertising trackers or data-harvesting scripts on your site. If you want to know how many visitors you get, we set up simple, privacy-respecting counting that doesn't follow people around the internet.",
   },
   {
     q: "How do we start?",
-    a: "Email us or fill in the form below. Tell us what your business does and what you need. We reply within one business day with a plan, a start date, and the Bitcoin invoice details.",
+    a: "Email us or fill in the form below. Tell us what your business does and what you need. We reply within one business day with a plan, a start date, and the payment details for the method you prefer — Bitcoin, another crypto, or gift cards.",
   },
 ];
 
 export const NAV_LINKS = [
   { href: "/#capabilities", label: "What you get" },
+  { href: "/#studio", label: "Studio" },
   { href: "/#work", label: "Work" },
   { href: "/#media", label: "Free video" },
   { href: "/#pricing", label: "Pricing" },
@@ -349,7 +524,7 @@ export const STATS = [
   { value: "$500", label: "dynamic plan, if you need a backend" },
   { value: "100%", label: "code you own" },
   { value: "Free", label: "promo video with every site" },
-  { value: "BTC", label: "how you pay — once" },
+  { value: "3 ways", label: "crypto or gift cards" },
 ];
 
 /** The "send us whatever you have" section: what customers can hand over, and what we give back. */

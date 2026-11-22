@@ -102,19 +102,19 @@ export default function Hero() {
           <Reveal delay={90}>
             <h1 className="font-display mt-8 text-[clamp(2.6rem,6.4vw,5.1rem)] font-semibold leading-[0.98] tracking-[-0.03em]">
               <span className="text-bone-gradient block">A real website for</span>
-              <span className="text-ember-gradient block">your business.</span>
+              <span className="text-ember-gradient block">your small business.</span>
             </h1>
           </Reveal>
 
           <Reveal delay={170}>
             <p className="mt-8 max-w-xl text-[1.06rem] leading-relaxed text-bone/62">
-              We build clean, fast websites for{" "}
+              We design and build custom websites for{" "}
               <span className="text-ember-200">
                 {typed}
                 <span className="ml-0.5 inline-block w-[2px] translate-y-[2px] bg-ember-300 align-middle" style={{ height: "1em", animation: "pulseGlow 1.1s steps(2) infinite" }} />
               </span>
-              . $100 flat while we&apos;re in beta. When we&apos;re done, the whole site is delivered to your
-              own GitHub — you own it, no monthly rent, no hidden costs.
+              . $100 flat during beta, written and tested for you, then delivered to your own GitHub — you
+              own it, with no monthly rent, no lock-in and no hidden costs.
             </p>
           </Reveal>
 
@@ -135,7 +135,7 @@ export default function Hero() {
 
           <Reveal delay={300}>
             <p className="mt-6 max-w-md font-mono text-[0.66rem] uppercase leading-relaxed tracking-[0.16em] text-bone/35">
-              Pay once in Bitcoin · delivered to your GitHub · privacy focused · no subscriptions
+              Pay in crypto or gift cards · delivered to your GitHub · privacy focused · no subscriptions
             </p>
           </Reveal>
 
@@ -204,7 +204,7 @@ export default function Hero() {
                 </p>
                 <p className="font-display mt-3 text-3xl font-semibold text-bone">$100 flat</p>
                 <p className="mt-1 text-[0.86rem] text-bone/55">
-                  One price. You own the site. Paid once in Bitcoin.
+                  One price. You own the site. Crypto or gift cards.
                 </p>
                 <span className="mt-5 inline-flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-ember-200">
                   See what&apos;s included
@@ -225,7 +225,7 @@ export default function Hero() {
             "Delivered to your GitHub",
             "Privacy focused",
             "No high costs",
-            "Pay in Bitcoin",
+            "Crypto or gift cards",
             "No subscriptions",
           ].map((s, i) => (
             <span

@@ -8,9 +8,9 @@ import { getPlans } from "@/db/queries";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Pay in Bitcoin — $100 flat during beta",
+  title: { absolute: "Checkout: Crypto or Gift Cards | Orr Technologies" },
   description:
-    "Get a Bitcoin invoice and pay once. $100 flat during beta. No cards, no subscriptions, no surprise charges.",
+    "Get a one-time invoice and pay in Bitcoin, other crypto, or gift cards. $100 flat during beta. No subscriptions, no surprise charges.",
   robots: { index: false, follow: false },
 };
 
@@ -33,14 +33,14 @@ export default async function CheckoutPage() {
           <Reveal delay={80}>
             <h1 className="font-display mt-6 max-w-4xl text-[clamp(2.3rem,5vw,3.9rem)] font-semibold leading-[1.03] tracking-[-0.03em]">
               <span className="text-bone-gradient block">$100, paid once,</span>
-              <span className="text-ember-gradient block">in Bitcoin.</span>
+              <span className="text-ember-gradient block">in crypto or gift cards.</span>
             </h1>
           </Reveal>
           <Reveal delay={140}>
             <p className="mt-6 max-w-2xl text-[1rem] leading-relaxed text-bone/58">
-              Tell us about your business below and we&apos;ll email you a Bitcoin invoice: the exact amount
-              and a payment address created just for your order. You pay from your own wallet — no cards, no
-              account with us, nothing auto-charged, ever.
+              Tell us about your business below and we&apos;ll email the exact amount and payment details
+              for your order — Bitcoin, another crypto, or gift cards. Choose whichever suits you;
+              nothing is auto-charged, ever.
             </p>
           </Reveal>
         </div>

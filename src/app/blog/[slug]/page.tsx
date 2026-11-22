@@ -5,8 +5,15 @@ import { notFound } from "next/navigation";
 import Reveal from "@/components/fx/Reveal";
 import EmberField from "@/components/fx/EmberField";
 import ActionButton from "@/components/ui/ActionButton";
+import JsonLd from "@/components/seo/JsonLd";
 import { BLOG_POSTS, formatDate, getPostBySlug } from "@/lib/blog";
-import { purchaseMailto } from "@/lib/content";
+import { SITE, purchaseMailto } from "@/lib/content";
+import {
+  DEFAULT_OG_IMAGE,
+  blogPostingSchema,
+  breadcrumbSchema,
+  webPageSchema,
+} from "@/lib/seo";
 
 export function generateStaticParams() {
   return BLOG_POSTS.map((p) => ({ slug: p.slug }));
@@ -23,12 +30,28 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.description,
+    keywords: [post.tag, "small business website", "website design", "website ownership"],
     alternates: { canonical: `/blog/${post.slug}` },
+    authors: [{ name: SITE.name, url: SITE.url }],
     openGraph: {
       type: "article",
+      locale: "en_US",
+      url: `/blog/${post.slug}`,
+      siteName: SITE.name,
       title: post.title,
       description: post.description,
-      publishedTime: post.date,
+      publishedTime: `${post.date}T12:00:00.000Z`,
+      modifiedTime: `${post.date}T12:00:00.000Z`,
+      authors: [SITE.name],
+      section: post.tag,
+      tags: [post.tag, "small business website", "website design"],
+      images: [DEFAULT_OG_IMAGE],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: [DEFAULT_OG_IMAGE.url],
     },
   };
 }
@@ -44,8 +67,26 @@ export default async function BlogPostPage({
 
   const others = BLOG_POSTS.filter((p) => p.slug !== post.slug).slice(0, 2);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      webPageSchema({
+        path: `/blog/${post.slug}`,
+        name: post.title,
+        description: post.description,
+      }),
+      blogPostingSchema(post),
+      breadcrumbSchema([
+        { name: "Home", path: "/" },
+        { name: "Blog", path: "/blog" },
+        { name: post.title, path: `/blog/${post.slug}` },
+      ]),
+    ],
+  };
+
   return (
     <>
+      <JsonLd data={jsonLd} />
       <article className="relative overflow-hidden pt-36 pb-16 sm:pt-44">
         <div className="absolute inset-x-0 top-0 z-0 h-[420px] opacity-60" aria-hidden="true">
           <EmberField variant="core" />
@@ -54,18 +95,33 @@ export default async function BlogPostPage({
 
         <div className="relative z-10 mx-auto max-w-[760px] px-5 sm:px-8">
           <Reveal>
-            <Link
-              href="/blog"
-              className="font-mono text-[0.62rem] uppercase tracking-[0.24em] text-bone/40 transition-colors hover:text-ember-200"
-            >
-              ← All posts
-            </Link>
+            <nav aria-label="Breadcrumb">
+              <ol className="flex flex-wrap items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-bone/40">
+                <li>
+                  <Link href="/" className="transition-colors hover:text-ember-200">
+                    Home
+                  </Link>
+                </li>
+                <li aria-hidden="true">/</li>
+                <li>
+                  <Link href="/blog" className="transition-colors hover:text-ember-200">
+                    Blog
+                  </Link>
+                </li>
+                <li aria-hidden="true">/</li>
+                <li aria-current="page" className="max-w-[18rem] truncate text-bone/60">
+                  {post.title}
+                </li>
+              </ol>
+            </nav>
           </Reveal>
           <Reveal delay={60}>
             <div className="mt-8 flex flex-wrap items-center gap-3 font-mono text-[0.6rem] uppercase tracking-[0.22em] text-bone/40">
               <span className="rounded-full border border-ember-200/25 bg-ember-500/10 px-3 py-1 text-ember-100/85">
                 {post.tag}
               </span>
+              <span>By Orr Technologies</span>
+              <span>·</span>
               <span>{formatDate(post.date)}</span>
               <span>·</span>
               <span>{post.readMinutes} min read</span>

@@ -47,7 +47,7 @@ export default function Contact() {
               kicker="Questions"
               title={
                 <>
-                  Straight answers to <span className="text-ember-gradient">honest questions</span>
+                  Small business website questions, <span className="text-ember-gradient">answered.</span>
                 </>
               }
             />

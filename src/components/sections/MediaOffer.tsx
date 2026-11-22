@@ -16,8 +16,7 @@ export default function MediaOffer() {
           kicker={MEDIA_OFFER.kicker}
           title={
             <>
-              You give us what you have.{" "}
-              <span className="text-ember-gradient">We make the video and build the whole site.</span>
+              A free promo video <span className="text-ember-gradient">with every website.</span>
             </>
           }
           body={MEDIA_OFFER.body}
