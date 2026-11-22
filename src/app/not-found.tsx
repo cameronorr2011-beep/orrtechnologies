@@ -1,5 +1,5 @@
 import Link from "next/link";
-import EmberField from "@/components/fx/EmberField";
+import VoidDust from "@/components/fx/VoidDust";
 import ActionButton from "@/components/ui/ActionButton";
 import { purchaseMailto } from "@/lib/content";
 
@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <section className="relative flex min-h-[100svh] items-center overflow-hidden">
       <div className="absolute inset-0 z-0" aria-hidden="true">
-        <EmberField />
+        <VoidDust />
       </div>
       <div className="absolute inset-0 bg-gradient-to-b from-void/60 via-void/85 to-void" aria-hidden="true" />
       <div className="relative z-10 mx-auto grid max-w-[1280px] gap-10 px-5 py-32 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import EmberField from "@/components/fx/EmberField";
+import VoidDust from "@/components/fx/VoidDust";
 import Reveal from "@/components/fx/Reveal";
 import CutEditor from "@/components/studio/CutEditor";
 import ActionButton from "@/components/ui/ActionButton";
@@ -10,10 +10,10 @@ import { purchaseMailto } from "@/lib/content";
 import { DEFAULT_OG_IMAGE, SITE_URL, breadcrumbSchema, webPageSchema } from "@/lib/seo";
 
 const DESCRIPTION =
-  "Orr Cut is a browser video editor for promo films and ads: cut clips, grade them, add captions, export WebM, and drive it from JSON with an agent API.";
+  "Void Cut is a browser video editor for promo films and ads: cut clips, grade them, add captions, export WebM, and drive it from JSON with an agent API.";
 
 export const metadata: Metadata = {
-  title: { absolute: "Orr Cut: Browser Video Editor for Promo Films | Orr Technologies" },
+  title: { absolute: "Void Cut: Browser Video Editor for Promo Films | VoidBuilds" },
   description: DESCRIPTION,
   keywords: [
     "browser video editor",
@@ -21,21 +21,21 @@ export const metadata: Metadata = {
     "cinematic video editor",
     "export WebM",
     "agent video editor",
-    "Orr Cut",
+    "Void Cut",
   ],
   alternates: { canonical: "/studio/editor" },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "/studio/editor",
-    siteName: "Orr Technologies",
-    title: "Orr Cut: Browser Video Editor",
+    siteName: "VoidBuilds",
+    title: "Void Cut: Browser Video Editor",
     description: DESCRIPTION,
     images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Orr Cut: Browser Video Editor | Orr Technologies",
+    title: "Void Cut: Browser Video Editor | VoidBuilds",
     description: DESCRIPTION,
     images: [DEFAULT_OG_IMAGE.url],
   },
@@ -50,13 +50,13 @@ export default function EditorPage() {
     "@graph": [
       webPageSchema({
         path: "/studio/editor",
-        name: "Orr Cut: browser video editor",
+        name: "Void Cut: browser video editor",
         description: DESCRIPTION,
       }),
       {
         "@type": "WebApplication",
         "@id": `${SITE_URL}/studio/editor#app`,
-        name: "Orr Cut",
+        name: "Void Cut",
         url: `${SITE_URL}/studio/editor`,
         applicationCategory: "MultimediaApplication",
         operatingSystem: "Web browser",
@@ -66,8 +66,8 @@ export default function EditorPage() {
       },
       breadcrumbSchema([
         { name: "Home", path: "/" },
-        { name: "Forge Studio", path: "/studio" },
-        { name: "Orr Cut", path: "/studio/editor" },
+        { name: "Void Studio", path: "/studio" },
+        { name: "Void Cut", path: "/studio/editor" },
       ]),
     ],
   };
@@ -78,14 +78,14 @@ export default function EditorPage() {
 
       <section className="relative overflow-hidden pt-36 pb-14 sm:pt-44">
         <div className="absolute inset-0 z-0" aria-hidden="true">
-          <EmberField />
+          <VoidDust />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-void/40 via-void/80 to-void" aria-hidden="true" />
         <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-8">
           <Reveal>
             <div className="flex flex-wrap items-center gap-3">
               <span className="font-mono text-[0.62rem] uppercase tracking-[0.32em] text-ember-300/75">
-                Orr Cut
+                Void Cut
               </span>
               <span className="rounded-full border border-royal-300/20 bg-royal-950/50 px-3 py-1 font-mono text-[0.55rem] uppercase tracking-[0.18em] text-bone/50">
                 Demo reel loaded · {runtime.toFixed(1)}s
@@ -100,7 +100,7 @@ export default function EditorPage() {
           </Reveal>
           <Reveal delay={140}>
             <p className="mt-7 max-w-2xl text-[1.02rem] leading-relaxed text-bone/58">
-              Orr Cut is the cut room behind every promo film and ad we ship: drop in clips, trim them,
+              Void Cut is the cut room behind every promo film and ad we ship: drop in clips, trim them,
               grade the whole thing, write captions, and export a WebM without installing anything.
               Every cut is a plain JSON project, so you — or a subagent — can build one before a frame
               is ever rendered.
@@ -119,7 +119,7 @@ export default function EditorPage() {
                 Commission a film
               </ActionButton>
               <ActionButton href="/studio" variant="ghost" event={{ name: "nav", label: "editor_studio" }}>
-                Try Forge Studio
+                Try Void Studio
               </ActionButton>
               <ActionButton href="/#studio" variant="ghost" event={{ name: "nav", label: "editor_services" }}>
                 What we make

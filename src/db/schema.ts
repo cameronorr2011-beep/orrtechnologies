@@ -10,7 +10,7 @@ import {
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 
-/** Catalog of service tiers offered by Orr Technologies. */
+/** Catalog of service tiers offered by VoidBuilds. */
 export const plans = pgTable(
   "plans",
   {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import EmberField from "@/components/fx/EmberField";
+import VoidDust from "@/components/fx/VoidDust";
 import Reveal from "@/components/fx/Reveal";
 import ForgeStudio from "@/components/studio/ForgeStudio";
 import Process from "@/components/sections/Process";
@@ -15,31 +15,31 @@ import {
 } from "@/lib/seo";
 
 const DESCRIPTION =
-  "Try Forge Studio, the Orr composition engine. Describe a business and see the art direction, layout and opening copy behind a custom website build.";
+  "Try Void Studio, the VoidBuilds composition engine. Describe a business and see the art direction, layout and opening copy behind a custom website build.";
 
 export const metadata: Metadata = {
-  title: { absolute: "Forge Studio: Website Design Engine | Orr Technologies" },
+  title: { absolute: "Void Studio: Website Design Engine | VoidBuilds" },
   description: DESCRIPTION,
   keywords: [
     "website design engine",
     "web design tool",
     "art direction generator",
     "custom website design",
-    "Orr Technologies Forge Studio",
+    "VoidBuilds Void Studio",
   ],
   alternates: { canonical: "/studio" },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "/studio",
-    siteName: "Orr Technologies",
-    title: "Forge Studio: Website Design Engine",
+    siteName: "VoidBuilds",
+    title: "Void Studio: Website Design Engine",
     description: DESCRIPTION,
     images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Forge Studio: Website Design Engine | Orr Technologies",
+    title: "Void Studio: Website Design Engine | VoidBuilds",
     description: DESCRIPTION,
     images: [DEFAULT_OG_IMAGE.url],
   },
@@ -55,13 +55,13 @@ export default function StudioPage() {
     "@graph": [
       webPageSchema({
         path: "/studio",
-        name: "Forge Studio: website design engine",
+        name: "Void Studio: website design engine",
         description: DESCRIPTION,
       }),
       webApplicationSchema(),
       breadcrumbSchema([
         { name: "Home", path: "/" },
-        { name: "Forge Studio", path: "/studio" },
+        { name: "Void Studio", path: "/studio" },
       ]),
     ],
   };
@@ -72,13 +72,13 @@ export default function StudioPage() {
 
       <section className="relative overflow-hidden pt-36 pb-20 sm:pt-44">
         <div className="absolute inset-0 z-0" aria-hidden="true">
-          <EmberField />
+          <VoidDust />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-void/40 via-void/80 to-void" />
         <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-8">
           <Reveal>
             <span className="font-mono text-[0.62rem] uppercase tracking-[0.32em] text-ember-300/75">
-              Forge Studio
+              Void Studio
             </span>
           </Reveal>
           <Reveal delay={80}>
@@ -89,7 +89,7 @@ export default function StudioPage() {
           </Reveal>
           <Reveal delay={140}>
             <p className="mt-7 max-w-2xl text-[1.02rem] leading-relaxed text-bone/58">
-              Forge Studio is a live sample of the same composition pass that opens every Orr project.
+              Void Studio is a live sample of the same composition pass that opens every VoidBuilds project.
               Describe a business and it returns a seeded art direction: palette, layout, motif and opening
               copy you can reference by name weeks later.
             </p>
@@ -107,7 +107,7 @@ export default function StudioPage() {
                 See pricing
               </ActionButton>
               <ActionButton href="/studio/editor" variant="ghost" event={{ name: "nav", label: "studio_editor" }}>
-                Open Orr Cut
+                Open Void Cut
               </ActionButton>
             </div>
           </Reveal>

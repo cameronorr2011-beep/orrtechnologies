@@ -5,10 +5,10 @@ import { SITE } from "@/lib/content";
 import { DEFAULT_OG_IMAGE, breadcrumbSchema, webPageSchema } from "@/lib/seo";
 
 const DESCRIPTION =
-  "Terms for using the Orr Technologies website and buying a build: services, one-time crypto or gift-card payment, code ownership, client materials and liability.";
+  "Terms for using the VoidBuilds website and buying a build: services, one-time crypto or gift-card payment, code ownership, client materials and liability.";
 
 export const metadata: Metadata = {
-  title: { absolute: "Terms of Use | Orr Technologies" },
+  title: { absolute: "Terms of Use | VoidBuilds" },
   description: DESCRIPTION,
   alternates: { canonical: "/terms" },
   openGraph: {
@@ -64,7 +64,7 @@ export default function TermsPage() {
               The service
             </h2>
             <p className="mt-4">
-              Orr Technologies builds websites for small businesses. During beta, a complete website
+              VoidBuilds builds websites for small businesses. During beta, a complete website
               is offered at a flat price, paid once in crypto or with gift cards. Details of what is included are on
               the{" "}
               <Link href="/pricing" className="text-ember-200 underline underline-offset-4">
@@ -98,7 +98,7 @@ export default function TermsPage() {
             </h2>
             <p className="mt-4">
               When your project is delivered, the repository, code, and content are transferred to
-              you: it is your website and your intellectual property. Orr Technologies retains the
+              you: it is your website and your intellectual property. VoidBuilds retains the
               right to reuse its own general-purpose tooling, components, and know-how. This website
               itself is open source under the MIT License — see the LICENSE file in the repository.
             </p>
@@ -123,7 +123,7 @@ export default function TermsPage() {
             </h2>
             <p className="mt-4">
               Don&apos;t attempt to disrupt the site, abuse its APIs, scrape it in a way that
-              degrades it for others, or misrepresent affiliation with Orr Technologies. Automated
+              degrades it for others, or misrepresent affiliation with VoidBuilds. Automated
               crawling by search engines for indexing is welcome.
             </p>
           </div>
@@ -156,7 +156,7 @@ export default function TermsPage() {
               Limitation of liability
             </h2>
             <p className="mt-4">
-              To the maximum extent permitted by law, Orr Technologies is not liable for any
+              To the maximum extent permitted by law, VoidBuilds is not liable for any
               indirect, incidental, special, or consequential damages arising from your use of, or
               inability to use, this site or its services. Nothing in these terms limits liability
               that cannot be limited by law.

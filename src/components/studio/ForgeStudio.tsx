@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
-import EmberField from "@/components/fx/EmberField";
+import VoidDust from "@/components/fx/VoidDust";
 import Reveal from "@/components/fx/Reveal";
 import ActionButton from "@/components/ui/ActionButton";
 import { INDUSTRY_OPTIONS, type ForgeResult } from "@/lib/forge";
@@ -138,7 +138,7 @@ function MotifField({ motif, palette, seed }: { motif: ForgeResult["motif"]; pal
 
 function Preview({ result }: { result: ForgeResult }) {
   const [c0, c1, c2, c3, c4] = result.palette;
-  const url = `${slugify(result.brandName)}.preview/orr-${result.layoutSeed.toLowerCase()}`;
+  const url = `${slugify(result.brandName)}.preview/void-${result.layoutSeed.toLowerCase()}`;
 
   const heroText = (
     <div className={result.layout === "centered" ? "mx-auto max-w-xl text-center" : "max-w-md"}>
@@ -328,12 +328,12 @@ export default function ForgeStudio({ initial }: { initial: ForgeResult | null }
           body: JSON.stringify({ prompt: payload, industry: industry || undefined }),
         });
         const data = (await res.json()) as { ok?: boolean; result?: ForgeResult; error?: string };
-        if (!res.ok || !data.result) throw new Error(data.error ?? "Forge failed");
+        if (!res.ok || !data.result) throw new Error(data.error ?? "Studio failed");
         setResult(data.result);
         setRuns((r) => r + 1);
         trackEvent("forge_run", data.result.brandName, { seed: data.result.layoutSeed });
       } catch (e) {
-        setError(e instanceof Error ? e.message : "Forge unavailable.");
+        setError(e instanceof Error ? e.message : "Studio unavailable.");
       } finally {
         setLoading(false);
       }
@@ -430,7 +430,7 @@ export default function ForgeStudio({ initial }: { initial: ForgeResult | null }
         <div>
           <div className="relative overflow-hidden rounded-[1.75rem] border border-royal-300/12 glass p-5 sm:p-7">
             <div className="absolute inset-0 opacity-30" aria-hidden="true">
-              <EmberField variant="core" />
+              <VoidDust variant="core" />
             </div>
             <div className="relative">
               <div className="flex items-center justify-between">
@@ -503,7 +503,7 @@ export default function ForgeStudio({ initial }: { initial: ForgeResult | null }
                   <div className="mt-7 flex flex-wrap gap-3">
                     <ActionButton
                       href={purchaseMailto({
-                        planName: "Forge plan",
+                        planName: "Studio plan",
                         invoiceCode: result.layoutSeed,
                         notes: `Art direction locked to seed ${result.layoutSeed} (${result.brandName}, ${result.industryLabel}).`,
                       })}

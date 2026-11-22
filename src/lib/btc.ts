@@ -46,5 +46,5 @@ export function toBtc(usd: number, rate: number) {
 export function invoiceCode() {
   const stamp = Date.now().toString(36).toUpperCase().slice(-5);
   const rand = Math.random().toString(36).toUpperCase().slice(2, 5);
-  return `ORR-${stamp}${rand}`;
+  return `VB-${stamp}${rand}`;
 }

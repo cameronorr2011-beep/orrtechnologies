@@ -30,7 +30,7 @@ export function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Orr Technologies — Small business website guides</title>
+    <title>VoidBuilds — Small business website guides</title>
     <link>${pageUrl("/blog")}</link>
     <description>Plain-English guides on website design, ownership, privacy, pricing and promo videos for small business owners.</description>
     <language>en</language>

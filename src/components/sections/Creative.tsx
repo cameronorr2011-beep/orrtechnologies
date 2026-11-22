@@ -2,233 +2,129 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import ActionButton from "@/components/ui/ActionButton";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { CREATIVE_SERVICES, PAYMENT_METHODS } from "@/lib/content";
 
-const COUNT = CREATIVE_SERVICES.length;
-
 export default function Creative() {
-  const wrapRef = useRef<HTMLDivElement | null>(null);
-  const lastProgress = useRef(0);
   const [active, setActive] = useState(0);
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const el = wrapRef.current;
-    if (!el) return;
-
-    let raf = 0;
-    let pending = false;
-
-    const apply = () => {
-      pending = false;
-      const rect = el.getBoundingClientRect();
-      const span = Math.max(1, rect.height - window.innerHeight);
-      const next = Math.min(1, Math.max(0, -rect.top / span));
-      if (Math.abs(next - lastProgress.current) > 0.004) {
-        lastProgress.current = next;
-        setProgress(next);
-      }
-      const index = Math.min(COUNT - 1, Math.floor(next * COUNT));
-      setActive((current) => (current === index ? current : index));
-    };
-
-    const onScroll = () => {
-      if (pending) return;
-      pending = true;
-      raf = requestAnimationFrame(apply);
-    };
-
-    apply();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
-
-  const jump = (index: number) => {
-    const el = wrapRef.current;
-    if (!el) return;
-    const span = Math.max(1, el.offsetHeight - window.innerHeight);
-    const top = el.getBoundingClientRect().top + window.scrollY + ((index + 0.12) / COUNT) * span;
-    window.scrollTo({ top, behavior: "smooth" });
-  };
-
   const scene = CREATIVE_SERVICES[active];
 
   return (
-    <section id="studio" className="relative z-10 border-t border-royal-300/10 py-24 sm:py-32">
-      <div className="pointer-events-none absolute left-1/4 top-20 h-[420px] w-[420px] rounded-full bg-royal-600/12 blur-[130px]" />
-      <div className="pointer-events-none absolute right-0 top-1/2 h-[360px] w-[360px] rounded-full bg-ember-500/10 blur-[120px]" />
-
-      <div className="relative mx-auto max-w-[1280px] px-5 sm:px-8">
+    <section id="studio" className="relative border-t border-bone/10 py-24 sm:py-32">
+      <div className="mx-auto max-w-[1480px] px-5 sm:px-8">
         <SectionHeading
-          kicker="The studio — websites · films · ads · posters"
+          kicker="03 / The studio"
           title={
             <>
-              One studio, four ways to be seen:{" "}
-              <span className="text-ember-gradient">site, film, ad, poster.</span>
+              One studio.
+              <br />
+              <span className="text-ember-300">Four ways to be seen.</span>
             </>
           }
-          body="Every project starts the same way: you send what you have, we find the idea, and we build it out across whatever your business actually needs. A website alone, or the site plus the film, the ads and the poster that make people remember it."
+          body="Start with the site, or build the whole presence: the film, the ads that cut it up, the poster that goes on the wall. Same idea, four formats."
         />
 
-        <div ref={wrapRef} className="relative mt-14 h-[250vh] sm:h-[300vh]">
-          <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
-            <div className="w-full py-10 sm:py-12">
-              <div
-                className="relative mx-auto overflow-hidden rounded-[1.75rem] border border-royal-300/15 bg-royal-950/60"
-                style={{
-                  width: "min(100%, calc(min(60svh, 600px) * 1.6))",
-                  aspectRatio: "16 / 10",
-                  boxShadow: "0 60px 160px -60px rgba(226,118,47,0.4)",
-                }}
-              >
-                {CREATIVE_SERVICES.map((service, index) => {
-                  const on = index === active;
-                  return (
-                    <div
-                      key={service.id}
-                      className="absolute inset-0 transition-opacity duration-700 ease-out"
-                      style={{ opacity: on ? 1 : 0, visibility: on ? "visible" : "hidden" }}
-                      aria-hidden={!on}
-                    >
-                      <div
-                        className="absolute inset-0 transition-transform duration-[1400ms] ease-out"
-                        style={{ transform: `scale(${on ? 1.02 : 1.1}) translateY(${on ? 0 : 18}px)` }}
+        <div className="mt-14 grid gap-12 lg:grid-cols-[1fr_0.92fr] lg:gap-16">
+          <div>
+            <div className="border-t border-bone/10">
+              {CREATIVE_SERVICES.map((service, index) => {
+                const on = index === active;
+                return (
+                  <button
+                    key={service.id}
+                    type="button"
+                    onMouseEnter={() => setActive(index)}
+                    onFocus={() => setActive(index)}
+                    onClick={() => setActive(index)}
+                    aria-pressed={on}
+                    className="group flex w-full items-baseline justify-between gap-4 border-b border-bone/10 py-6 text-left"
+                  >
+                    <span className="flex min-w-0 items-baseline gap-4 sm:gap-6">
+                      <span
+                        className={`font-mono text-[0.58rem] tracking-[0.12em] transition-colors ${
+                          on ? "text-ember-300" : "text-bone/30"
+                        }`}
                       >
-                        <Image
-                          src={service.image}
-                          alt={service.alt}
-                          fill
-                          sizes="(max-width: 1024px) 100vw, 1140px"
-                          className="object-contain"
-                          priority={index === 0}
-                        />
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-void via-void/55 to-void/10" />
-                      <div className="absolute inset-0 bg-gradient-to-r from-void/75 via-transparent to-transparent" />
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span
+                        className={`font-display truncate text-[clamp(1.65rem,3.6vw,2.7rem)] font-semibold uppercase leading-[1.05] tracking-[-0.035em] transition-colors ${
+                          on ? "text-bone" : "text-bone/45 group-hover:text-bone/80"
+                        }`}
+                      >
+                        {service.name}
+                      </span>
+                    </span>
+                    <span className="shrink-0 font-mono text-[0.52rem] uppercase tracking-[0.14em] text-bone/35">
+                      {service.price}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
 
-                      <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-9">
-                        <div className="flex items-center justify-between font-mono text-[0.58rem] uppercase tracking-[0.26em] text-bone/60">
-                          <span>{service.kicker}</span>
-                          <span className="flex items-center gap-2 rounded-full border border-royal-300/20 bg-void/45 px-3 py-1.5 backdrop-blur-sm">
-                            0{index + 1} / 0{COUNT}
-                          </span>
-                        </div>
+            <div className="mt-8 max-w-xl">
+              <p className="text-[0.95rem] leading-relaxed text-bone/55">{scene.detail}</p>
+              <Link
+                href={scene.cta.href}
+                className="mt-5 inline-flex items-center gap-2 font-mono text-[0.6rem] uppercase tracking-[0.2em] text-ember-300 transition-colors hover:text-ember-200"
+              >
+                {scene.cta.label} →
+              </Link>
+            </div>
+          </div>
 
-                        <div className="max-w-[38rem]">
-                          <span className="font-mono text-[0.58rem] uppercase tracking-[0.28em] text-ember-200/80">
-                            {service.price}
-                          </span>
-                          <h3 className="font-display mt-2 text-[clamp(1.55rem,3.4vw,2.6rem)] font-semibold leading-[1.04] tracking-[-0.02em] text-bone">
-                            {service.name}
-                          </h3>
-                          <p className="mt-2.5 max-w-[32rem] text-[0.88rem] leading-relaxed text-bone/72">
-                            {service.line}
-                          </p>
-                          <Link
-                            href={service.cta.href}
-                            className="mt-6 inline-flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-ember-200 transition-colors hover:text-gold"
-                          >
-                            {service.cta.label}
-                            <span aria-hidden="true">→</span>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-
-                <div className="pointer-events-none absolute inset-x-6 bottom-0 h-[2px] bg-royal-300/15 sm:inset-x-9">
-                  <div
-                    className="h-full origin-left"
-                    style={{
-                      transform: `scaleX(${Math.max(0.02, progress)})`,
-                      background: "linear-gradient(90deg,#5B3AA8,#E2762F,#FFD9A0)",
-                    }}
+          <div>
+            <div className="relative aspect-[4/5] overflow-hidden border border-bone/10 bg-royal-950">
+              {CREATIVE_SERVICES.map((service, index) => (
+                <div
+                  key={service.id}
+                  className="absolute inset-0 transition-opacity duration-500"
+                  style={{ opacity: index === active ? 1 : 0 }}
+                  aria-hidden={index !== active}
+                >
+                  <Image
+                    src={service.image}
+                    alt={service.alt}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 44vw"
+                    className="plate object-cover"
+                    priority={index === 0}
                   />
                 </div>
-              </div>
-
-              <div className="mx-auto mt-5 grid w-full max-w-[1140px] grid-cols-2 gap-2.5 sm:grid-cols-4">
-                {CREATIVE_SERVICES.map((service, index) => {
-                  const on = index === active;
-                  return (
-                    <button
-                      key={service.id}
-                      type="button"
-                      onClick={() => jump(index)}
-                      aria-pressed={on}
-                      className={`group rounded-2xl border px-4 py-3 text-left transition-all duration-500 ${
-                        on
-                          ? "border-ember-300/45 bg-ember-500/[0.09]"
-                          : "border-royal-300/10 bg-royal-950/40 hover:border-royal-300/25"
-                      }`}
-                    >
-                      <span className="flex items-baseline justify-between gap-2">
-                        <span className={`text-[0.86rem] font-semibold ${on ? "text-bone" : "text-bone/65"}`}>
-                          {service.name}
-                        </span>
-                        <span className="font-mono text-[0.54rem] uppercase tracking-[0.14em] text-bone/35">
-                          0{index + 1}
-                        </span>
-                      </span>
-                      <span className="mt-1 block font-mono text-[0.55rem] uppercase tracking-[0.12em] text-bone/40">
-                        {service.price}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid gap-5 lg:grid-cols-3">
-          {scene.deliverables.map((item) => (
-            <div key={`${scene.id}-${item}`} className="glass flex items-start gap-3 rounded-2xl p-5">
-              <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-copper" />
-              <span className="text-[0.88rem] leading-relaxed text-bone/65">{item}</span>
-            </div>
-          ))}
-        </div>
-        <p className="mt-6 max-w-3xl text-[0.92rem] leading-relaxed text-bone/45">{scene.detail}</p>
-
-        <div className="mt-14 grid gap-6 rounded-[1.75rem] glass-warm p-7 sm:p-9 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div>
-            <p className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-ember-200/75">Payment</p>
-            <h3 className="font-display mt-3 text-[clamp(1.4rem,2.6vw,2rem)] font-semibold leading-tight text-bone">
-              Pay in crypto or gift cards. Your choice.
-            </h3>
-            <p className="mt-3 max-w-xl text-[0.9rem] leading-relaxed text-bone/55">
-              Bitcoin, Ethereum, USDT, or gift cards from Amazon, Apple, Steam, Google Play and Visa prepaid.
-              The exact amount is fixed on your invoice before you send anything.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              {PAYMENT_METHODS.map((method) => (
-                <span
-                  key={method.id}
-                  className="rounded-full border border-royal-300/15 bg-void/40 px-3.5 py-1.5 font-mono text-[0.58rem] uppercase tracking-[0.16em] text-bone/55"
-                >
-                  {method.name}
-                </span>
               ))}
+              <span className="absolute left-4 top-4 border border-bone/20 bg-void/80 px-2.5 py-1 font-mono text-[0.52rem] uppercase tracking-[0.18em] text-bone/70">
+                {scene.kicker}
+              </span>
+              <div className="absolute inset-x-0 bottom-0 border-t border-bone/15 bg-void/90 p-5 backdrop-blur-sm">
+                <p className="font-display text-[1.1rem] font-medium leading-snug text-bone">{scene.line}</p>
+              </div>
             </div>
+
+            <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2">
+              {scene.deliverables.map((item) => (
+                <li key={`${scene.id}-${item}`} className="flex items-start gap-2 text-[0.8rem] leading-snug text-bone/45">
+                  <span className="mt-1.5 h-1 w-1 shrink-0 bg-ember-300/70" aria-hidden="true" />
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="flex flex-col items-start gap-3 lg:items-end">
-            <ActionButton href="/checkout" event={{ name: "checkout_open", label: "creative_payment" }}>
-              Choose how you pay
-            </ActionButton>
-            <p className="font-mono text-[0.58rem] uppercase tracking-[0.14em] text-bone/35">
-              One payment · no subscriptions
+        </div>
+
+        <div className="mt-14 grid gap-6 border-t border-bone/10 pt-8 sm:grid-cols-[1fr_auto] sm:items-center">
+          <div>
+            <p className="font-mono text-[0.56rem] uppercase tracking-[0.2em] text-bone/35">Payment</p>
+            <p className="mt-2 max-w-2xl text-[0.92rem] leading-relaxed text-bone/55">
+              {PAYMENT_METHODS.map((m) => m.name).join(", ")}. One payment, fixed on your invoice before
+              anything is sent.
             </p>
           </div>
+          <ActionButton href="/checkout" variant="ghost" event={{ name: "checkout_open", label: "creative_payment" }}>
+            Choose how you pay
+          </ActionButton>
         </div>
       </div>
     </section>

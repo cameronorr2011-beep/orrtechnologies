@@ -1,5 +1,5 @@
 /**
- * Orr Cut — the project format shared by the browser editor and the agent API.
+ * Void Cut — the project format shared by the browser editor and the agent API.
  *
  * A project is deliberately small and plain JSON so an agent (or a subagent)
  * can write one without touching the DOM: aspect, grade, and an ordered list of
@@ -154,7 +154,7 @@ export function demoProject(): CutProject {
   return {
     version: 1,
     id: "cut-demo-orr",
-    title: "Orr Technologies — studio reel",
+    title: "VoidBuilds — studio reel",
     aspect: "16:9",
     grade: "ember",
     clips: [
@@ -162,10 +162,10 @@ export function demoProject(): CutProject {
         id: "clip-hero",
         name: "The build",
         kind: "image",
-        src: "/media/forge-hero.jpg",
+        src: "/media/art/facade.jpg",
         duration: 4,
         trimStart: 0,
-        headline: "Orr Technologies",
+        headline: "VoidBuilds",
         caption: "A website built like a film.",
       },
       {
@@ -221,7 +221,7 @@ export const AGENT_CONTRACT = `POST /api/cut
 Content-Type: application/json
 
 { "project": { "title": "...", "aspect": "16:9", "grade": "ember",
-  "clips": [ { "src": "/media/forge-hero.jpg", "kind": "image",
+  "clips": [ { "src": "/media/art/facade.jpg", "kind": "image",
                "duration": 4, "headline": "...", "caption": "..." } ] } }
 
 Returns { "ok": true, "project": { ...normalized project } }.

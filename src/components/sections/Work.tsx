@@ -2,93 +2,90 @@
 
 import Image from "next/image";
 import Reveal from "@/components/fx/Reveal";
-import Parallax from "@/components/fx/Parallax";
-import TiltCard from "@/components/fx/TiltCard";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ActionButton from "@/components/ui/ActionButton";
 import { CASE_STUDIES, purchaseMailto } from "@/lib/content";
 
 export default function Work() {
   return (
-    <section id="work" className="relative z-10 border-t border-royal-300/10 py-28 sm:py-36">
-      <div className="pointer-events-none absolute left-1/2 top-0 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-royal-600/12 blur-[130px]" />
-      <div className="relative mx-auto max-w-[1280px] px-5 sm:px-8">
-        <SectionHeading
-          kicker="Our work"
-          title={
-            <>
-              Small business websites, <span className="text-ember-gradient">real results</span>
-            </>
-          }
-          body="A few recent builds. Every one delivered to the client's own GitHub, paid once in crypto or gift cards, no monthly fees after launch."
-        />
+    <section id="work" className="relative border-t border-bone/10 py-24 sm:py-32">
+      <div className="mx-auto max-w-[1480px] px-5 sm:px-8">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <SectionHeading
+            kicker="02 / Selected builds"
+            title={
+              <>
+                Built to be
+                <br />
+                <span className="text-ember-300">believed.</span>
+              </>
+            }
+            body="Four recent projects, each delivered to the client's own repository and paid once. No retainer, no platform, no lock-in."
+          />
+          <p className="hidden shrink-0 font-mono text-[0.56rem] uppercase leading-relaxed tracking-[0.18em] text-bone/30 lg:block">
+            Recent work
+            <br />
+            01 — 04
+          </p>
+        </div>
 
-        <div className="mt-16 grid gap-8 lg:grid-cols-2">
+        <div className="mt-14 grid gap-x-8 gap-y-14 lg:grid-cols-2">
           {CASE_STUDIES.map((cs, i) => (
-            <Reveal key={cs.slug} delay={i * 90}>
-              <TiltCard className="h-full rounded-[1.75rem]" intensity={4}>
-                <article className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] glass">
-                  <div className="relative aspect-[16/10] overflow-hidden">
-                    <Parallax speed={0.035} className="absolute inset-[-6%]">
-                      <Image
-                        src={cs.image}
-                        alt={`Website design built for ${cs.client}`}
-                        fill
-                        sizes="(max-width: 1024px) 100vw, 50vw"
-                        className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.04]"
-                      />
-                    </Parallax>
-                    <div className="absolute inset-0 bg-gradient-to-t from-royal-950/95 via-royal-950/25 to-transparent" />
-                    <div className="absolute inset-x-6 bottom-5 flex items-center justify-between">
-                      <span className="font-mono text-[0.58rem] uppercase tracking-[0.26em] text-ember-100/75">
-                        {cs.sector}
-                      </span>
-                      <span className="h-px w-10 bg-ember-300/50 transition-all duration-500 group-hover:w-20" />
-                    </div>
-                  </div>
+            <Reveal key={cs.slug} delay={(i % 2) * 70}>
+              <article className="group">
+                <div className="relative aspect-[4/3] overflow-hidden border border-bone/10 bg-royal-950">
+                  <Image
+                    src={cs.image}
+                    alt={`Website design built for ${cs.client}`}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="plate object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.03]"
+                  />
+                  <span className="absolute left-4 top-4 border border-bone/20 bg-void/80 px-2.5 py-1 font-mono text-[0.52rem] uppercase tracking-[0.18em] text-bone/70">
+                    {cs.sector}
+                  </span>
+                </div>
 
-                  <div className="flex flex-1 flex-col p-7">
-                    <p className="font-mono text-[0.6rem] uppercase tracking-[0.28em] text-bone/40">
-                      {cs.client}
-                    </p>
-                    <h3 className="font-display mt-3 text-[1.35rem] font-semibold leading-snug text-bone">
-                      {cs.headline}
-                    </h3>
-                    <p className="mt-4 flex-1 text-[0.92rem] leading-relaxed text-bone/55">{cs.body}</p>
-                    <dl className="mt-7 grid grid-cols-3 gap-4 border-t border-royal-300/10 pt-6">
-                      {cs.metrics.map((m) => (
-                        <div key={m.label}>
-                          <dt className="font-display text-[1.35rem] font-semibold text-ember-200">{m.value}</dt>
-                          <dd className="mt-1.5 font-mono text-[0.56rem] uppercase leading-relaxed tracking-[0.18em] text-bone/38">
-                            {m.label}
-                          </dd>
-                        </div>
-                      ))}
-                    </dl>
-                  </div>
-                </article>
-              </TiltCard>
+                <div className="mt-5 flex items-baseline justify-between gap-4 border-b border-bone/10 pb-3">
+                  <p className="font-mono text-[0.56rem] uppercase tracking-[0.2em] text-bone/45">{cs.client}</p>
+                  <span className="font-mono text-[0.56rem] text-bone/25">0{i + 1}</span>
+                </div>
+
+                <h3 className="font-display mt-4 max-w-md text-[1.4rem] font-semibold leading-tight tracking-[-0.015em] text-bone">
+                  {cs.headline}
+                </h3>
+                <p className="mt-2 max-w-md text-[0.88rem] leading-relaxed text-bone/50">{cs.body}</p>
+
+                <dl className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
+                  {cs.metrics.map((m) => (
+                    <div key={m.label}>
+                      <dt className="font-display text-[1.15rem] font-semibold leading-none text-bone">{m.value}</dt>
+                      <dd className="mt-1.5 font-mono text-[0.52rem] uppercase tracking-[0.14em] text-bone/35">
+                        {m.label}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </article>
             </Reveal>
           ))}
         </div>
 
-        <Reveal delay={120}>
-          <div className="mt-14 flex flex-col items-start justify-between gap-6 rounded-3xl glass-warm p-8 sm:flex-row sm:items-center">
-            <div>
-              <p className="font-display text-[1.5rem] font-semibold text-bone">
-                Your business could be next.
-              </p>
-              <p className="mt-2 max-w-xl text-[0.92rem] text-bone/55">
-                Send us a short message about what you do. We reply with a plan and a start date — within one
-                business day.
-              </p>
-            </div>
+        <Reveal delay={100}>
+          <div className="mt-16 flex flex-col items-start justify-between gap-6 border-t border-bone/10 pt-8 sm:flex-row sm:items-center">
+            <p className="max-w-xl text-[0.92rem] leading-relaxed text-bone/50">
+              Send a short message about what your business does. You get a plan, a start date and a price
+              — within one business day.
+            </p>
             <ActionButton
-              href={purchaseMailto({ planName: "Website request", notes: "I'd like to talk about a website for my business." })}
+              href={purchaseMailto({
+                planName: "Website request",
+                notes: "I'd like to talk about a website for my business.",
+              })}
               external
               event={{ name: "purchase_click", label: "work_cta" }}
             >
-              Get started
+              Start a build
             </ActionButton>
           </div>
         </Reveal>

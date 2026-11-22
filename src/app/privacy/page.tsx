@@ -7,7 +7,7 @@ import { DEFAULT_OG_IMAGE, breadcrumbSchema, webPageSchema } from "@/lib/seo";
 const DESCRIPTION = `How ${SITE.name} handles information on ${SITE.domain}: what we collect, the cookies and local storage we use, and the choices you have.`;
 
 export const metadata: Metadata = {
-  title: { absolute: "Privacy Policy | Orr Technologies" },
+  title: { absolute: "Privacy Policy | VoidBuilds" },
   description: DESCRIPTION,
   alternates: { canonical: "/privacy" },
   openGraph: {
@@ -55,7 +55,7 @@ export default function PrivacyPage() {
         <div className="mt-12 space-y-10 text-[1rem] leading-relaxed text-bone/70">
           <p>
             This policy covers {SITE.domain} (the &ldquo;site&rdquo;), operated by
-            Orr Technologies. We built this site to respect privacy by default: no advertising
+            VoidBuilds. We built this site to respect privacy by default: no advertising
             trackers, no data sales, no social-media pixels.
           </p>
 

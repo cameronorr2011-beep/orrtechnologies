@@ -23,7 +23,7 @@ import {
 type Tab = "library" | "upload" | "agent";
 
 const LIBRARY = [
-  { src: "/media/forge-hero.jpg", label: "Forge hero" },
+  { src: "/media/art/facade.jpg", label: "Facade" },
   { src: "/media/showcase-lattice.jpg", label: "Lattice" },
   { src: "/media/showcase-resin.jpg", label: "Resin" },
   { src: "/media/showcase-vault.jpg", label: "Vault" },
@@ -253,7 +253,7 @@ export default function CutEditor({ initial }: { initial: CutProject }) {
       ctx.fillStyle = "#F4EFE9";
       ctx.textAlign = "right";
       ctx.font = `600 ${Math.round(unit * 0.018)}px ui-monospace, "Courier New", monospace`;
-      ctx.fillText("ORR · CUT", width - pad, pad + unit * 0.024);
+      ctx.fillText("VOID · CUT", width - pad, pad + unit * 0.024);
       ctx.restore();
 
       if (current.caption && alpha > 0.01) {
@@ -499,7 +499,7 @@ export default function CutEditor({ initial }: { initial: CutProject }) {
     window.setTimeout(() => URL.revokeObjectURL(url), 5000);
   };
 
-  const slug = project.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "orr-cut";
+  const slug = project.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "void-cut";
 
   const saveProject = () => {
     download(`${slug}.orr.json`, agentBrief(projectRef.current), "application/json");
@@ -833,7 +833,7 @@ export default function CutEditor({ initial }: { initial: CutProject }) {
                     onChange={(event) => setAgentJson(event.target.value)}
                     rows={7}
                     spellCheck={false}
-                    placeholder={'{\n  "title": "Launch cut",\n  "aspect": "9:16",\n  "clips": [\n    { "src": "/media/forge-hero.jpg", "duration": 4, "headline": "Orr", "caption": "Built like a film." }\n  ]\n}'}
+                    placeholder={'{\n  "title": "Launch cut",\n  "aspect": "9:16",\n  "clips": [\n    { "src": "/media/art/facade.jpg", "duration": 4, "headline": "Void", "caption": "Built like a film." }\n  ]\n}'}
                     className={`${field} mt-3 !px-3 !py-2 font-mono !text-[0.66rem] leading-relaxed`}
                   />
                   <div className="mt-2.5 flex flex-wrap gap-2">

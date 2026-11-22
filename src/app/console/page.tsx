@@ -3,7 +3,7 @@ import Link from "next/link";
 import { desc } from "drizzle-orm";
 import { db } from "@/db";
 import { events, forgeBuilds, inquiries, orders, subscribers } from "@/db/schema";
-import EmberField from "@/components/fx/EmberField";
+import VoidDust from "@/components/fx/VoidDust";
 import Reveal from "@/components/fx/Reveal";
 import CountUp from "@/components/fx/CountUp";
 import ActionButton from "@/components/ui/ActionButton";
@@ -13,7 +13,7 @@ import { SITE, purchaseMailto } from "@/lib/content";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: { absolute: "Client Console | Orr Technologies" },
+  title: { absolute: "Client Console | VoidBuilds" },
   description: "Operational view of briefs, invoices, compositions and the event stream.",
   robots: { index: false, follow: false },
 };
@@ -61,7 +61,7 @@ export default async function ConsolePage() {
     <>
       <section className="relative overflow-hidden pt-36 pb-12 sm:pt-44">
         <div className="absolute inset-0 z-0 opacity-60" aria-hidden="true">
-          <EmberField variant="core" />
+          <VoidDust variant="core" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-void/40 via-void/80 to-void" aria-hidden="true" />
         <div className="relative z-10 mx-auto flex max-w-[1280px] flex-col gap-8 px-5 sm:px-8 lg:flex-row lg:items-end lg:justify-between">
@@ -157,7 +157,7 @@ export default async function ConsolePage() {
             </Reveal>
 
             <Reveal delay={120}>
-              <Panel title="Forge compositions" note="Seeded art directions">
+              <Panel title="Studio compositions" note="Seeded art directions">
                 {builds.length === 0 ? (
                   <Empty text="No compositions logged. Run one in the Studio." />
                 ) : (

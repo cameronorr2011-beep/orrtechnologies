@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import EmberField from "@/components/fx/EmberField";
+import VoidDust from "@/components/fx/VoidDust";
 import Reveal from "@/components/fx/Reveal";
 import CheckoutFlow from "@/components/checkout/CheckoutFlow";
 import { getPlans } from "@/db/queries";
@@ -8,7 +8,7 @@ import { getPlans } from "@/db/queries";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: { absolute: "Checkout: Crypto or Gift Cards | Orr Technologies" },
+  title: { absolute: "Checkout: Crypto or Gift Cards | VoidBuilds" },
   description:
     "Get a one-time invoice and pay in Bitcoin, other crypto, or gift cards. $100 flat during beta. No subscriptions, no surprise charges.",
   robots: { index: false, follow: false },
@@ -21,7 +21,7 @@ export default async function CheckoutPage() {
     <>
       <section className="relative overflow-hidden pt-36 pb-14 sm:pt-44">
         <div className="absolute inset-0 z-0 opacity-80" aria-hidden="true">
-          <EmberField variant="core" />
+          <VoidDust variant="core" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-void/30 via-void/75 to-void" aria-hidden="true" />
         <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-8">

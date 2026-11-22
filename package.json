@@ -1,12 +1,13 @@
 {
-  "name": "nextjs-postgresql-template",
+  "name": "voidbuilds",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "studio": "node tools/studio-bridge/cli.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

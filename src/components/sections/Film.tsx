@@ -7,66 +7,57 @@ import { FILM } from "@/lib/content";
 
 export default function Film() {
   return (
-    <section
-      id="media"
-      className="relative z-10 overflow-hidden border-t border-royal-300/10 py-24 sm:py-32"
-    >
-      <div className="pointer-events-none absolute left-1/2 top-10 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-ember-500/10 blur-[140px]" />
+    <section id="media" className="relative border-t border-bone/10 py-24 sm:py-32">
+      <div className="mx-auto max-w-[1480px] px-5 sm:px-8">
+        <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+          <SectionHeading
+            kicker="04 / The film"
+            title={
+              <>
+                Made to be
+                <span className="text-ember-300"> seen.</span>
+              </>
+            }
+            body={FILM.body}
+          />
+          <p className="hidden font-mono text-[0.56rem] uppercase leading-relaxed tracking-[0.18em] text-bone/30 lg:block">
+            Original score
+            <br />
+            Written in-house
+          </p>
+        </div>
 
-      <div className="relative mx-auto max-w-[1280px] px-5 sm:px-8">
-        <SectionHeading
-          kicker={FILM.kicker}
-          title={
-            <>
-              Made to be <span className="text-ember-gradient">seen.</span>
-            </>
-          }
-          body={FILM.body}
-        />
+        <Reveal>
+          <div className="mt-12 border border-bone/12 bg-black">
+            <video
+              className="aspect-video w-full"
+              controls
+              playsInline
+              preload="metadata"
+              poster="/media/studio-film-poster.jpg"
+              aria-label="VoidBuilds studio film — 24 seconds"
+            >
+              <source src="/media/studio-film.mp4" type="video/mp4" />
+              Your browser cannot play this video.{" "}
+              <a href="/media/studio-film.mp4">Download the film</a>.
+            </video>
+          </div>
+        </Reveal>
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-[1.6fr_0.4fr] lg:items-start">
-          <Reveal>
-            <div className="overflow-hidden rounded-[1.5rem] border border-royal-300/15 bg-black shadow-[0_60px_160px_-70px_rgba(226,118,47,0.55)]">
-              <video
-                className="aspect-video w-full"
-                controls
-                playsInline
-                preload="metadata"
-                poster="/media/orr-film-poster.jpg"
-                aria-label="Orr Technologies brand film — 24 seconds"
-              >
-                <source src="/media/orr-made-to-be-seen.mp4" type="video/mp4" />
-                Your browser cannot play this video.{" "}
-                <a href="/media/orr-made-to-be-seen.mp4">Download the film</a>.
-              </video>
+        <div className="mt-8 grid gap-8 border-t border-bone/10 pt-7 sm:grid-cols-3">
+          {FILM.specs.map((spec) => (
+            <div key={spec.label}>
+              <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-bone/35">{spec.label}</p>
+              <p className="mt-2 text-[0.92rem] text-bone/75">{spec.value}</p>
             </div>
-          </Reveal>
+          ))}
+        </div>
 
-          <Reveal delay={100}>
-            <div className="flex flex-col gap-6">
-              <dl className="divide-y divide-royal-300/10 border-y border-royal-300/10">
-                {FILM.specs.map((spec) => (
-                  <div key={spec.label} className="flex items-baseline justify-between gap-4 py-3">
-                    <dt className="font-mono text-[0.56rem] uppercase tracking-[0.2em] text-bone/35">
-                      {spec.label}
-                    </dt>
-                    <dd className="text-right text-[0.84rem] text-bone/75">{spec.value}</dd>
-                  </div>
-                ))}
-              </dl>
-
-              <p className="text-[0.88rem] leading-relaxed text-bone/50">{FILM.note}</p>
-
-              <div>
-                <ActionButton href="/#pricing" event={{ name: "nav", label: "film_cta" }}>
-                  Get the website
-                </ActionButton>
-                <p className="mt-3 font-mono text-[0.56rem] uppercase tracking-[0.16em] text-bone/35">
-                  Film included · no extra charge
-                </p>
-              </div>
-            </div>
-          </Reveal>
+        <div className="mt-8 flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-center">
+          <p className="max-w-xl text-[0.86rem] leading-relaxed text-bone/40">{FILM.note}</p>
+          <ActionButton href="/#pricing" event={{ name: "nav", label: "film_cta" }}>
+            Get the website
+          </ActionButton>
         </div>
       </div>
     </section>

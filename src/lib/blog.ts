@@ -46,7 +46,7 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: "What you can safely ignore",
         paragraphs: [
           "You don't need a video background, a chatbot, or the latest design trend. Most of those things slow your site down and add nothing. A clean, fast site with clear words will outperform a flashy one in almost every business.",
-          "This is how we build every site at Orr Technologies: clear, fast, and focused on what your customers need. If that sounds right to you, our $100 beta package might be a good fit.",
+          "This is how we build every site at VoidBuilds: clear, fast, and focused on what your customers need. If that sounds right to you, our $100 beta package might be a good fit.",
         ],
       },
     ],
@@ -55,7 +55,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "why-you-should-own-your-website",
     title: "Why You Should Own Your Website",
     description:
-      "Many small businesses rent their website without knowing it. Here's how to check who owns the files, and why every Orr site is delivered to your GitHub.",
+      "Many small businesses rent their website without knowing it. Here's how to check who owns the files, and why every VoidBuilds site is delivered to your GitHub.",
     date: "2026-08-24",
     readMinutes: 5,
     tag: "Ownership",
@@ -206,7 +206,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "your-website-should-come-with-a-video",
     title: "Why Your Website Needs a Promo Video",
     description:
-      "A short video sells better than a block of text. Here's why every Orr website includes a promo video made from your photos and clips, at no extra cost.",
+      "A short video sells better than a block of text. Here's why every VoidBuilds website includes a promo video made from your photos and clips, at no extra cost.",
     date: "2026-09-07",
     readMinutes: 4,
     tag: "Free video",

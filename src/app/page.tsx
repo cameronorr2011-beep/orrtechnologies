@@ -4,7 +4,7 @@ import Capabilities from "@/components/sections/Capabilities";
 import Creative from "@/components/sections/Creative";
 import Work from "@/components/sections/Work";
 import Film from "@/components/sections/Film";
-import SigilBand from "@/components/sections/SigilBand";
+import Manifesto from "@/components/sections/Manifesto";
 import Voices from "@/components/sections/Voices";
 import Process from "@/components/sections/Process";
 import PricingTable from "@/components/sections/PricingTable";
@@ -25,9 +25,9 @@ import {
 // catalog still refreshes without a redeploy.
 export const revalidate = 3600;
 
-const TITLE = "Websites, Promo Films, Ads & Posters | Orr Technologies";
+const TITLE = "VoidBuilds — websites, promo films, ads & posters";
 const DESCRIPTION =
-  "Custom websites from $100 flat, plus cinematic promo films, ads and posters for small businesses. Pay in crypto or gift cards, and own the code.";
+  "Custom websites from $100 flat, plus cinematic promo films, ads and posters for small businesses. Paid once in crypto or gift cards, and the code is yours.";
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },
@@ -49,17 +49,17 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "/",
-    siteName: "Orr Technologies",
-    title: "Websites, Promo Films, Ads & Posters",
+    siteName: "VoidBuilds",
+    title: "Websites, promo films, ads & posters",
     description:
-      "Custom websites from $100 flat, with a promo film included — plus ads and posters. Pay in crypto or gift cards, and own the code.",
+      "Custom websites from $100 flat, with a promo film included — plus ads and posters. Paid once, and you own the code.",
     images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Websites, Promo Films, Ads & Posters | Orr Technologies",
+    title: "VoidBuilds — websites, promo films, ads & posters",
     description:
-      "$100 flat during beta. You own the code, a promo film is included, and ads or posters are quoted per project. Pay in crypto or gift cards.",
+      "$100 flat during beta. You own the code, a promo film is included, and ads or posters are quoted per project.",
     images: [DEFAULT_OG_IMAGE.url],
   },
 };
@@ -88,7 +88,7 @@ export default async function HomePage() {
       <Work />
       <Creative />
       <Film />
-      <SigilBand />
+      <Manifesto />
       <Process />
       <Voices />
       <PricingTable plans={plans} />

@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/fx/Reveal";
-import EmberField from "@/components/fx/EmberField";
+import VoidDust from "@/components/fx/VoidDust";
 import ActionButton from "@/components/ui/ActionButton";
 import JsonLd from "@/components/seo/JsonLd";
 import { BLOG_POSTS, formatDate, getPostBySlug } from "@/lib/blog";
@@ -89,7 +89,7 @@ export default async function BlogPostPage({
       <JsonLd data={jsonLd} />
       <article className="relative overflow-hidden pt-36 pb-16 sm:pt-44">
         <div className="absolute inset-x-0 top-0 z-0 h-[420px] opacity-60" aria-hidden="true">
-          <EmberField variant="core" />
+          <VoidDust variant="core" />
         </div>
         <div className="absolute inset-x-0 top-0 z-[1] h-[420px] bg-gradient-to-b from-transparent via-void/70 to-void" aria-hidden="true" />
 
@@ -120,7 +120,7 @@ export default async function BlogPostPage({
               <span className="rounded-full border border-ember-200/25 bg-ember-500/10 px-3 py-1 text-ember-100/85">
                 {post.tag}
               </span>
-              <span>By Orr Technologies</span>
+              <span>By VoidBuilds</span>
               <span>·</span>
               <span>{formatDate(post.date)}</span>
               <span>·</span>

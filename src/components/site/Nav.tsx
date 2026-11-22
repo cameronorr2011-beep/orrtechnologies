@@ -2,73 +2,57 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Sigil from "@/components/brand/Sigil";
+import VoidMark from "@/components/brand/VoidMark";
 import ActionButton from "@/components/ui/ActionButton";
-import { NAV_LINKS, SITE, purchaseMailto } from "@/lib/content";
-
-function phaseFor(hour: number) {
-  if (hour < 5) return { label: "Deep Reign", note: "royal bias" };
-  if (hour < 8) return { label: "First Ember", note: "warming" };
-  if (hour < 12) return { label: "High Forge", note: "peak warmth" };
-  if (hour < 16) return { label: "Copper Noon", note: "balanced" };
-  if (hour < 19) return { label: "Maple Hour", note: "amber bias" };
-  return { label: "Dusk Court", note: "cooling" };
-}
+import { NAV_LINKS, purchaseMailto } from "@/lib/content";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [clock, setClock] = useState<string>("");
-  const [phase, setPhase] = useState<{ label: string; note: string }>({ label: "—", note: "" });
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 12);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-
-    const tick = () => {
-      const now = new Date();
-      setClock(
-        now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "UTC", hour12: false }),
-      );
-      setPhase(phaseFor(now.getHours() + now.getMinutes() / 60));
-    };
-    tick();
-    const iv = window.setInterval(tick, 20_000);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.clearInterval(iv);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   return (
     <header className="fixed inset-x-0 top-0 z-[65]">
       <div
-        className={`transition-all duration-500 ${
+        className={`transition-colors duration-300 ${
           scrolled
-            ? "border-b border-royal-300/10 bg-void/72 backdrop-blur-2xl shadow-[0_20px_60px_-30px_rgba(0,0,0,0.9)]"
-            : "border-b border-transparent"
+            ? "border-b border-bone/10 bg-void/95 backdrop-blur-md"
+            : "border-b border-transparent bg-transparent"
         }`}
       >
-        <nav className="mx-auto flex max-w-[1280px] items-center justify-between gap-6 px-5 py-3.5 sm:px-8">
-          <Link href="/" className="group flex items-center gap-3" aria-label="Orr Technologies home">
-            <Sigil size={38} />
-            <span className="leading-none">
-              <span className="font-display block text-[1.02rem] font-semibold tracking-tight text-bone">
-                Orr<span className="text-ember-300">Technologies</span>
-              </span>
-              <span className="block font-mono text-[0.58rem] uppercase tracking-[0.34em] text-bone/40">
-                Websites · Film · Ads · Posters
-              </span>
+        <nav className="mx-auto flex h-[68px] max-w-[1480px] items-center justify-between gap-6 px-5 sm:px-8">
+          <Link
+            href="/"
+            className="group flex items-center gap-3"
+            aria-label="VoidBuilds home"
+            onClick={() => setOpen(false)}
+          >
+            <VoidMark size={30} className="shrink-0" />
+            <span className="font-display flex items-baseline text-[0.92rem] leading-none text-bone">
+              <span className="font-extrabold tracking-[-0.03em]">VOID</span>
+              <span className="font-light tracking-[0.12em]">BUILDS</span>
             </span>
           </Link>
 
-          <div className="hidden items-center gap-1 lg:flex">
+          <div className="hidden items-center gap-7 lg:flex">
             {NAV_LINKS.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
-                className="ember-underline rounded-md px-3.5 py-2 text-[0.8rem] font-medium tracking-wide text-bone/70 transition-colors hover:text-bone"
+                className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-bone/55 transition-colors hover:text-bone"
               >
                 {l.label}
               </Link>
@@ -76,27 +60,13 @@ export default function Nav() {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="hidden items-center gap-2.5 rounded-full border border-royal-300/12 bg-royal-950/50 px-3.5 py-1.5 xl:flex">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ember-400 opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-ember-300" />
-              </span>
-              <span className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-bone/55">
-                {phase.label} · {clock} UTC
-              </span>
-            </div>
-
             <ActionButton
               href={purchaseMailto({ planName: "Your website" })}
               external
               event={{ name: "purchase_click", label: "nav_purchase_website" }}
-              className="!px-5 !py-3 !text-[0.7rem]"
+              className="max-sm:hidden !px-5 !py-3 !text-[0.62rem]"
             >
-              Purchase
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M3 9l9-6 9 6v11a1 1 0 01-1 1H4a1 1 0 01-1-1V9z" stroke="currentColor" strokeWidth="1.6" />
-                <path d="M9 21V12h6v9" stroke="currentColor" strokeWidth="1.6" />
-              </svg>
+              $100 build
             </ActionButton>
 
             <button
@@ -104,17 +74,23 @@ export default function Nav() {
               onClick={() => setOpen((v) => !v)}
               aria-label="Toggle menu"
               aria-expanded={open}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-royal-300/15 text-bone/75 lg:hidden"
+              className="flex h-10 w-10 items-center justify-center border border-bone/20 text-bone/80 lg:hidden"
             >
               <span className="relative block h-3 w-4">
                 <span
-                  className={`absolute left-0 h-[1.5px] w-4 bg-current transition-all ${open ? "top-1.5 rotate-45" : "top-0"}`}
+                  className={`absolute left-0 h-[1.5px] w-4 bg-current transition-all ${
+                    open ? "top-1.5 rotate-45" : "top-0"
+                  }`}
                 />
                 <span
-                  className={`absolute left-0 top-1.5 h-[1.5px] w-4 bg-current transition-all ${open ? "opacity-0" : "opacity-100"}`}
+                  className={`absolute left-0 top-1.5 h-[1.5px] w-4 bg-current transition-all ${
+                    open ? "opacity-0" : "opacity-100"
+                  }`}
                 />
                 <span
-                  className={`absolute left-0 h-[1.5px] w-4 bg-current transition-all ${open ? "top-1.5 -rotate-45" : "top-3"}`}
+                  className={`absolute left-0 h-[1.5px] w-4 bg-current transition-all ${
+                    open ? "top-1.5 -rotate-45" : "top-3"
+                  }`}
                 />
               </span>
             </button>
@@ -123,25 +99,30 @@ export default function Nav() {
       </div>
 
       <div
-        className={`overflow-hidden border-b border-royal-300/10 bg-void/95 backdrop-blur-2xl transition-all duration-500 lg:hidden ${
-          open ? "max-h-[520px] opacity-100" : "max-h-0 opacity-0"
+        className={`overflow-hidden border-b border-bone/10 bg-void transition-all duration-400 lg:hidden ${
+          open ? "max-h-[560px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="mx-auto flex max-w-[1280px] flex-col gap-1 px-5 py-5 sm:px-8">
+        <div className="mx-auto flex max-w-[1480px] flex-col px-5 pb-8 pt-3 sm:px-8">
           {NAV_LINKS.map((l) => (
             <Link
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="rounded-xl px-4 py-3 text-sm font-medium text-bone/75 transition-colors hover:bg-royal-900/60 hover:text-bone"
+              className="flex items-center justify-between border-b border-bone/8 py-4 font-display text-[1.35rem] font-medium uppercase tracking-[-0.01em] text-bone/85 transition-colors hover:text-bone"
             >
               {l.label}
+              <span className="font-mono text-[0.6rem] text-bone/30">↗</span>
             </Link>
           ))}
-          <div className="mt-3 flex flex-col gap-2 border-t border-royal-300/10 pt-4 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-bone/45">
-            <span>Atmosphere · {phase.label} ({phase.note})</span>
-            <a href={`mailto:${SITE.email}`} className="text-ember-200/80">{SITE.emailDisplay}</a>
-          </div>
+          <ActionButton
+            href={purchaseMailto({ planName: "Your website" })}
+            external
+            event={{ name: "purchase_click", label: "mobile_nav_purchase" }}
+            className="mt-6 w-full"
+          >
+            Start your build — $100
+          </ActionButton>
         </div>
       </div>
     </header>

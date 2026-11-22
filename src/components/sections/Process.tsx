@@ -6,74 +6,43 @@ import { PROCESS } from "@/lib/content";
 
 export default function Process() {
   return (
-    <section id="process" className="relative z-10 border-t border-royal-300/10 py-28 sm:py-36">
-      <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
-        <SectionHeading
-          kicker="How it works"
-          title={
-            <>
-              How we build your website <span className="text-ember-gradient">in four steps</span>
-            </>
-          }
-          body="From your first email to owning your finished site, usually inside two weeks. You always know what's happening and what you get next."
-        />
-
-        <div className="relative mt-16">
-          <svg
-            className="absolute left-0 right-0 top-[54px] hidden h-2 w-full md:block"
-            viewBox="0 0 1200 8"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            <line x1="0" y1="4" x2="1200" y2="4" stroke="rgba(166,143,240,0.18)" strokeWidth="1" />
-            <line
-              x1="0"
-              y1="4"
-              x2="1200"
-              y2="4"
-              stroke="url(#proc)"
-              strokeWidth="2"
-              className="dashed-flow"
-              style={{ filter: "drop-shadow(0 0 6px rgba(226,118,47,0.7))" }}
-            />
-            <defs>
-              <linearGradient id="proc" x1="0" x2="1">
-                <stop offset="0" stopColor="#5B3AA8" />
-                <stop offset="0.5" stopColor="#E2762F" />
-                <stop offset="1" stopColor="#FFD9A0" />
-              </linearGradient>
-            </defs>
-          </svg>
-
-          <ol className="grid gap-10 md:grid-cols-4 md:gap-6">
-            {PROCESS.map((p, i) => (
-              <Reveal key={p.step} delay={i * 110}>
-                <li className="relative">
-                  <div className="relative z-10 flex h-[76px] items-center">
-                    <span className="relative flex h-[52px] w-[52px] items-center justify-center rounded-full border border-ember-200/25 bg-void">
-                      <span
-                        className="absolute inset-0 rounded-full opacity-60 animate-pulse-glow"
-                        style={{
-                          background:
-                            "radial-gradient(circle, rgba(226,118,47,0.35), transparent 70%)",
-                          animationDelay: `${i * 0.6}s`,
-                        }}
-                      />
-                      <span className="font-mono text-[0.78rem] tracking-[0.1em] text-ember-100">{p.step}</span>
-                    </span>
-                  </div>
-                  <p className="font-mono text-[0.58rem] uppercase tracking-[0.3em] text-bone/35">
-                    {p.duration}
-                  </p>
-                  <h3 className="font-display mt-3 text-[1.3rem] font-semibold text-bone">
-                    <span className="text-ember-300/80">{p.label}</span> · {p.title}
-                  </h3>
-                  <p className="mt-3 text-[0.9rem] leading-relaxed text-bone/55">{p.body}</p>
-                </li>
-              </Reveal>
-            ))}
-          </ol>
+    <section id="process" className="relative border-t border-bone/10 py-24 sm:py-32">
+      <div className="mx-auto max-w-[1480px] px-5 sm:px-8">
+        <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+          <SectionHeading
+            kicker="06 / Process"
+            title={
+              <>
+                Four steps.
+                <br />
+                <span className="text-ember-300">No theatre.</span>
+              </>
+            }
+            body="From your first message to owning the finished site, usually inside two weeks. You always know what happens next."
+          />
+          <p className="hidden font-mono text-[0.56rem] uppercase leading-relaxed tracking-[0.18em] text-bone/30 lg:block">
+            Start to handover
+            <br />
+            10 — 14 days
+          </p>
         </div>
+
+        <ol className="mt-14 border-t border-bone/10">
+          {PROCESS.map((p, i) => (
+            <Reveal key={p.step} delay={i * 55}>
+              <li className="grid gap-4 border-b border-bone/10 py-8 sm:grid-cols-[4rem_1fr_1.15fr] sm:gap-8 sm:py-10">
+                <span className="font-mono text-[0.62rem] tracking-[0.12em] text-ember-300/85">{p.step}</span>
+                <div>
+                  <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-bone/35">{p.duration}</p>
+                  <h3 className="font-display mt-2 text-[clamp(1.25rem,2.2vw,1.6rem)] font-semibold uppercase leading-tight tracking-[-0.02em] text-bone">
+                    {p.label} — {p.title}
+                  </h3>
+                </div>
+                <p className="max-w-xl text-[0.92rem] leading-relaxed text-bone/50 sm:pt-6">{p.body}</p>
+              </li>
+            </Reveal>
+          ))}
+        </ol>
       </div>
     </section>
   );

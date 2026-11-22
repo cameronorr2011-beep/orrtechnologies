@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/fx/Reveal";
-import EmberField from "@/components/fx/EmberField";
+import VoidDust from "@/components/fx/VoidDust";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ActionButton from "@/components/ui/ActionButton";
 import JsonLd from "@/components/seo/JsonLd";
@@ -18,7 +18,7 @@ const DESCRIPTION =
   "Practical, plain-English guides on website design, ownership, privacy, pricing and promo videos for small business owners. No jargon, no sales pitch.";
 
 export const metadata: Metadata = {
-  title: { absolute: "Small Business Website Guides | Orr Technologies" },
+  title: { absolute: "Small Business Website Guides | VoidBuilds" },
   description: DESCRIPTION,
   keywords: [
     "small business website guide",
@@ -32,16 +32,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "/blog",
-    siteName: "Orr Technologies",
+    siteName: "VoidBuilds",
     title: "Small Business Website Guides",
     description: DESCRIPTION,
-    images: [{ url: "/media/forge-hero.jpg", width: 1200, height: 630, alt: "Orr Technologies website guides" }],
+    images: [{ url: "/media/voidbuilds-og.jpg", width: 1200, height: 630, alt: "VoidBuilds website guides" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Small Business Website Guides | Orr Technologies",
+    title: "Small Business Website Guides | VoidBuilds",
     description: DESCRIPTION,
-    images: ["/media/forge-hero.jpg"],
+    images: ["/media/voidbuilds-og.jpg"],
   },
 };
 
@@ -70,7 +70,7 @@ export default function BlogIndexPage() {
       <JsonLd data={jsonLd} />
       <section className="relative overflow-hidden pt-36 pb-16 sm:pt-44">
         <div className="absolute inset-0 z-0 opacity-70" aria-hidden="true">
-          <EmberField variant="core" />
+          <VoidDust variant="core" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-void/70 to-void" aria-hidden="true" />
         <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-8">

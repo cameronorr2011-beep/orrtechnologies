@@ -11,10 +11,10 @@ export const GITHUB_URL = SITE.github;
 export const CONTENT_UPDATED = "2026-11-21";
 
 export const DEFAULT_OG_IMAGE = {
-  url: "/media/forge-hero.jpg",
+  url: "/media/voidbuilds-og.jpg",
   width: 1200,
   height: 630,
-  alt: "Orr Technologies builds custom small business websites for $100",
+  alt: "VoidBuilds — a website with gravity. $100 flat, paid once.",
 };
 
 export const SITE_KEYWORDS = [
@@ -46,7 +46,7 @@ export function organizationSchema() {
     legalName: SITE.legalName,
     url: SITE_URL,
     description:
-      "Orr Technologies designs and builds custom websites for small businesses: $100 flat during beta, or $500 for a site that needs a backend. Copy, contact form, blog and a free promo video are included, and the finished code is delivered to the client's GitHub.",
+      "VoidBuilds designs and builds custom websites for small businesses: $100 flat during beta, or $500 for a site that needs a backend. Copy, contact form, blog and a free promo video are included, and the finished code is delivered to the client's GitHub.",
     email: SITE.email,
     image: absoluteUrl(DEFAULT_OG_IMAGE.url),
     logo: {
@@ -138,7 +138,7 @@ export function serviceSchema(plans: OfferPlan[]) {
     name: "Small business website design and development",
     serviceType: "Small business website design and development",
     description:
-      "Custom websites for small businesses, written and built by Orr Technologies. The standard plan is $100 flat during beta; the Dynamic Website plan is $500 for projects that need a backend, database, accounts or APIs. Both are one-time prices paid in Bitcoin.",
+      "Custom websites for small businesses, written and built by VoidBuilds. The standard plan is $100 flat during beta; the Dynamic Website plan is $500 for projects that need a backend, database, accounts or APIs. Both are one-time prices paid in Bitcoin.",
     provider: { "@id": ORG_ID },
     areaServed: "Worldwide",
     offers: plans.map((plan) => ({
@@ -220,12 +220,12 @@ export function webApplicationSchema() {
   return {
     "@type": "WebApplication",
     "@id": `${url}#app`,
-    name: "Forge Studio",
+    name: "Void Studio",
     url,
     applicationCategory: "DesignApplication",
     operatingSystem: "Web browser",
     description:
-      "A seeded demo of the Orr composition engine: describe a business and see the art direction, layout grammar, motif and opening copy behind a custom website build.",
+      "A seeded demo of the VoidBuilds composition engine: describe a business and see the art direction, layout grammar, motif and opening copy behind a custom website build.",
     isPartOf: { "@id": WEBSITE_ID },
     offers: {
       "@type": "Offer",

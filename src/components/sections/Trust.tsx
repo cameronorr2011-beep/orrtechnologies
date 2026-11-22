@@ -15,63 +15,63 @@ const LEDGER = [
 
 export default function Trust() {
   return (
-    <section id="trust" className="relative z-10 border-t border-royal-300/10 py-28 sm:py-36">
-      <div className="pointer-events-none absolute right-0 top-24 h-[380px] w-[380px] rounded-full bg-copper/10 blur-[120px]" />
-      <div className="relative mx-auto max-w-[1280px] px-5 sm:px-8">
-        <div className="grid gap-16 lg:grid-cols-[1fr_1fr] lg:gap-20">
+    <section id="trust" className="relative border-t border-bone/10 py-24 sm:py-32">
+      <div className="mx-auto max-w-[1480px] px-5 sm:px-8">
+        <div className="grid gap-16 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
           <div>
             <SectionHeading
-              kicker="Fair deal"
+              kicker="09 / The deal"
               title={
                 <>
-                  Simple terms, <span className="text-ember-gradient">no fine print</span>
+                  Plain terms.
+                  <br />
+                  <span className="text-ember-300">No fine print.</span>
                 </>
               }
-              body="One price, paid once. You own what we build. Your visitors' privacy is respected. Here's exactly how it works, step by step."
+              body="One price, paid once. You own what we build. Your visitors keep their privacy. Here is exactly what that means."
             />
 
-            <Reveal delay={160}>
-              <dl className="mt-12 divide-y divide-royal-300/10 border-y border-royal-300/10">
+            <Reveal delay={120}>
+              <dl className="mt-10 divide-y divide-bone/10 border-y border-bone/10">
                 {LEDGER.map((row) => (
-                  <div key={row.k} className="flex items-baseline justify-between gap-6 py-4">
-                    <dt className="text-[0.95rem] font-medium text-bone/85">{row.k}</dt>
-                    <dd className="text-right font-mono text-[0.68rem] uppercase tracking-[0.14em] text-bone/45">
+                  <div key={row.k} className="flex items-baseline justify-between gap-6 py-3.5">
+                    <dt className="text-[0.9rem] text-bone/75">{row.k}</dt>
+                    <dd className="text-right font-mono text-[0.6rem] uppercase tracking-[0.14em] text-bone/40">
                       {row.v}
                     </dd>
                   </div>
                 ))}
                 <div className="flex items-baseline justify-between gap-6 py-4">
-                  <dt className="font-display text-[1.05rem] font-semibold text-bone">Total, paid once</dt>
-                  <dd className="font-display text-[1.35rem] font-semibold text-ember-200">$100</dd>
+                  <dt className="font-display text-[1rem] font-semibold uppercase tracking-[-0.01em] text-bone">
+                    Total, paid once
+                  </dt>
+                  <dd className="font-display text-[1.5rem] font-extrabold leading-none tracking-[-0.04em] text-ember-300">
+                    $100
+                  </dd>
                 </div>
               </dl>
-              <p className="mt-4 font-mono text-[0.58rem] uppercase tracking-[0.16em] text-bone/35">
+              <p className="mt-4 font-mono text-[0.54rem] uppercase tracking-[0.16em] text-bone/30">
                 No deposit · no subscription · no renewal
               </p>
             </Reveal>
 
-            <Reveal delay={220}>
-              <div className="mt-10 rounded-3xl border border-ember-200/15 bg-gradient-to-br from-royal-900/70 to-void p-7">
-                <p className="font-mono text-[0.6rem] uppercase tracking-[0.28em] text-ember-200/70">
-                  Paying your way
-                </p>
-                <div className="mt-3 flex flex-wrap gap-1.5">
+            <Reveal delay={180}>
+              <div className="mt-10 border border-bone/12 p-6">
+                <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-bone/35">Paying your way</p>
+                <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
                   {PAYMENT_METHODS.map((method) => (
-                    <span
-                      key={method.id}
-                      className="rounded-full border border-royal-300/20 px-2.5 py-1 font-mono text-[0.55rem] uppercase tracking-[0.12em] text-bone/65"
-                    >
+                    <span key={method.id} className="font-mono text-[0.6rem] uppercase tracking-[0.12em] text-bone/60">
                       {method.name}
                     </span>
                   ))}
                 </div>
-                <p className="mt-4 text-[0.88rem] leading-relaxed text-bone/50">{SITE.btcMemo}</p>
+                <p className="mt-4 text-[0.86rem] leading-relaxed text-bone/45">{SITE.btcMemo}</p>
                 <div className="mt-6 flex flex-wrap gap-3">
                   <ActionButton
                     href={purchaseMailto({ planName: "Website request" })}
                     external
                     event={{ name: "purchase_click", label: "trust_btc_invoice" }}
-                    className="!px-5 !py-3 !text-[0.7rem]"
+                    className="!px-5 !py-3 !text-[0.62rem]"
                   >
                     Get started
                   </ActionButton>
@@ -79,7 +79,7 @@ export default function Trust() {
                     href="/checkout"
                     variant="ghost"
                     event={{ name: "checkout_open", label: "trust_checkout" }}
-                    className="!px-5 !py-3 !text-[0.7rem]"
+                    className="!px-5 !py-3 !text-[0.62rem]"
                   >
                     How payment works
                   </ActionButton>
@@ -88,22 +88,17 @@ export default function Trust() {
             </Reveal>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:mt-4">
+          <div className="grid gap-x-10 sm:grid-cols-2">
             {TRUST.map((t, i) => (
-              <Reveal key={t.title} delay={i * 90}>
-                <div className="glass edge-glow h-full rounded-3xl p-7">
-                  <span
-                    className="mb-6 block h-10 w-10 rounded-xl"
-                    style={{
-                      background:
-                        i % 2 === 0
-                          ? "linear-gradient(140deg,rgba(226,118,47,0.35),rgba(91,58,168,0.25))"
-                          : "linear-gradient(140deg,rgba(124,90,214,0.35),rgba(255,217,160,0.18))",
-                      boxShadow: "inset 0 0 0 1px rgba(255,217,160,0.16)",
-                    }}
-                  />
-                  <h3 className="font-display text-[1.2rem] font-semibold text-bone">{t.title}</h3>
-                  <p className="mt-3 text-[0.88rem] leading-relaxed text-bone/55">{t.body}</p>
+              <Reveal key={t.title} delay={i * 45}>
+                <div className="border-t border-bone/12 py-6">
+                  <span className="font-mono text-[0.54rem] tracking-[0.14em] text-bone/25">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="font-display mt-3 text-[1.08rem] font-semibold uppercase tracking-[-0.01em] text-bone">
+                    {t.title}
+                  </h3>
+                  <p className="mt-2.5 text-[0.86rem] leading-relaxed text-bone/50">{t.body}</p>
                 </div>
               </Reveal>
             ))}

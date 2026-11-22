@@ -1,80 +1,68 @@
 "use client";
 
-import EmberField from "@/components/fx/EmberField";
+import Image from "next/image";
 import Reveal from "@/components/fx/Reveal";
-import TiltCard from "@/components/fx/TiltCard";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { CAPABILITIES } from "@/lib/content";
 
 export default function Capabilities() {
   return (
-    <section id="capabilities" className="relative z-10 py-28 sm:py-36">
-      <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
-        <div className="grid gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
-          <div className="lg:sticky lg:top-32 lg:self-start">
+    <section id="capabilities" className="relative border-t border-bone/10 py-24 sm:py-32">
+      <div className="mx-auto max-w-[1480px] px-5 sm:px-8">
+        <div className="grid gap-14 lg:grid-cols-[0.88fr_1.12fr] lg:gap-20">
+          <div className="lg:sticky lg:top-28 lg:self-start">
             <SectionHeading
-              kicker="What you get"
+              kicker="01 / What you get"
               title={
                 <>
-                  Everything a small business website needs, <span className="text-ember-gradient">nothing it doesn&apos;t</span>
+                  Everything it needs.
+                  <br />
+                  <span className="text-ember-300">Nothing it doesn&apos;t.</span>
                 </>
               }
-              body="Custom website design that looks professional, loads fast, belongs to you, and respects your visitors' privacy."
+              body="A site that looks professional, loads fast, belongs to you, and leaves your visitors alone. Built around the business you actually run."
             />
 
             <Reveal delay={200}>
-              <div className="relative mt-10 h-[260px] overflow-hidden rounded-3xl border border-royal-300/12">
-                <EmberField variant="core" />
-                <div className="pointer-events-none absolute inset-0 noise-panel opacity-60" />
-                <div className="pointer-events-none absolute inset-0 flex flex-col justify-between p-6">
-                  <div className="flex items-center justify-between font-mono text-[0.58rem] uppercase tracking-[0.26em] text-ember-100/70">
-                    <span>built fresh for you</span>
-                    <span className="flex items-center gap-2">
-                      <span className="h-1 w-1 animate-pulse rounded-full bg-ember-300" />
-                      not a template
-                    </span>
-                  </div>
-                  <div className="flex items-end justify-between">
-                    <div>
-                      <p className="font-mono text-[0.58rem] uppercase tracking-[0.26em] text-bone/40">
-                        designed around your business
-                      </p>
-                      <p className="font-display mt-2 text-2xl text-bone">Yours, not rented.</p>
-                    </div>
-                    <span className="font-mono text-[0.58rem] uppercase tracking-[0.26em] text-bone/35">
-                      $100 flat
-                    </span>
-                  </div>
+              <figure className="mt-10 border border-bone/10">
+                <div className="relative aspect-square overflow-hidden bg-royal-950">
+                  <Image
+                    src="/media/art/void.jpg"
+                    alt="A black hole with a pale accretion disk and a green lensing edge"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    className="object-cover"
+                  />
+                  <span className="absolute left-4 top-4 h-1.5 w-1.5 bg-ember-300" aria-hidden="true" />
                 </div>
-              </div>
+                <figcaption className="flex items-center justify-between gap-4 border-t border-bone/10 px-4 py-3 font-mono text-[0.54rem] uppercase tracking-[0.18em] text-bone/40">
+                  <span>Fig. 02 — The mark</span>
+                  <span>Event horizon / VB-001</span>
+                </figcaption>
+              </figure>
             </Reveal>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2">
+          <ol className="border-t border-bone/10">
             {CAPABILITIES.map((c, i) => (
-              <Reveal key={c.id} delay={i * 90}>
-                <TiltCard className="h-full rounded-3xl" intensity={5}>
-                  <article className="glass edge-glow flex h-full flex-col rounded-3xl p-7">
-                    <span className="font-mono text-[0.6rem] uppercase tracking-[0.24em] text-ember-300/70">
-                      {c.kicker}
-                    </span>
-                    <h3 className="font-display mt-5 text-[1.4rem] font-semibold leading-tight text-bone">
+              <Reveal key={c.id} delay={i * 50}>
+                <li className="grid gap-3 border-b border-bone/10 py-8 sm:grid-cols-[3.5rem_1fr] sm:gap-6">
+                  <span className="font-mono text-[0.6rem] tracking-[0.12em] text-ember-300/80">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 className="font-display text-[clamp(1.3rem,2.2vw,1.65rem)] font-semibold uppercase leading-tight tracking-[-0.02em] text-bone">
                       {c.title}
                     </h3>
-                    <p className="mt-4 flex-1 text-[0.92rem] leading-relaxed text-bone/55">{c.body}</p>
-                    <ul className="mt-6 space-y-2.5 border-t border-royal-300/10 pt-5">
-                      {c.points.map((p) => (
-                        <li key={p} className="flex items-start gap-3 text-[0.84rem] text-bone/65">
-                          <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-copper" />
-                          {p}
-                        </li>
-                      ))}
-                    </ul>
-                  </article>
-                </TiltCard>
+                    <p className="mt-3 max-w-xl text-[0.92rem] leading-relaxed text-bone/55">{c.body}</p>
+                    <p className="mt-4 font-mono text-[0.56rem] uppercase leading-relaxed tracking-[0.16em] text-bone/30">
+                      {c.points.join(" · ")}
+                    </p>
+                  </div>
+                </li>
               </Reveal>
             ))}
-          </div>
+          </ol>
         </div>
       </div>
     </section>

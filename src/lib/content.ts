@@ -1,16 +1,16 @@
-const DEFAULT_SITE_URL = "https://orrtechnologies.vercel.app";
+const DEFAULT_SITE_URL = "https://voidbuilds.vercel.app";
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL?.trim() || DEFAULT_SITE_URL).replace(/\/+$/, "");
 
 export const SITE = {
-  name: "Orr Technologies",
-  legalName: "Orr Technologies",
+  name: "VoidBuilds",
+  legalName: "VoidBuilds",
   domain: new URL(siteUrl).host,
   url: siteUrl,
-  github: "https://github.com/cameronorr2011-beep/orrtechnologies",
+  github: "https://github.com/cameronorr2011-beep/voidbuilds",
   email: "service@orrbiologicals.com",
   emailDisplay: "service@orrbiologicals.com",
   tagline:
-    "We build websites, cinematic promo films, ads and posters for small businesses. $100 flat during beta, or $500 if your site needs a backend. Pay in crypto or gift cards — you own everything.",
+    "We build websites with gravity: custom sites, films, ads and posters for small businesses. $100 flat during beta, or $500 if your site needs a backend. Paid once — and you own everything.",
   btcNetwork: "Bitcoin",
   btcAddress: process.env.NEXT_PUBLIC_BTC_ADDRESS ?? "bc1q-issued-per-invoice",
   btcMemo:
@@ -108,8 +108,8 @@ export const CREATIVE_SERVICES: CreativeService[] = [
       "Code delivered to your GitHub — you own it",
     ],
     price: "$100 flat · one time",
-    image: "/media/forge-hero.jpg",
-    alt: "Dark studio render used for the Orr Technologies website build",
+    image: "/media/art/facade.jpg",
+    alt: "Black stone office facade at dusk, used as the plate for a VoidBuilds website build",
     cta: { href: "/pricing", label: "Website pricing" },
   },
   {
@@ -126,8 +126,8 @@ export const CREATIVE_SERVICES: CreativeService[] = [
       "Included free with every website",
     ],
     price: "Included with a website",
-    image: "/media/free-promo-video.svg",
-    alt: "Illustration of a cinematic promo video frame with captions and music",
+    image: "/media/art/freight.jpg",
+    alt: "Foggy freight yard at night, the opening frame of a VoidBuilds promo film",
     cta: { href: "/studio/editor", label: "Open the cut room" },
   },
   {
@@ -144,8 +144,8 @@ export const CREATIVE_SERVICES: CreativeService[] = [
       "Every aspect ratio you post in",
     ],
     price: "Quoted per campaign",
-    image: "/media/showcase-resin.jpg",
-    alt: "Amber resin texture used as the backdrop for an Orr ad campaign",
+    image: "/media/art/precision.jpg",
+    alt: "Machined metal components on a workshop table, the plate for a VoidBuilds ad campaign",
     cta: { href: "/#contact", label: "Brief an ad" },
   },
   {
@@ -162,15 +162,15 @@ export const CREATIVE_SERVICES: CreativeService[] = [
       "Print-ready PDF",
     ],
     price: "Quoted per set",
-    image: "/media/showcase-ribbon.jpg",
-    alt: "Copper ribbon detail used for an Orr poster design",
+    image: "/media/art/lab.jpg",
+    alt: "Laboratory vials on a steel bench, the plate for a VoidBuilds poster design",
     cta: { href: "/#contact", label: "Brief a poster" },
   },
 ];
 
 export const MAILTO = {
   to: SITE.email,
-  subject: "Orr Technologies — Website Request",
+  subject: "VoidBuilds — Website Request",
 } as const;
 
 export function purchaseMailto(params: {
@@ -372,7 +372,7 @@ export const CASE_STUDIES = [
     slug: "atlas-freight",
     client: "Atlas Freight Alliance",
     sector: "Freight company",
-    image: "/media/showcase-lattice.jpg",
+    image: "/media/art/freight.jpg",
     headline: "More quote requests after replacing their old site",
     body: "Their old site was hard to use on phones. We rebuilt it around what customers actually ask for, with a clear quote request on every page.",
     metrics: [
@@ -385,7 +385,7 @@ export const CASE_STUDIES = [
     slug: "veridian-diagnostics",
     client: "Veridian Diagnostics",
     sector: "Medical supplier",
-    image: "/media/showcase-resin.jpg",
+    image: "/media/art/lab.jpg",
     headline: "A site their customers finally found easy to use",
     body: "Clear product pages, simple documents, and a site that works for busy clinic staff ordering supplies.",
     metrics: [
@@ -398,7 +398,7 @@ export const CASE_STUDIES = [
     slug: "meridian-capital",
     client: "Meridian Capital Partners",
     sector: "Finance firm",
-    image: "/media/showcase-vault.jpg",
+    image: "/media/art/facade.jpg",
     headline: "Professional and private, exactly as their clients expect",
     body: "A calm, dark design with secure client areas and a simple way to share documents with investors.",
     metrics: [
@@ -411,7 +411,7 @@ export const CASE_STUDIES = [
     slug: "helio-manufacturing",
     client: "Helio Manufacturing",
     sector: "Manufacturer",
-    image: "/media/showcase-ribbon.jpg",
+    image: "/media/art/precision.jpg",
     headline: "2,300 products, one easy-to-browse catalogue",
     body: "We organised their entire product range into a site that works even on the tablets in their workshop. Quoting went from nine days to two.",
     metrics: [

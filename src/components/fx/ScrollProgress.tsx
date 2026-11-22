@@ -28,8 +28,8 @@ export default function ScrollProgress() {
         className="h-full origin-left"
         style={{
           transform: `scaleX(${pct})`,
-          background: "linear-gradient(90deg,#5B3AA8,#E2762F 55%,#FFD9A0)",
-          boxShadow: "0 0 14px rgba(226,118,47,0.8)",
+          background: "#C8F751",
+          boxShadow: "none",
           transition: "transform .12s linear",
         }}
       />

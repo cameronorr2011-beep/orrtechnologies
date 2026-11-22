@@ -3,13 +3,13 @@ import { SITE } from "@/lib/content";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Orr Technologies — Small business website design",
-    short_name: "Orr Technologies",
+    name: "VoidBuilds — websites with gravity",
+    short_name: "VoidBuilds",
     description: SITE.tagline,
     start_url: "/",
     display: "standalone",
-    background_color: "#070510",
-    theme_color: "#070510",
+    background_color: "#060607",
+    theme_color: "#060607",
     icons: [
       {
         src: "/icon.svg",

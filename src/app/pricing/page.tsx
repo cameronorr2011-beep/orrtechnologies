@@ -3,7 +3,7 @@ import PricingTable, { type PlanView } from "@/components/sections/PricingTable"
 import Trust from "@/components/sections/Trust";
 import Contact from "@/components/sections/Contact";
 import Reveal from "@/components/fx/Reveal";
-import EmberField from "@/components/fx/EmberField";
+import VoidDust from "@/components/fx/VoidDust";
 import ActionButton from "@/components/ui/ActionButton";
 import JsonLd from "@/components/seo/JsonLd";
 import { SITE, purchaseMailto } from "@/lib/content";
@@ -15,7 +15,7 @@ import {
 } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: { absolute: "Website Pricing: $100 and $500 Plans | Orr Technologies" },
+  title: { absolute: "Website Pricing: $100 and $500 Plans | VoidBuilds" },
   description:
     "Website pricing: $100 flat for a complete small business website, $500 for a dynamic site with backend features. Pay once, own the code.",
   keywords: [
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Website Pricing: $100 and $500 Plans | Orr Technologies",
+    title: "Website Pricing: $100 and $500 Plans | VoidBuilds",
     description:
       "$100 flat for a complete website, $500 for a dynamic site with backend features. Pay once in Bitcoin and own the code.",
     images: [DEFAULT_OG_IMAGE.url],
@@ -125,7 +125,7 @@ export default function PricingPage() {
 
       <section className="relative overflow-hidden pt-36 pb-16 sm:pt-44">
         <div className="absolute inset-0 z-0 opacity-70" aria-hidden="true">
-          <EmberField variant="core" />
+          <VoidDust variant="core" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-void/70 to-void" aria-hidden="true" />
         <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-8">

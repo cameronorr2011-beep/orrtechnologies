@@ -15,20 +15,25 @@ export default function SectionHeading({
   children?: ReactNode;
 }) {
   return (
-    <div className={align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
+    <div className={align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-4xl"}>
       <Reveal>
-        <span className="font-mono text-[0.62rem] uppercase tracking-[0.32em] text-ember-300/75">
+        <span className="kicker inline-flex items-center gap-3">
+          <span className="inline-block h-1.5 w-1.5 bg-ember-300" aria-hidden="true" />
           {kicker}
         </span>
       </Reveal>
-      <Reveal delay={80}>
-        <h2 className="font-display mt-5 text-[clamp(1.9rem,4vw,3.1rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-bone">
-          {title}
-        </h2>
+      <Reveal delay={70}>
+        <h2 className="display mt-5 text-[clamp(2.15rem,5.2vw,4.2rem)] text-bone">{title}</h2>
       </Reveal>
       {body ? (
-        <Reveal delay={140}>
-          <p className="mt-5 text-[1rem] leading-relaxed text-bone/55">{body}</p>
+        <Reveal delay={130}>
+          <p
+            className={`mt-6 max-w-2xl text-[1rem] leading-relaxed text-bone/55 ${
+              align === "center" ? "mx-auto" : ""
+            }`}
+          >
+            {body}
+          </p>
         </Reveal>
       ) : null}
       {children}

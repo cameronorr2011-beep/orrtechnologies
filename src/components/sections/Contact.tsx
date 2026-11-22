@@ -31,84 +31,87 @@ export default function Contact() {
       setForm({ name: "", email: "", company: "", message: "" });
     } catch {
       setState("error");
-      setFeedback("Something went wrong. Email us directly at service@orrbiologicals.com.");
+      setFeedback(`Something went wrong. Email us directly at ${SITE.emailDisplay}.`);
     }
   };
 
   const field =
-    "w-full rounded-2xl border border-royal-300/15 bg-royal-950/50 px-5 py-3.5 text-[0.92rem] text-bone placeholder:text-bone/25 transition-colors focus:border-ember-300/55 focus:outline-none";
+    "w-full border border-bone/15 bg-transparent px-4 py-3.5 text-[0.9rem] text-bone placeholder:text-bone/25 transition-colors focus:border-ember-300 focus:outline-none";
 
   return (
-    <section id="contact" className="relative z-10 border-t border-royal-300/10 py-28 sm:py-36">
-      <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
+    <section id="contact" className="relative border-t border-bone/10 py-24 sm:py-32">
+      <div className="mx-auto max-w-[1480px] px-5 sm:px-8">
         <div className="grid gap-16 lg:grid-cols-[1fr_1fr] lg:gap-20">
           <div>
             <SectionHeading
-              kicker="Questions"
+              kicker="11 / Questions"
               title={
                 <>
-                  Small business website questions, <span className="text-ember-gradient">answered.</span>
+                  Answers,
+                  <br />
+                  <span className="text-ember-300">without the pitch.</span>
                 </>
               }
             />
-            <div className="mt-10 divide-y divide-royal-300/10 border-y border-royal-300/10">
+            <div className="mt-9 border-t border-bone/10">
               {FAQ.map((f, i) => {
                 const isOpen = open === i;
                 return (
-                  <Reveal key={f.q} delay={i * 40}>
-                    <div>
-                      <button
-                        type="button"
-                        onClick={() => setOpen(isOpen ? null : i)}
-                        aria-expanded={isOpen}
-                        className="group flex w-full items-start justify-between gap-6 py-5 text-left"
+                  <div key={f.q} className="border-b border-bone/10">
+                    <button
+                      type="button"
+                      onClick={() => setOpen(isOpen ? null : i)}
+                      aria-expanded={isOpen}
+                      className="group flex w-full items-start justify-between gap-6 py-5 text-left"
+                    >
+                      <span
+                        className={`text-[0.95rem] font-medium leading-snug transition-colors ${
+                          isOpen ? "text-bone" : "text-bone/70 group-hover:text-bone"
+                        }`}
                       >
-                        <span
-                          className={`text-[1rem] font-medium transition-colors ${isOpen ? "text-ember-100" : "text-bone/80 group-hover:text-bone"}`}
-                        >
-                          {f.q}
-                        </span>
-                        <span
-                          className={`mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ${
-                            isOpen ? "rotate-45 border-ember-300/60 text-ember-200" : "border-royal-300/25 text-bone/45"
-                          }`}
-                        >
-                          +
-                        </span>
-                      </button>
-                      <div
-                        className="grid transition-all duration-500"
-                        style={{
-                          gridTemplateRows: isOpen ? "1fr" : "0fr",
-                          opacity: isOpen ? 1 : 0,
-                        }}
+                        {f.q}
+                      </span>
+                      <span
+                        className={`mt-0.5 shrink-0 font-mono text-[0.9rem] transition-transform duration-300 ${
+                          isOpen ? "rotate-45 text-ember-300" : "text-bone/35"
+                        }`}
+                        aria-hidden="true"
                       >
-                        <div className="min-h-0 overflow-hidden">
-                          <p className="pb-6 pr-10 text-[0.92rem] leading-relaxed text-bone/55">
-                            {f.a}
-                          </p>
-                        </div>
+                        +
+                      </span>
+                    </button>
+                    <div
+                      className="grid transition-all duration-400"
+                      style={{ gridTemplateRows: isOpen ? "1fr" : "0fr", opacity: isOpen ? 1 : 0 }}
+                    >
+                      <div className="min-h-0 overflow-hidden">
+                        <p className="pb-6 pr-8 text-[0.88rem] leading-relaxed text-bone/50">{f.a}</p>
                       </div>
                     </div>
-                  </Reveal>
+                  </div>
                 );
               })}
             </div>
           </div>
 
           <div>
-            <Reveal delay={120}>
-              <form onSubmit={submit} className="glass edge-glow rounded-[1.75rem] p-8">
-                <p className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-ember-300/75">
-                  Start here
-                </p>
-                <h3 className="font-display mt-4 text-[1.6rem] font-semibold leading-tight text-bone">
-                  Tell us about your business.
+            <Reveal delay={100}>
+              <form onSubmit={submit} className="border border-bone/12 p-6 sm:p-8">
+                <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-ember-300">Start here</p>
+                <h3 className="font-display mt-3 text-[1.7rem] font-semibold uppercase leading-tight tracking-[-0.03em] text-bone">
+                  Tell us what you&apos;re building.
                 </h3>
 
-                <div className="mt-7 space-y-3.5">
-                  <div className="grid gap-3.5 sm:grid-cols-2">
-                    <input required value={form.name} onChange={set("name")} placeholder="Your name" className={field} aria-label="Your name" />
+                <div className="mt-7 space-y-3">
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <input
+                      required
+                      value={form.name}
+                      onChange={set("name")}
+                      placeholder="Your name"
+                      className={field}
+                      aria-label="Your name"
+                    />
                     <input
                       required
                       type="email"
@@ -119,13 +122,19 @@ export default function Contact() {
                       aria-label="Your email"
                     />
                   </div>
-                  <input value={form.company} onChange={set("company")} placeholder="Business name" className={field} aria-label="Business name" />
+                  <input
+                    value={form.company}
+                    onChange={set("company")}
+                    placeholder="Business name"
+                    className={field}
+                    aria-label="Business name"
+                  />
                   <textarea
                     required
                     value={form.message}
                     onChange={set("message")}
-                    rows={4}
-                    placeholder="What does your business do? What do you need the website to do for you?"
+                    rows={5}
+                    placeholder="What does your business do? What should the website do for you?"
                     className={`${field} resize-none`}
                     aria-label="What you need"
                   />
@@ -145,20 +154,20 @@ export default function Contact() {
                     variant="ghost"
                     event={{ name: "purchase_click", label: "contact_purchase" }}
                   >
-                    Email us instead
+                    Email instead
                   </ActionButton>
                 </div>
 
                 {feedback ? (
                   <p
-                    className={`mt-5 font-mono text-[0.7rem] leading-relaxed ${
-                      state === "error" ? "text-maple" : "text-ember-200/85"
+                    className={`mt-5 font-mono text-[0.66rem] leading-relaxed ${
+                      state === "error" ? "text-maple" : "text-ember-300/85"
                     }`}
                   >
                     {feedback}
                   </p>
                 ) : (
-                  <p className="mt-5 font-mono text-[0.64rem] uppercase leading-relaxed tracking-[0.16em] text-bone/35">
+                  <p className="mt-5 font-mono text-[0.56rem] uppercase leading-relaxed tracking-[0.16em] text-bone/30">
                     Or write straight to {SITE.emailDisplay}
                   </p>
                 )}
