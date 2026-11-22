@@ -7,7 +7,7 @@ import EmberField from "@/components/fx/EmberField";
 import Parallax from "@/components/fx/Parallax";
 import Reveal from "@/components/fx/Reveal";
 import ActionButton from "@/components/ui/ActionButton";
-import { STATS, purchaseMailto } from "@/lib/content";
+import { HANDOVER, STATS, purchaseMailto } from "@/lib/content";
 
 const ROTATOR = [
   "your business",
@@ -66,7 +66,7 @@ export default function Hero() {
       {/* parallax forge plate */}
       <Parallax speed={-0.09} className="absolute -right-[8%] top-[14%] z-[2] hidden w-[46vw] max-w-[720px] lg:block">
         <div
-          className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-ember-200/12 opacity-70"
+          className="relative aspect-[16/10] overflow-hidden rounded-[2rem] border border-ember-200/12 opacity-70"
           style={{ boxShadow: "0 60px 140px -60px rgba(226,118,47,0.55)" }}
         >
           <Image
@@ -155,49 +155,47 @@ export default function Hero() {
           </Reveal>
         </div>
 
-        <div className="relative hidden lg:block">
-          <Parallax speed={0.07} className="absolute inset-x-4 top-[28%]">
-            <Reveal delay={200}>
+        <div className="hidden flex-col gap-6 lg:flex lg:pt-8">
+          <Reveal delay={200}>
               <div className="glass edge-glow rounded-3xl p-6">
                 <p className="font-mono text-[0.6rem] uppercase tracking-[0.28em] text-bone/40">
-                  How it works
+                  {HANDOVER.title}
                 </p>
-                <ul className="mt-5 space-y-4">
-                  {[
-                    { k: "You tell us", v: "what your business does", pct: 100 },
-                    { k: "We build it", v: "design, text, all of it", pct: 78 },
-                    { k: "You review", v: "changes until you're happy", pct: 41 },
-                    { k: "It's yours", v: "code delivered to your GitHub", pct: 100 },
-                  ].map((row) => (
-                    <li key={row.k}>
-                      <div className="flex items-baseline justify-between">
-                        <span className="text-[0.86rem] font-medium text-bone/85">{row.k}</span>
-                        <span className="font-mono text-[0.62rem] text-bone/40">{row.v}</span>
-                      </div>
-                      <div className="mt-2 h-[3px] overflow-hidden rounded-full bg-royal-700/50">
-                        <div
-                          className="h-full rounded-full"
-                          style={{
-                            width: `${row.pct}%`,
-                            background: "linear-gradient(90deg,#5B3AA8,#E2762F)",
-                          }}
+                <p className="mt-4 font-display text-[1.2rem] font-semibold text-bone">
+                  your-business <span className="text-ember-200">/ main</span>
+                </p>
+                <ul className="mt-5 space-y-3">
+                  {HANDOVER.items.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-[0.85rem] text-bone/70">
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 16 16"
+                        className="mt-[3px] shrink-0 text-ember-300"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M2 8.5l3.5 3.5L14 3.5"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.8"
+                          strokeLinecap="round"
                         />
-                      </div>
+                      </svg>
+                      {item}
                     </li>
                   ))}
                 </ul>
                 <p className="mt-6 border-t border-royal-300/10 pt-5 text-[0.78rem] leading-relaxed text-bone/45">
-                  No meetings required. No jargon. You get a finished website and the code.
+                  {HANDOVER.body}
                 </p>
               </div>
-            </Reveal>
-          </Parallax>
+          </Reveal>
 
-          <Parallax speed={0.14} className="absolute right-0 top-[62%] w-[76%]">
-            <Reveal delay={280}>
+          <Reveal delay={280}>
               <Link
                 href="/#pricing"
-                className="glass-warm edge-glow group block rounded-3xl p-6 transition-transform duration-500 hover:-translate-y-1"
+                className="glass-warm edge-glow group ml-auto block w-[88%] rounded-3xl p-6 transition-transform duration-500 hover:-translate-y-1"
               >
                 <p className="font-mono text-[0.6rem] uppercase tracking-[0.28em] text-ember-100/70">
                   During beta
@@ -211,8 +209,7 @@ export default function Hero() {
                   <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                 </span>
               </Link>
-            </Reveal>
-          </Parallax>
+          </Reveal>
         </div>
       </div>
 

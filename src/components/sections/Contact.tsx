@@ -77,10 +77,17 @@ export default function Contact() {
                         </span>
                       </button>
                       <div
-                        className="overflow-hidden transition-all duration-500"
-                        style={{ maxHeight: isOpen ? "260px" : "0px", opacity: isOpen ? 1 : 0 }}
+                        className="grid transition-all duration-500"
+                        style={{
+                          gridTemplateRows: isOpen ? "1fr" : "0fr",
+                          opacity: isOpen ? 1 : 0,
+                        }}
                       >
-                        <p className="pb-6 pr-10 text-[0.92rem] leading-relaxed text-bone/55">{f.a}</p>
+                        <div className="min-h-0 overflow-hidden">
+                          <p className="pb-6 pr-10 text-[0.92rem] leading-relaxed text-bone/55">
+                            {f.a}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </Reveal>

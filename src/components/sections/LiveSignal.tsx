@@ -114,7 +114,7 @@ export default function LiveSignal() {
                       key={`${b.layoutSeed}-${i}`}
                       className="flex items-center justify-between gap-4 border-b border-royal-300/8 pb-3 last:border-0"
                     >
-                      <span className="truncate text-[0.9rem] text-bone/80">{b.brandName}</span>
+                      <span className="min-w-0 break-words text-[0.9rem] text-bone/80">{b.brandName}</span>
                       <span className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-bone/35">
                         {b.layoutSeed} · {ago(b.createdAt)}
                       </span>
@@ -141,8 +141,8 @@ export default function LiveSignal() {
                       key={`${e.name}-${i}`}
                       className="flex items-center justify-between gap-4 border-b border-royal-300/8 pb-3 last:border-0"
                     >
-                      <span className="truncate font-mono text-[0.72rem] text-bone/70">{e.name}</span>
-                      <span className="truncate font-mono text-[0.62rem] text-bone/35">
+                      <span className="min-w-0 break-words font-mono text-[0.72rem] text-bone/70">{e.name}</span>
+                      <span className="min-w-0 break-words text-right font-mono text-[0.62rem] text-bone/35">
                         {e.label} · {ago(e.createdAt)}
                       </span>
                     </li>

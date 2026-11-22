@@ -4,7 +4,6 @@ import { Fraunces, JetBrains_Mono, Manrope } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
-import AmbientAudio from "@/components/site/AmbientAudio";
 import CookieConsent from "@/components/site/CookieConsent";
 import ScrollProgress from "@/components/fx/ScrollProgress";
 import CursorEmbers from "@/components/fx/CursorEmbers";
@@ -121,7 +120,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <main className="relative">{children}</main>
         <Footer />
         <CookieConsent />
-        <AmbientAudio />
         <Analytics />
       </body>
     </html>

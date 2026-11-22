@@ -29,7 +29,7 @@ export default function Work() {
               <TiltCard className="h-full rounded-[1.75rem]" intensity={4}>
                 <article className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] glass">
                   <div className="relative aspect-[16/10] overflow-hidden">
-                    <Parallax speed={0.035} className="absolute inset-[-12%]">
+                    <Parallax speed={0.035} className="absolute inset-[-6%]">
                       <Image
                         src={cs.image}
                         alt={`Website design built for ${cs.client}`}

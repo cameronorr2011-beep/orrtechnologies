@@ -80,11 +80,12 @@ export default function Creative() {
 
         <div ref={wrapRef} className="relative mt-14 h-[250vh] sm:h-[300vh]">
           <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
-            <div className="w-full py-20 sm:py-24">
+            <div className="w-full py-10 sm:py-12">
               <div
-                className="relative mx-auto w-full max-w-[1140px] overflow-hidden rounded-[1.75rem] border border-royal-300/15 bg-royal-950/60"
+                className="relative mx-auto overflow-hidden rounded-[1.75rem] border border-royal-300/15 bg-royal-950/60"
                 style={{
-                  height: "min(56svh, 600px)",
+                  width: "min(100%, calc(min(60svh, 600px) * 1.6))",
+                  aspectRatio: "16 / 10",
                   boxShadow: "0 60px 160px -60px rgba(226,118,47,0.4)",
                 }}
               >
@@ -106,7 +107,7 @@ export default function Creative() {
                           alt={service.alt}
                           fill
                           sizes="(max-width: 1024px) 100vw, 1140px"
-                          className="object-cover"
+                          className="object-contain"
                           priority={index === 0}
                         />
                       </div>
@@ -125,10 +126,10 @@ export default function Creative() {
                           <span className="font-mono text-[0.58rem] uppercase tracking-[0.28em] text-ember-200/80">
                             {service.price}
                           </span>
-                          <h3 className="font-display mt-3 text-[clamp(1.8rem,4.2vw,3.1rem)] font-semibold leading-[1.02] tracking-[-0.02em] text-bone">
+                          <h3 className="font-display mt-2 text-[clamp(1.55rem,3.4vw,2.6rem)] font-semibold leading-[1.04] tracking-[-0.02em] text-bone">
                             {service.name}
                           </h3>
-                          <p className="mt-3 max-w-[32rem] text-[0.98rem] leading-relaxed text-bone/72">
+                          <p className="mt-2.5 max-w-[32rem] text-[0.88rem] leading-relaxed text-bone/72">
                             {service.line}
                           </p>
                           <Link
@@ -178,7 +179,7 @@ export default function Creative() {
                           0{index + 1}
                         </span>
                       </span>
-                      <span className="mt-1 block truncate font-mono text-[0.55rem] uppercase tracking-[0.12em] text-bone/40">
+                      <span className="mt-1 block font-mono text-[0.55rem] uppercase tracking-[0.12em] text-bone/40">
                         {service.price}
                       </span>
                     </button>

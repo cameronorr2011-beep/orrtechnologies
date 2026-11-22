@@ -512,7 +512,7 @@ export const NAV_LINKS = [
   { href: "/#capabilities", label: "What you get" },
   { href: "/#studio", label: "Studio" },
   { href: "/#work", label: "Work" },
-  { href: "/#media", label: "Free video" },
+  { href: "/#media", label: "The film" },
   { href: "/#pricing", label: "Pricing" },
   { href: "/blog", label: "Blog" },
   { href: "/#contact", label: "Contact" },
@@ -527,23 +527,26 @@ export const STATS = [
   { value: "3 ways", label: "crypto or gift cards" },
 ];
 
-/** The "send us whatever you have" section: what customers can hand over, and what we give back. */
-export const MEDIA_OFFER = {
-  kicker: "Free video · full website",
-  title: "You give us what you have. We make the video and build the whole site.",
-  body: "Most people think they need polished photos, professional writing, and a video before they can get a website. You don't. Send us whatever you have — even a few notes typed on your phone — and we turn it into a complete website plus a promo video for your business, at no extra cost.",
-  youHave: [
-    "Photos from your phone — slightly blurry is fine, we tidy them up",
-    "A video you already filmed, however rough",
-    "A menu, price list, or old leaflet",
-    "Just a few sentences about what you do",
-    "Nothing at all yet — we'll plan it together",
+/** The studio's own brand film, shown on the site as proof of the craft. */
+export const FILM = {
+  kicker: "The film · 24 seconds",
+  body: "We cut this for ourselves the same way we cut one for you: eight shots, one idea, no filler. Every website includes a film like it, built around your business.",
+  specs: [
+    { label: "Runtime", value: "24 seconds" },
+    { label: "Cut", value: "Eight shots, hard cuts" },
+    { label: "Sound", value: "Original score + narration" },
   ],
-  weMake: [
-    "A complete website, written and designed for you",
-    "A free promo video built from your photos and clips",
-    "Clean text that explains your business clearly",
-    "Sharp images throughout — sourced by us where needed",
-    "Everything delivered to your GitHub, owned by you",
+  note: "Written, shot and scored in-house. You get the file, so you can post it wherever you like.",
+} as const;
+
+/** What the client physically receives at handover — not another process list. */
+export const HANDOVER = {
+  title: "Delivery receipt",
+  body: "A repository, not a login. The full commit history, the domain pointed where you want it, and an MIT licence on the work.",
+  items: [
+    "Repository, transferred to you",
+    "Full commit history",
+    "Domain control",
+    "MIT licence",
   ],
-};
+} as const;

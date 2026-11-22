@@ -5,11 +5,12 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import ActionButton from "@/components/ui/ActionButton";
 import { PAYMENT_METHODS, SITE, TRUST, purchaseMailto } from "@/lib/content";
 
-const RAIL = [
-  { k: "01", t: "You email us", d: "Tell us about your business and what you need. We reply within one business day." },
-  { k: "02", t: "We send the invoice", d: "A fixed amount and the details for the method you chose — crypto or gift cards." },
-  { k: "03", t: "You pay once", d: "You send crypto from your wallet, or the gift-card codes. That's the whole cost — $100." },
-  { k: "04", t: "We build and hand over", d: "Your site goes live and the full code is delivered to your GitHub. It's yours." },
+const LEDGER = [
+  { k: "Design", v: "matched to your business" },
+  { k: "Copy", v: "written for you" },
+  { k: "Build", v: "up to five pages" },
+  { k: "Film", v: "included" },
+  { k: "Handover", v: "GitHub + domain" },
 ];
 
 export default function Trust() {
@@ -30,22 +31,23 @@ export default function Trust() {
             />
 
             <Reveal delay={160}>
-              <ol className="mt-12 space-y-5">
-                {RAIL.map((r, i) => (
-                  <li
-                    key={r.k}
-                    className="group relative flex gap-5 rounded-2xl border border-royal-300/10 bg-royal-950/40 p-5 transition-colors duration-500 hover:border-ember-300/30"
-                    style={{ transitionDelay: `${i * 20}ms` }}
-                  >
-                    <span className="font-mono text-[0.72rem] text-ember-300/70">{r.k}</span>
-                    <div>
-                      <p className="text-[0.95rem] font-semibold text-bone/90">{r.t}</p>
-                      <p className="mt-1.5 text-[0.86rem] leading-relaxed text-bone/50">{r.d}</p>
-                    </div>
-                    <span className="ml-auto h-px w-8 self-center bg-ember-300/30 transition-all duration-500 group-hover:w-14" />
-                  </li>
+              <dl className="mt-12 divide-y divide-royal-300/10 border-y border-royal-300/10">
+                {LEDGER.map((row) => (
+                  <div key={row.k} className="flex items-baseline justify-between gap-6 py-4">
+                    <dt className="text-[0.95rem] font-medium text-bone/85">{row.k}</dt>
+                    <dd className="text-right font-mono text-[0.68rem] uppercase tracking-[0.14em] text-bone/45">
+                      {row.v}
+                    </dd>
+                  </div>
                 ))}
-              </ol>
+                <div className="flex items-baseline justify-between gap-6 py-4">
+                  <dt className="font-display text-[1.05rem] font-semibold text-bone">Total, paid once</dt>
+                  <dd className="font-display text-[1.35rem] font-semibold text-ember-200">$100</dd>
+                </div>
+              </dl>
+              <p className="mt-4 font-mono text-[0.58rem] uppercase tracking-[0.16em] text-bone/35">
+                No deposit · no subscription · no renewal
+              </p>
             </Reveal>
 
             <Reveal delay={220}>
