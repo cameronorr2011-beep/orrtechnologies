@@ -1,4 +1,8 @@
-const DEFAULT_SITE_URL = "https://voidbuilds.vercel.app";
+// Brand canonical. On Vercel we prefer the project's real production host so
+// canonicals stay correct while the project is being renamed; an explicit
+// NEXT_PUBLIC_SITE_URL always wins.
+const vercelHost = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
+const DEFAULT_SITE_URL = vercelHost ? `https://${vercelHost}` : "https://voidbuilds.vercel.app";
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL?.trim() || DEFAULT_SITE_URL).replace(/\/+$/, "");
 
 export const SITE = {
