@@ -23,12 +23,12 @@ export default function Trust() {
               kicker="08 / The deal"
               title={
                 <>
-                  Plain terms.
+                  What you&apos;re
                   <br />
-                  <span className="text-ember-300">No fine print.</span>
+                  <span className="text-ember-300">agreeing to.</span>
                 </>
               }
-              body="One price, paid once. You own what we build. Your visitors keep their privacy. Here is exactly what that means."
+              body="One payment. You own the code. No ad trackers on your site. Here is the detail."
             />
 
             <Reveal delay={120}>
@@ -51,7 +51,7 @@ export default function Trust() {
                 </div>
               </dl>
               <p className="mt-4 font-mono text-[0.54rem] uppercase tracking-[0.16em] text-bone/30">
-                No deposit · no subscription · no renewal
+                Paid once, before the build
               </p>
             </Reveal>
 

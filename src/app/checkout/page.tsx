@@ -26,7 +26,7 @@ export default async function CheckoutPage() {
             <span className="text-ember-300">in crypto or gift cards.</span>
           </>
         }
-        body="Tell us about your business below and we'll email the exact amount and payment details for your order — Bitcoin, another crypto, or gift cards. Choose whichever suits you; nothing is auto-charged, ever."
+        body="Tell us about the business and we'll email the amount and payment details for Bitcoin, another crypto or gift cards. Nothing is charged automatically."
       />
 
       <Suspense

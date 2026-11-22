@@ -47,9 +47,9 @@ export default function Contact() {
               kicker="10 / Questions"
               title={
                 <>
-                  Answers,
+                  Common
                   <br />
-                  <span className="text-ember-300">without the pitch.</span>
+                  <span className="text-ember-300">questions.</span>
                 </>
               }
             />

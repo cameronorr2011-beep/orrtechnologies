@@ -13,12 +13,12 @@ export default function Process() {
             kicker="05 / Process"
             title={
               <>
-                Four steps.
+                How a build
                 <br />
-                <span className="text-ember-300">No theatre.</span>
+                <span className="text-ember-300">runs.</span>
               </>
             }
-            body="From your first message to owning the finished site, usually inside two weeks. You always know what happens next."
+            body="Ten to fourteen days from your first message to handover. You see the first build in week one and approve it before it goes live."
           />
           <p className="hidden font-mono text-[0.56rem] uppercase leading-relaxed tracking-[0.18em] text-bone/30 lg:block">
             Start to handover

@@ -127,11 +127,11 @@ export default function PricingPage() {
         kicker="Pricing"
         title={
           <>
-            Website pricing.{" "}
-            <span className="text-ember-300">$100 flat. Yours.</span>
+            A complete website{" "}
+            <span className="text-ember-300">is $100.</span>
           </>
         }
-        body="A complete website for your small business: designed, written, tested and delivered to your GitHub, with a free promo video. $100 once during beta, or $500 if your site needs a backend."
+        body="Design, copy, build and the promo film. Paid once. The code goes into your GitHub when we finish."
       />
 
       <PricingTable plans={PRICING_PLANS} />

@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  canvas { display: block; width: 100vw; height: 100vh; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+const canvas = document.getElementById("c");
+const gl = canvas.getContext("webgl", {
+  alpha: false,
+  antialias: false,
+  depth: false,
+  preserveDrawingBuffer: true,
+  powerPreference: "high-performance",
+});
+
+const VS = `
+attribute vec2 a_pos;
+void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }
+`;
+
+const FS = `
+precision highp float;
+
+uniform vec2 u_res;
+uniform float u_phase;
+
+float hash21(vec2 p) {
+  p = fract(p * vec2(123.34, 456.21));
+  p += dot(p, p + 45.32);
+  return fract(p.x * p.y);
+}
+
+float noise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  vec2 u = f * f * (3.0 - 2.0 * f);
+  float a = hash21(i);
+  float b = hash21(i + vec2(1.0, 0.0));
+  float c = hash21(i + vec2(0.0, 1.0));
+  float d = hash21(i + vec2(1.0, 1.0));
+  return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
+}
+
+float fbm(vec2 p) {
+  float v = 0.0;
+  float a = 0.5;
+  for (int i = 0; i < 5; i++) {
+    v += a * noise(p);
+    p = p * 2.03 + vec2(17.1, 9.7);
+    a *= 0.5;
+  }
+  return v;
+}
+
+vec3 starField(vec3 d) {
+  float az = atan(d.z, d.x);
+  float el = asin(clamp(d.y, -1.0, 1.0));
+  vec2 uv = vec2(az, el);
+  vec3 col = vec3(0.0);
+
+  for (int i = 0; i < 3; i++) {
+    float fi = float(i);
+    vec2 g = uv * vec2(58.0 + fi * 41.0, 44.0 + fi * 31.0);
+    vec2 id = floor(g);
+    vec2 f = fract(g) - 0.5;
+    float h = hash21(id + fi * 19.7);
+    if (h > 0.982) {
+      vec2 o = vec2(hash21(id + 3.1), hash21(id + 8.7)) - 0.5;
+      float dd = length(f - o * 0.75);
+      float tw = 0.72 + 0.28 * sin(u_phase * 2.0 + h * 62.0);
+      col += vec3(0.88, 0.93, 1.0) * smoothstep(0.10, 0.0, dd) * tw * (0.55 + 0.75 * h) * (1.0 - fi * 0.20);
+    }
+  }
+
+  float n = fbm(uv * vec2(3.0, 4.2) + vec2(2.0, 5.0));
+  col += vec3(0.014, 0.018, 0.028) * pow(n, 4.0);
+  return col;
+}
+
+vec3 diskSample(float r, float phi, vec3 rd, out float alpha) {
+  alpha = 0.0;
+  const float rin = 2.5;
+  const float rout = 7.0;
+  float t = (r - rin) / (rout - rin);
+  if (t < 0.0 || t > 1.0) return vec3(0.0);
+
+  // rigid texture rotation keeps the loop seamless
+  float ang = phi - u_phase * 2.0;
+  vec2 q = vec2(cos(ang), sin(ang)) * r;
+
+  float n1 = fbm(q * 1.15 + vec2(3.1, 0.7));
+  float n2 = fbm(q * 3.4 + vec2(7.7, 1.9));
+  float n3 = fbm(q * 9.0 + vec2(1.3, 5.1));
+  float dens = smoothstep(0.34, 0.70, n1 * 0.46 + n2 * 0.32 + n3 * 0.22);
+  dens = pow(dens, 1.25);
+
+  float edge = smoothstep(0.0, 0.03, t) * smoothstep(1.0, 0.55, t);
+  float radial = pow(rin / r, 1.15);
+  float streak = 0.84 + 0.16 * sin(ang * 30.0 + r * 7.0 + n1 * 6.0);
+  float bright = edge * (0.10 + 2.6 * dens) * radial * streak;
+
+  vec3 c = mix(vec3(0.82, 0.90, 1.0), vec3(1.0, 0.97, 0.90), smoothstep(0.0, 0.18, t));
+  c = mix(c, vec3(1.0, 0.72, 0.34), smoothstep(0.22, 0.62, t));
+  c = mix(c, vec3(1.0, 0.34, 0.06), smoothstep(0.66, 1.0, t));
+  c += vec3(1.0, 0.96, 0.90) * exp(-pow((r - 2.62) / 0.16, 2.0)) * 2.6;
+  c += vec3(1.0, 0.62, 0.24) * pow(dens, 4.0) * 1.1;
+
+  // relativistic beaming: the side moving toward the camera is hotter
+  vec3 vel = vec3(-sin(phi), 0.0, cos(phi));
+  float beta = clamp(1.25 / sqrt(r), 0.0, 0.6);
+  float dop = 1.0 / (1.0 - dot(vel, -rd) * beta);
+  dop = pow(max(dop, 0.15), 2.4);
+
+  c *= bright * clamp(dop, 0.18, 7.5);
+  alpha = clamp(edge * (0.18 + 0.82 * dens), 0.0, 1.0);
+  return c;
+}
+
+void main() {
+  vec2 p = (gl_FragCoord.xy - 0.5 * u_res) / u_res.y;
+
+  float dist = 23.0 + 0.4 * sin(u_phase);
+  vec3 ro = vec3(0.0, 6.4, dist);
+  vec3 ww = normalize(-ro);
+  vec3 uu = normalize(cross(vec3(0.0, 1.0, 0.0), ww));
+  vec3 vv = cross(ww, uu);
+  vec3 rd = normalize(p.x * uu + p.y * vv + 1.55 * ww);
+
+  vec3 pos = ro;
+  vec3 dir = rd;
+  vec3 hv = cross(pos, dir);
+  float h2 = dot(hv, hv);
+
+  vec3 col = vec3(0.0);
+  float trans = 1.0;
+  bool escaped = false;
+
+  for (int i = 0; i < 300; i++) {
+    float r = length(pos);
+    if (r < 1.0) break;
+    if (r > 45.0) { escaped = true; break; }
+
+    float dt = clamp(0.035 * r + 0.012, 0.012, 0.55);
+    vec3 acc = -1.5 * h2 * pos / pow(r, 5.0);
+    vec3 nd = normalize(dir + acc * dt);
+    vec3 np = pos + nd * dt;
+
+    if (pos.y * np.y < 0.0) {
+      float f = pos.y / (pos.y - np.y);
+      vec3 hit = mix(pos, np, f);
+      float hr = length(hit.xz);
+      float a;
+      vec3 dc = diskSample(hr, atan(hit.z, hit.x), nd, a);
+      col += trans * dc * (0.35 + a * 0.9);
+      trans *= 1.0 - a * 0.38;
+    }
+
+    pos = np;
+    dir = nd;
+  }
+
+  if (escaped) col += trans * starField(dir);
+
+  // exposure and filmic tonemap
+  col *= 1.22;
+  col = col / (1.0 + col * 0.82);
+  col = pow(max(col, 0.0), vec3(1.0 / 2.2));
+  float lum = dot(col, vec3(0.299, 0.587, 0.114));
+  col = mix(vec3(lum), col, 1.12);
+
+  float vig = 1.0 - 0.24 * pow(length(p * vec2(0.86, 0.72)), 2.0);
+  col *= vig;
+
+  float g = hash21(gl_FragCoord.xy + fract(u_phase) * 13.0);
+  col += (g - 0.5) * 0.016;
+
+  gl_FragColor = vec4(max(col, 0.0), 1.0);
+}
+`;
+
+function compile(type, src) {
+  const sh = gl.createShader(type);
+  gl.shaderSource(sh, src);
+  gl.compileShader(sh);
+  if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+    throw new Error(gl.getShaderInfoLog(sh) || "shader compile failed");
+  }
+  return sh;
+}
+
+const program = gl.createProgram();
+gl.attachShader(program, compile(gl.VERTEX_SHADER, VS));
+gl.attachShader(program, compile(gl.FRAGMENT_SHADER, FS));
+gl.linkProgram(program);
+if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+  throw new Error(gl.getProgramInfoLog(program) || "link failed");
+}
+gl.useProgram(program);
+
+const buffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+const loc = gl.getAttribLocation(program, "a_pos");
+gl.enableVertexAttribArray(loc);
+gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+const uRes = gl.getUniformLocation(program, "u_res");
+const uPhase = gl.getUniformLocation(program, "u_phase");
+
+function resize() {
+  const dpr = 1;
+  const w = Math.max(1, Math.round(window.innerWidth * dpr));
+  const h = Math.max(1, Math.round(window.innerHeight * dpr));
+  if (canvas.width !== w || canvas.height !== h) {
+    canvas.width = w;
+    canvas.height = h;
+    gl.viewport(0, 0, w, h);
+    gl.uniform2f(uRes, w, h);
+  }
+}
+
+function draw(phase) {
+  gl.uniform1f(uPhase, phase);
+  gl.drawArrays(gl.TRIANGLES, 0, 3);
+}
+
+window.setPhase = (phase) => {
+  resize();
+  draw(phase);
+};
+
+resize();
+draw(0);
+window.ready = true;
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+  html, body { margin: 0; width: 1200px; height: 630px; background: #060607; overflow: hidden; }
+  .wrap { display: grid; grid-template-columns: 680px 520px; height: 630px; }
+  .left {
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 52px 52px 44px; border-right: 1px solid rgba(242, 239, 232, 0.14);
+  }
+  .kicker {
+    font: 11px Consolas, monospace; letter-spacing: 0.26em; text-transform: uppercase;
+    color: #c8f751;
+  }
+  h1 {
+    margin: 0; font-family: "Arial Black", Bahnschrift, "Segoe UI", sans-serif;
+    font-weight: 900; font-size: 80px; line-height: 0.9; letter-spacing: -0.045em;
+    text-transform: uppercase; color: #f2efe8;
+  }
+  h1 span { color: #c8f751; display: block; }
+  .foot {
+    font: 11px Consolas, monospace; letter-spacing: 0.16em; line-height: 1.9;
+    text-transform: uppercase; color: rgba(242, 239, 232, 0.55);
+  }
+  .right { position: relative; overflow: hidden; }
+  .right img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+  .tag {
+    position: absolute; left: 20px; bottom: 18px;
+    font: 10px Consolas, monospace; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(242, 239, 232, 0.6); background: rgba(6, 6, 7, 0.55); padding: 4px 6px;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="left">
+      <div class="kicker">VoidBuilds / independent web studio</div>
+      <h1>A website<br />with<span>gravity.</span></h1>
+      <div class="foot">$100 flat · paid once · code to your GitHub<br />voidbuilds.vercel.app</div>
+    </div>
+    <div class="right">
+      <img src="../../public/media/void-poster.jpg" alt="" />
+      <div class="tag">Rendered / 180 frames</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -31,12 +31,12 @@ export default function PricingTable({ plans }: { plans: PlanView[] }) {
           kicker="07 / Pricing"
           title={
             <>
-              One price.
+              The price.
               <br />
-              <span className="text-ember-300">Paid once.</span>
+              <span className="text-ember-300">$100.</span>
             </>
           }
-          body="During beta, a complete small business website is $100 — paid once. No hourly billing, no monthly fee, no surprise invoice. When beta ends, the price rises for new clients only."
+          body="A complete small-business website costs $100 during beta. That covers the design, the copy, up to five pages, the build and the promo film. The price goes up for new clients when beta ends."
         />
 
         {standard ? (
@@ -151,8 +151,8 @@ export default function PricingTable({ plans }: { plans: PlanView[] }) {
         ) : null}
 
         <p className="mt-10 max-w-3xl font-mono text-[0.56rem] uppercase leading-relaxed tracking-[0.16em] text-bone/30">
-          Two packages, nothing hidden. Tell us what your business does and we&apos;ll say straight which
-          one fits — including if the answer is neither.
+          Two packages. Tell us what the business does and we&apos;ll say which one fits, including if you
+          need neither.
         </p>
       </div>
     </section>

@@ -67,12 +67,12 @@ export default function LiveSignal() {
             kicker="09 / Live signal"
             title={
               <>
-                Real numbers.
+                The live
                 <br />
-                <span className="text-ember-300">Not promises.</span>
+                <span className="text-ember-300">board.</span>
               </>
             }
-            body="This panel reads straight from our database — websites built, enquiries and invoices here, updating as they happen."
+            body="These numbers come straight from our database and refresh every 25 seconds."
           />
           <div className="flex items-center gap-3 font-mono text-[0.56rem] uppercase tracking-[0.2em] text-bone/35">
             <span

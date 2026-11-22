@@ -73,11 +73,11 @@ export default function StudioPage() {
         kicker="Void Studio"
         title={
           <>
-            See a website design{" "}
-            <span className="text-ember-300">take shape in seconds.</span>
+            Describe a business.{" "}
+            <span className="text-ember-300">Get a direction.</span>
           </>
         }
-        body="Void Studio is a live sample of the same composition pass that opens every VoidBuilds project. Describe a business and it returns a seeded art direction: palette, layout, motif and opening copy you can reference by name weeks later."
+        body="Void Studio is a demo of how we start: describe the business and it returns a palette, layout and opening copy. The real build starts with a conversation."
       >
         <ActionButton
           href={purchaseMailto({ planName: "Your website", amountUsd: 100 })}

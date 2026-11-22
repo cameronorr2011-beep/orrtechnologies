@@ -15,20 +15,20 @@ export default function Capabilities() {
               kicker="01 / What you get"
               title={
                 <>
-                  Everything it needs.
+                  What a small
                   <br />
-                  <span className="text-ember-300">Nothing it doesn&apos;t.</span>
+                  <span className="text-ember-300">site needs.</span>
                 </>
               }
-              body="A site that looks professional, loads fast, belongs to you, and leaves your visitors alone. Built around the business you actually run."
+              body="Pages that load fast, copy that sounds like you, a contact form that reaches your inbox, and code you control. Built around the business you run."
             />
 
             <Reveal delay={200}>
               <figure className="mt-10 border border-bone/10">
                 <div className="relative aspect-square overflow-hidden bg-royal-950">
                   <Image
-                    src="/media/art/void.jpg"
-                    alt="A black hole with a pale accretion disk and a green lensing edge"
+                    src="/media/void-poster.jpg"
+                    alt="A rendered black hole with a white-hot accretion disk around a dark event horizon"
                     fill
                     sizes="(max-width: 1024px) 100vw, 40vw"
                     className="object-cover"

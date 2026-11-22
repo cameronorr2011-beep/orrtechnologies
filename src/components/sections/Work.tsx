@@ -15,12 +15,12 @@ export default function Work() {
             kicker="02 / Selected builds"
             title={
               <>
-                Built to be
+                Four recent
                 <br />
-                <span className="text-ember-300">believed.</span>
+                <span className="text-ember-300">builds.</span>
               </>
             }
-            body="Four recent projects, each delivered to the client's own repository and paid once. No retainer, no platform, no lock-in."
+            body="Each project was paid once and handed over to the client's own repository. We do not keep a copy running anywhere."
           />
           <p className="hidden shrink-0 font-mono text-[0.56rem] uppercase leading-relaxed tracking-[0.18em] text-bone/30 lg:block">
             Recent work
@@ -75,7 +75,7 @@ export default function Work() {
           <div className="mt-16 flex flex-col items-start justify-between gap-6 border-t border-bone/10 pt-8 sm:flex-row sm:items-center">
             <p className="max-w-xl text-[0.92rem] leading-relaxed text-bone/50">
               Send a short message about what your business does. You get a plan, a start date and a price
-              — within one business day.
+              within one business day.
             </p>
             <ActionButton
               href={purchaseMailto({

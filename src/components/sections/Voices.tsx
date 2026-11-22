@@ -56,9 +56,9 @@ export default function Voices() {
           kicker="06 / Client voices"
           title={
             <>
-              What the people
+              What clients
               <br />
-              who paid <span className="text-ember-300">actually said.</span>
+              <span className="text-ember-300">said.</span>
             </>
           }
         />

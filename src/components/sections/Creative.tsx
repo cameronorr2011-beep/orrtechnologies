@@ -18,12 +18,12 @@ export default function Creative() {
           kicker="03 / The studio"
           title={
             <>
-              One studio.
+              Websites, films,
               <br />
-              <span className="text-ember-300">Four ways to be seen.</span>
+              <span className="text-ember-300">ads, posters.</span>
             </>
           }
-          body="Start with the site, or build the whole presence: the film, the ads that cut it up, the poster that goes on the wall. Same idea, four formats."
+          body="Most projects start with a website. Some also need a short film, ads cut from it, or a poster for the wall. We make all four from the same idea."
         />
 
         <div className="mt-14 grid gap-12 lg:grid-cols-[1fr_0.92fr] lg:gap-16">

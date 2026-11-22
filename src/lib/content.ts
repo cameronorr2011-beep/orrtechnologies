@@ -14,7 +14,7 @@ export const SITE = {
   email: "service@orrbiologicals.com",
   emailDisplay: "service@orrbiologicals.com",
   tagline:
-    "We build websites with gravity: custom sites, films, ads and posters for small businesses. $100 flat during beta, or $500 if your site needs a backend. Paid once — and you own everything.",
+    "Custom websites, films, ads and posters for small businesses. $100 flat during beta, or $500 if the site needs a backend. You pay once and own the code.",
   btcNetwork: "Bitcoin",
   btcAddress: process.env.NEXT_PUBLIC_BTC_ADDRESS ?? "bc1q-issued-per-invoice",
   btcMemo:

@@ -1,24 +1,23 @@
 "use client";
 
-import VoidMark from "@/components/brand/VoidMark";
 import Reveal from "@/components/fx/Reveal";
 
 const TENETS = [
   {
-    k: "No templates",
-    v: "Every layout is composed for the business in front of us. Nothing is pulled off a theme shelf.",
+    k: "Drawn by hand",
+    v: "Every layout is composed for the business in front of us. Nothing comes off a theme shelf.",
   },
   {
-    k: "No rent",
-    v: "One price, paid once. No subscription, no platform, no monthly permission to exist.",
+    k: "One invoice",
+    v: "You pay once, before the build starts. There is no subscription and no monthly permission to exist.",
   },
   {
-    k: "No noise",
-    v: "One idea per screen. Type that reads. Motion only where it earns its place.",
+    k: "Quiet pages",
+    v: "One idea per screen, type you can read, and motion only where it helps.",
   },
   {
-    k: "No lock-in",
-    v: "The repository, the domain and the full commit history transfer to you on day one.",
+    k: "Yours on day one",
+    v: "The repository, the domain and the commit history are transferred when we finish.",
   },
 ];
 
@@ -28,20 +27,28 @@ export default function Manifesto() {
       <div className="mx-auto max-w-[1480px] px-5 sm:px-8">
         <div className="grid gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-20">
           <Reveal>
-            <figure className="relative aspect-square overflow-hidden border border-bone/10">
-              <div className="absolute inset-0 noise-panel opacity-50" aria-hidden="true" />
-              <div className="relative flex h-full items-center justify-center">
-                <VoidMark size={520} className="h-auto w-[74%] max-w-[520px]" />
-              </div>
-              <span className="pointer-events-none absolute left-4 top-4 font-mono text-[0.52rem] uppercase tracking-[0.18em] text-bone/35">
+            <figure className="relative aspect-square overflow-hidden border border-bone/10 bg-void">
+              <img
+                src="/media/void-loop.gif"
+                alt="A rendered black hole: a dark event horizon ringed by a white-hot accretion disk"
+                width={540}
+                height={691}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+              <span className="pointer-events-none absolute left-4 top-4 font-mono text-[0.52rem] uppercase tracking-[0.18em] text-bone/50">
                 + 00
               </span>
-              <span className="pointer-events-none absolute right-4 top-4 font-mono text-[0.52rem] uppercase tracking-[0.18em] text-bone/35">
+              <span className="pointer-events-none absolute right-4 top-4 font-mono text-[0.52rem] uppercase tracking-[0.18em] text-bone/50">
                 VB / MARK
               </span>
-              <figcaption className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-4 border-t border-bone/10 pt-3 font-mono text-[0.52rem] uppercase leading-relaxed tracking-[0.16em] text-bone/40">
-                <span>Event horizon</span>
-                <span className="text-right">A black centre<br />with a bright edge</span>
+              <figcaption className="pointer-events-none absolute inset-x-4 bottom-4 flex items-end justify-between gap-4 border-t border-bone/20 bg-void/55 px-2 py-2 font-mono text-[0.52rem] uppercase leading-relaxed tracking-[0.16em] text-bone/65">
+                <span>180 frames</span>
+                <span className="text-right">
+                  A black centre
+                  <br />
+                  with a bright edge
+                </span>
               </figcaption>
             </figure>
           </Reveal>
@@ -55,16 +62,16 @@ export default function Manifesto() {
             </Reveal>
             <Reveal delay={70}>
               <h2 className="display mt-5 text-[clamp(2.15rem,5.2vw,4.2rem)] text-bone">
-                We don&apos;t decorate.
+                One price.
                 <br />
-                <span className="text-ember-300">We build gravity.</span>
+                <span className="text-ember-300">One handover.</span>
               </h2>
             </Reveal>
             <Reveal delay={130}>
               <p className="mt-6 max-w-xl text-[1rem] leading-relaxed text-bone/55">
-                A black hole is the simplest idea in the universe: enough mass in one place that everything
-                else bends around it. That is what a good website does to attention. No ornament, no noise —
-                just weight, in the right place.
+                The mark is a black hole. A lot of mass in one place, and everything else bends around it. A
+                good page works the same way: one clear idea, one next step, and nothing pulling the eye
+                somewhere else.
               </p>
             </Reveal>
 

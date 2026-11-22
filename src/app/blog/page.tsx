@@ -72,11 +72,11 @@ export default function BlogIndexPage() {
         kicker="Blog"
         title={
           <>
-            Website advice for{" "}
-            <span className="text-ember-300">small businesses.</span>
+            Guides for{" "}
+            <span className="text-ember-300">business owners.</span>
           </>
         }
-        body="Short guides for business owners: what a good website needs, what it should cost, and how to avoid the traps. No jargon, no sales pitch."
+        body="What a website should cost, what it needs, and how to avoid the traps. No jargon."
       />
 
       <section className="relative z-10 pb-24">

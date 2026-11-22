@@ -1,4 +1,4 @@
-import VoidField from "@/components/brand/VoidField";
+import VoidLoop from "@/components/brand/VoidLoop";
 import Reveal from "@/components/fx/Reveal";
 import ActionButton from "@/components/ui/ActionButton";
 import { purchaseMailto } from "@/lib/content";
@@ -38,8 +38,8 @@ export default function Hero() {
 
           <Reveal delay={140}>
             <p className="mt-8 max-w-[31rem] text-[1.02rem] leading-relaxed text-bone/60">
-              Custom sites for small businesses. Designed, written and built for you — then handed over
-              whole. $100 flat, paid once, no subscriptions. The code, the domain, the lot: yours.
+              We build websites for small businesses. One payment of $100 covers the design, the copy and
+              the build, and the finished code goes into your GitHub. No monthly fee, and nothing to renew.
             </p>
           </Reveal>
 
@@ -60,7 +60,7 @@ export default function Hero() {
 
           <Reveal delay={270}>
             <p className="mt-6 font-mono text-[0.58rem] uppercase leading-relaxed tracking-[0.18em] text-bone/35">
-              No templates · no rent · no subscriptions
+              Most builds take 10 to 14 days. One invoice, sent before we start.
             </p>
           </Reveal>
 
@@ -80,46 +80,30 @@ export default function Hero() {
           </Reveal>
         </div>
 
-        <div className="relative hidden border-l border-bone/10 lg:block">
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url(/media/art/void.jpg)" }}
-            aria-hidden="true"
-          />
-          <VoidField className="absolute inset-0" scale={2.1} label="Live black-hole plate — VoidBuilds mark" />
+        <div className="relative h-[58svh] min-h-[360px] border-t border-bone/10 lg:h-auto lg:min-h-0 lg:border-l lg:border-t-0">
+          <VoidLoop />
 
-          <div className="pointer-events-none absolute inset-0 flex flex-col justify-between px-7 pb-7 pt-24">
-            <div className="flex items-start justify-between font-mono text-[0.56rem] uppercase tracking-[0.2em] text-bone/45">
+          <div className="pointer-events-none absolute inset-0 flex flex-col justify-between px-5 pb-5 pt-5 sm:px-7 sm:pb-7 lg:pt-24">
+            <div className="flex items-start justify-between font-mono text-[0.56rem] uppercase tracking-[0.2em] text-bone/60">
               <span>Fig. 01 — Event horizon</span>
-              <span className="text-right">VB / 001<br />Live WebGL</span>
+              <span className="text-right">
+                VB / 001
+                <br />
+                Rendered loop
+              </span>
             </div>
-            <div className="flex items-end justify-between gap-6">
-              <p className="font-mono text-[0.56rem] uppercase leading-relaxed tracking-[0.18em] text-bone/40">
+            <div className="hidden items-end justify-between gap-6 lg:flex">
+              <p className="bg-void/55 px-2 py-1 font-mono text-[0.56rem] uppercase leading-relaxed tracking-[0.18em] text-bone/60">
                 A dark centre
                 <br />
                 with a bright edge.
               </p>
-              <p className="max-w-[12rem] text-right font-mono text-[0.52rem] uppercase leading-relaxed tracking-[0.18em] text-bone/30">
-                Rendered in real time.
+              <p className="max-w-[12rem] bg-void/55 px-2 py-1 text-right font-mono text-[0.52rem] uppercase leading-relaxed tracking-[0.18em] text-bone/60">
+                180 frames, rendered.
                 <br />
-                Nothing here is a stock image.
+                No stock image.
               </p>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="relative border-t border-bone/10 lg:hidden">
-        <div className="relative h-[58svh] min-h-[360px]">
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url(/media/art/void.jpg)" }}
-            aria-hidden="true"
-          />
-          <VoidField className="absolute inset-0" scale={2.35} label="Live black-hole plate — VoidBuilds mark" />
-          <div className="pointer-events-none absolute inset-x-5 top-5 flex justify-between font-mono text-[0.54rem] uppercase tracking-[0.18em] text-bone/45">
-            <span>Fig. 01 — Event horizon</span>
-            <span>Live WebGL</span>
           </div>
         </div>
       </div>
