@@ -3,7 +3,7 @@ import PricingTable, { type PlanView } from "@/components/sections/PricingTable"
 import Trust from "@/components/sections/Trust";
 import Contact from "@/components/sections/Contact";
 import Reveal from "@/components/fx/Reveal";
-import VoidDust from "@/components/fx/VoidDust";
+import PageHero from "@/components/ui/PageHero";
 import ActionButton from "@/components/ui/ActionButton";
 import JsonLd from "@/components/seo/JsonLd";
 import { SITE, purchaseMailto } from "@/lib/content";
@@ -123,32 +123,16 @@ export default function PricingPage() {
     <>
       <JsonLd data={jsonLd} />
 
-      <section className="relative overflow-hidden pt-36 pb-16 sm:pt-44">
-        <div className="absolute inset-0 z-0 opacity-70" aria-hidden="true">
-          <VoidDust variant="core" />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-void/70 to-void" aria-hidden="true" />
-        <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-8">
-          <Reveal>
-            <span className="font-mono text-[0.62rem] uppercase tracking-[0.32em] text-ember-300/75">
-              Pricing
-            </span>
-          </Reveal>
-          <Reveal delay={80}>
-            <h1 className="font-display mt-6 max-w-4xl text-[clamp(2.4rem,5.4vw,4.2rem)] font-semibold leading-[1.02] tracking-[-0.03em]">
-              <span className="text-bone-gradient block">Website pricing,</span>
-              <span className="text-ember-gradient block">$100 flat. Yours.</span>
-            </h1>
-          </Reveal>
-          <Reveal delay={140}>
-            <p className="mt-7 max-w-2xl text-[1.02rem] leading-relaxed text-bone/58">
-              A complete website for your small business: designed, written, tested and delivered to your
-              GitHub, with a free promo video. $100 once during beta, or $500 if your site needs a backend.
-              No monthly fees, no hosting lock-in, no surprise bills.
-            </p>
-          </Reveal>
-        </div>
-      </section>
+      <PageHero
+        kicker="Pricing"
+        title={
+          <>
+            Website pricing.{" "}
+            <span className="text-ember-300">$100 flat. Yours.</span>
+          </>
+        }
+        body="A complete website for your small business: designed, written, tested and delivered to your GitHub, with a free promo video. $100 once during beta, or $500 if your site needs a backend."
+      />
 
       <PricingTable plans={PRICING_PLANS} />
 

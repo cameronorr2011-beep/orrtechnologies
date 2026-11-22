@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import VoidDust from "@/components/fx/VoidDust";
-import Reveal from "@/components/fx/Reveal";
 import ForgeStudio from "@/components/studio/ForgeStudio";
 import Process from "@/components/sections/Process";
 import ActionButton from "@/components/ui/ActionButton";
+import PageHero from "@/components/ui/PageHero";
 import JsonLd from "@/components/seo/JsonLd";
 import { forgeSite } from "@/lib/forge";
 import { purchaseMailto } from "@/lib/content";
@@ -70,49 +69,30 @@ export default function StudioPage() {
     <>
       <JsonLd data={jsonLd} />
 
-      <section className="relative overflow-hidden pt-36 pb-20 sm:pt-44">
-        <div className="absolute inset-0 z-0" aria-hidden="true">
-          <VoidDust />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-void/40 via-void/80 to-void" />
-        <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-8">
-          <Reveal>
-            <span className="font-mono text-[0.62rem] uppercase tracking-[0.32em] text-ember-300/75">
-              Void Studio
-            </span>
-          </Reveal>
-          <Reveal delay={80}>
-            <h1 className="font-display mt-6 max-w-4xl text-[clamp(2.4rem,5.4vw,4.2rem)] font-semibold leading-[1.02] tracking-[-0.03em]">
-              <span className="text-bone-gradient block">See a website design</span>
-              <span className="text-ember-gradient block">take shape in seconds.</span>
-            </h1>
-          </Reveal>
-          <Reveal delay={140}>
-            <p className="mt-7 max-w-2xl text-[1.02rem] leading-relaxed text-bone/58">
-              Void Studio is a live sample of the same composition pass that opens every VoidBuilds project.
-              Describe a business and it returns a seeded art direction: palette, layout, motif and opening
-              copy you can reference by name weeks later.
-            </p>
-          </Reveal>
-          <Reveal delay={200}>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <ActionButton
-                href={purchaseMailto({ planName: "Your website", amountUsd: 100 })}
-                external
-                event={{ name: "purchase_click", label: "studio_hero" }}
-              >
-                Start your website — $100
-              </ActionButton>
-              <ActionButton href="/pricing" variant="ghost" event={{ name: "nav", label: "studio_pricing" }}>
-                See pricing
-              </ActionButton>
-              <ActionButton href="/studio/editor" variant="ghost" event={{ name: "nav", label: "studio_editor" }}>
-                Open Void Cut
-              </ActionButton>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <PageHero
+        kicker="Void Studio"
+        title={
+          <>
+            See a website design{" "}
+            <span className="text-ember-300">take shape in seconds.</span>
+          </>
+        }
+        body="Void Studio is a live sample of the same composition pass that opens every VoidBuilds project. Describe a business and it returns a seeded art direction: palette, layout, motif and opening copy you can reference by name weeks later."
+      >
+        <ActionButton
+          href={purchaseMailto({ planName: "Your website", amountUsd: 100 })}
+          external
+          event={{ name: "purchase_click", label: "studio_hero" }}
+        >
+          Start your website — $100
+        </ActionButton>
+        <ActionButton href="/pricing" variant="ghost" event={{ name: "nav", label: "studio_pricing" }}>
+          See pricing
+        </ActionButton>
+        <ActionButton href="/studio/editor" variant="ghost" event={{ name: "nav", label: "studio_editor" }}>
+          Open Void Cut
+        </ActionButton>
+      </PageHero>
 
       <ForgeStudio initial={initial} />
       <Process />

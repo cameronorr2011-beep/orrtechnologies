@@ -512,7 +512,7 @@ export const NAV_LINKS = [
   { href: "/#capabilities", label: "What you get" },
   { href: "/#studio", label: "Studio" },
   { href: "/#work", label: "Work" },
-  { href: "/#media", label: "The film" },
+  { href: "/#process", label: "Process" },
   { href: "/#pricing", label: "Pricing" },
   { href: "/blog", label: "Blog" },
   { href: "/#contact", label: "Contact" },

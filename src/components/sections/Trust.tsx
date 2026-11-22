@@ -20,7 +20,7 @@ export default function Trust() {
         <div className="grid gap-16 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
           <div>
             <SectionHeading
-              kicker="09 / The deal"
+              kicker="08 / The deal"
               title={
                 <>
                   Plain terms.

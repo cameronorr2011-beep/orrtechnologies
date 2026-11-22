@@ -88,7 +88,7 @@ export default function Hero() {
           />
           <VoidField className="absolute inset-0" scale={2.1} label="Live black-hole plate — VoidBuilds mark" />
 
-          <div className="pointer-events-none absolute inset-0 flex flex-col justify-between p-7">
+          <div className="pointer-events-none absolute inset-0 flex flex-col justify-between px-7 pb-7 pt-24">
             <div className="flex items-start justify-between font-mono text-[0.56rem] uppercase tracking-[0.2em] text-bone/45">
               <span>Fig. 01 — Event horizon</span>
               <span className="text-right">VB / 001<br />Live WebGL</span>

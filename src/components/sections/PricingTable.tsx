@@ -28,7 +28,7 @@ export default function PricingTable({ plans }: { plans: PlanView[] }) {
     <section id="pricing" className="relative border-t border-bone/10 py-24 sm:py-32">
       <div className="mx-auto max-w-[1480px] px-5 sm:px-8">
         <SectionHeading
-          kicker="08 / Pricing"
+          kicker="07 / Pricing"
           title={
             <>
               One price.
@@ -57,25 +57,27 @@ export default function PricingTable({ plans }: { plans: PlanView[] }) {
 
                 <p className="mt-6 max-w-sm text-[0.94rem] leading-relaxed text-bone/55">{standard.tagline}</p>
 
-                <ActionButton
-                  href={purchaseMailto({ planName: "Your website", amountUsd: 100 })}
-                  external
-                  event={{
-                    name: "purchase_click",
-                    label: "pricing_website",
-                    meta: { plan: "website", amountUsd: 100 },
-                  }}
-                  className="mt-8 w-full sm:w-auto"
-                >
-                  Start your build
-                </ActionButton>
+                <div className="mt-8 flex flex-col items-start gap-4">
+                  <ActionButton
+                    href={purchaseMailto({ planName: "Your website", amountUsd: 100 })}
+                    external
+                    event={{
+                      name: "purchase_click",
+                      label: "pricing_website",
+                      meta: { plan: "website", amountUsd: 100 },
+                    }}
+                    className="w-full sm:w-auto"
+                  >
+                    Start your build
+                  </ActionButton>
 
-                <Link
-                  href="/checkout"
-                  className="mt-5 inline-flex items-center gap-2 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-bone/40 transition-colors hover:text-ember-300"
-                >
-                  Pay in Bitcoin or gift cards →
-                </Link>
+                  <Link
+                    href="/checkout"
+                    className="inline-flex items-center gap-2 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-bone/40 transition-colors hover:text-ember-300"
+                  >
+                    Pay in Bitcoin or gift cards →
+                  </Link>
+                </div>
               </div>
             </Reveal>
 

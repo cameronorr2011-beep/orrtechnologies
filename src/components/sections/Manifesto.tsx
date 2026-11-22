@@ -24,7 +24,7 @@ const TENETS = [
 
 export default function Manifesto() {
   return (
-    <section className="relative border-t border-bone/10 py-24 sm:py-32">
+    <section id="mark" className="relative border-t border-bone/10 py-24 sm:py-32">
       <div className="mx-auto max-w-[1480px] px-5 sm:px-8">
         <div className="grid gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-20">
           <Reveal>
@@ -50,7 +50,7 @@ export default function Manifesto() {
             <Reveal>
               <span className="kicker inline-flex items-center gap-3">
                 <span className="inline-block h-1.5 w-1.5 bg-ember-300" aria-hidden="true" />
-                05 / The mark
+                04 / The mark
               </span>
             </Reveal>
             <Reveal delay={70}>

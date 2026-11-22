@@ -53,7 +53,7 @@ export default function Voices() {
     <section className="relative border-t border-bone/10 py-24 sm:py-32">
       <div className="mx-auto max-w-[1480px] px-5 sm:px-8">
         <SectionHeading
-          kicker="07 / Client voices"
+          kicker="06 / Client voices"
           title={
             <>
               What the people

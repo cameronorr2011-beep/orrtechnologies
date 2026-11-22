@@ -3,7 +3,6 @@ import Hero from "@/components/sections/Hero";
 import Capabilities from "@/components/sections/Capabilities";
 import Creative from "@/components/sections/Creative";
 import Work from "@/components/sections/Work";
-import Film from "@/components/sections/Film";
 import Manifesto from "@/components/sections/Manifesto";
 import Voices from "@/components/sections/Voices";
 import Process from "@/components/sections/Process";
@@ -87,7 +86,6 @@ export default async function HomePage() {
       <Capabilities />
       <Work />
       <Creative />
-      <Film />
       <Manifesto />
       <Process />
       <Voices />

@@ -10,7 +10,7 @@ export default function Process() {
       <div className="mx-auto max-w-[1480px] px-5 sm:px-8">
         <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
           <SectionHeading
-            kicker="06 / Process"
+            kicker="05 / Process"
             title={
               <>
                 Four steps.

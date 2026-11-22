@@ -44,7 +44,7 @@ export default function Contact() {
         <div className="grid gap-16 lg:grid-cols-[1fr_1fr] lg:gap-20">
           <div>
             <SectionHeading
-              kicker="11 / Questions"
+              kicker="10 / Questions"
               title={
                 <>
                   Answers,

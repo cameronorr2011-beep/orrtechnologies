@@ -64,7 +64,7 @@ export default function LiveSignal() {
       <div className="mx-auto max-w-[1480px] px-5 sm:px-8">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
-            kicker="10 / Live signal"
+            kicker="09 / Live signal"
             title={
               <>
                 Real numbers.

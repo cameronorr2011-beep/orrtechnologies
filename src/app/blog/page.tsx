@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/fx/Reveal";
-import VoidDust from "@/components/fx/VoidDust";
+import PageHero from "@/components/ui/PageHero";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ActionButton from "@/components/ui/ActionButton";
 import JsonLd from "@/components/seo/JsonLd";
@@ -68,44 +68,29 @@ export default function BlogIndexPage() {
   return (
     <>
       <JsonLd data={jsonLd} />
-      <section className="relative overflow-hidden pt-36 pb-16 sm:pt-44">
-        <div className="absolute inset-0 z-0 opacity-70" aria-hidden="true">
-          <VoidDust variant="core" />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-void/70 to-void" aria-hidden="true" />
-        <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-8">
-          <Reveal>
-            <span className="font-mono text-[0.62rem] uppercase tracking-[0.32em] text-ember-300/75">
-              Blog
-            </span>
-          </Reveal>
-          <Reveal delay={80}>
-            <h1 className="font-display mt-6 max-w-4xl text-[clamp(2.4rem,5.4vw,4.2rem)] font-semibold leading-[1.02] tracking-[-0.03em]">
-              <span className="text-bone-gradient block">Website advice for</span>
-              <span className="text-ember-gradient block">small businesses.</span>
-            </h1>
-          </Reveal>
-          <Reveal delay={140}>
-            <p className="mt-7 max-w-2xl text-[1.02rem] leading-relaxed text-bone/58">
-              Short guides for business owners: what a good website needs, what it should cost, and how to
-              avoid the traps. No jargon, no sales pitch.
-            </p>
-          </Reveal>
-        </div>
-      </section>
+      <PageHero
+        kicker="Blog"
+        title={
+          <>
+            Website advice for{" "}
+            <span className="text-ember-300">small businesses.</span>
+          </>
+        }
+        body="Short guides for business owners: what a good website needs, what it should cost, and how to avoid the traps. No jargon, no sales pitch."
+      />
 
       <section className="relative z-10 pb-24">
         <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
           <Reveal>
             <Link
               href={`/blog/${featured.slug}`}
-              className="glass edge-glow group block rounded-[1.75rem] p-8 transition-colors hover:border-ember-300/25 sm:p-10"
+              className="group block border border-bone/12 p-8 transition-colors hover:border-bone/35 sm:p-10"
             >
               <span className="font-mono text-[0.6rem] uppercase tracking-[0.24em] text-ember-300/75">
                 {featured.tag} · {formatDate(featured.date)} · {featured.readMinutes} min read
               </span>
               {featured.image ? (
-                <div className="relative mt-6 aspect-[16/7] overflow-hidden rounded-2xl border border-royal-300/10">
+                <div className="relative mt-6 aspect-[16/7] overflow-hidden border border-bone/10">
                   <Image
                     src={featured.image}
                     alt={featured.imageAlt ?? featured.title}
@@ -133,13 +118,13 @@ export default function BlogIndexPage() {
               <Reveal key={post.slug} delay={i * 80}>
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="glass edge-glow group flex h-full flex-col rounded-3xl p-7 transition-colors hover:border-ember-300/25"
+                  className="group flex h-full flex-col border border-bone/12 p-7 transition-colors hover:border-bone/35"
                 >
                   <span className="font-mono text-[0.56rem] uppercase tracking-[0.22em] text-ember-300/70">
                     {post.tag}
                   </span>
                   {post.image ? (
-                    <div className="relative mt-4 aspect-[16/6] overflow-hidden rounded-xl border border-royal-300/10">
+                    <div className="relative mt-4 aspect-[16/6] overflow-hidden border border-bone/10">
                       <Image
                         src={post.image}
                         alt={post.imageAlt ?? post.title}
