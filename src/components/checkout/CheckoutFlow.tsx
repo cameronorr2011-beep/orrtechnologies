@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Reveal from "@/components/fx/Reveal";
 import ActionButton from "@/components/ui/ActionButton";
 import { PAYMENT_METHODS, SITE, purchaseMailto, type PaymentMethodId } from "@/lib/content";
@@ -27,7 +28,16 @@ type Invoice = {
 };
 
 export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
-  const plan = plans[0];
+  const searchParams = useSearchParams();
+  const requested = searchParams.get("plan");
+  const [planSlug, setPlanSlug] = useState(
+    () =>
+      plans.find((p) => p.slug === requested)?.slug ??
+      plans.find((p) => p.featured)?.slug ??
+      plans[0]?.slug ??
+      "",
+  );
+  const plan = plans.find((p) => p.slug === planSlug) ?? plans[0];
   const [form, setForm] = useState({ contactName: "", contactEmail: "", company: "", notes: "" });
   const [methodId, setMethodId] = useState<PaymentMethodId>("bitcoin");
   const [invoice, setInvoice] = useState<Invoice | null>(null);
@@ -42,7 +52,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
   const steps = invoice ? invoiceMethod.steps : method.steps;
 
   const field =
-    "w-full rounded-2xl border border-royal-300/15 bg-royal-950/60 px-5 py-3.5 text-[0.92rem] text-bone placeholder:text-bone/25 transition-colors focus:border-ember-300/55 focus:outline-none";
+    "w-full border border-bone/15 bg-[#08090a] px-5 py-3.5 text-[0.92rem] text-bone placeholder:text-bone/25 transition-colors focus:border-ember-300/55 focus:outline-none";
 
   const copy = async (value: string, key: string) => {
     try {
@@ -111,7 +121,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
     <div className="mx-auto max-w-[1280px] px-5 pb-24 sm:px-8">
       {invoice ? (
         <Reveal>
-          <div className="glass-warm relative overflow-hidden rounded-[1.75rem] p-8 sm:p-10">
+          <div className="relative overflow-hidden border border-bone/15 bg-[#0a0b08] p-8 sm:p-10">
             <div className="pointer-events-none absolute inset-0 noise-panel opacity-70" />
             <div className="relative">
               <div className="flex flex-wrap items-start justify-between gap-6">
@@ -126,7 +136,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
                     {invoice.planName} · ${invoice.amountUsd.toLocaleString("en-US")} USD
                   </p>
                 </div>
-                <div className="rounded-2xl border border-ember-200/20 bg-void/40 px-5 py-4 text-right">
+                <div className="border border-bone/15 bg-void/40 px-5 py-4 text-right">
                   <p className="font-mono text-[0.56rem] uppercase tracking-[0.22em] text-bone/40">
                     {invoice.payment.id === "giftcard" ? "In gift cards" : "Roughly, in Bitcoin"}
                   </p>
@@ -142,7 +152,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
               </div>
 
               <div className="mt-8 grid gap-5 sm:grid-cols-2">
-                <div className="rounded-2xl border border-royal-300/12 bg-void/40 p-6">
+                <div className="border border-bone/12 bg-[#08090a] p-6">
                   <p className="font-mono text-[0.56rem] uppercase tracking-[0.22em] text-bone/40">
                     How you pay
                   </p>
@@ -156,7 +166,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
                       {invoice.payment.accepted.map((card) => (
                         <span
                           key={card}
-                          className="rounded-full border border-royal-300/20 px-2.5 py-1 font-mono text-[0.52rem] uppercase tracking-[0.12em] text-bone/50"
+                          className="border border-bone/15 px-2.5 py-1 font-mono text-[0.52rem] uppercase tracking-[0.12em] text-bone/50"
                         >
                           {card}
                         </span>
@@ -164,7 +174,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
                     </div>
                   ) : null}
                 </div>
-                <div className="rounded-2xl border border-royal-300/12 bg-void/40 p-6">
+                <div className="border border-bone/12 bg-[#08090a] p-6">
                   <p className="font-mono text-[0.56rem] uppercase tracking-[0.22em] text-bone/40">
                     Questions?
                   </p>
@@ -181,7 +191,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
                 </div>
               </div>
 
-              <div className="mt-8 rounded-2xl border border-ember-200/20 bg-gradient-to-br from-ember-500/12 to-royal-700/20 p-7">
+              <div className="mt-8 border border-ember-300/30 bg-[#0a0b08] p-7">
                 <p className="text-[0.95rem] leading-relaxed text-bone/80">
                   Next step: send the email below. It includes your order code and your chosen payment
                   method — we reply with the final details on the same thread.
@@ -217,15 +227,42 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
 
       <div className={`mt-8 grid gap-8 ${invoice ? "opacity-70" : ""} lg:grid-cols-[1.05fr_0.95fr]`}>
         <Reveal>
-          <form onSubmit={submit} className="glass edge-glow rounded-[1.75rem] p-8">
+          <form onSubmit={submit} className="border border-bone/12 bg-[#08090a] p-8">
             <p className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-ember-300/75">
-              Your website — $100
+              Your package{plan ? ` — ${plan.priceLabel ?? `$${plan.priceUsd}`}` : ""}
             </p>
 
             <p className="mt-4 text-[0.9rem] leading-relaxed text-bone/55">
-              One package, one price. Tell us about your business and how you&apos;d like to pay, and
-              we&apos;ll email your invoice.
+              Pick a package, tell us about the business and how you&apos;d like to pay, and we&apos;ll email
+              your invoice.
             </p>
+
+            <div className="mt-6">
+              <p className="font-mono text-[0.56rem] uppercase tracking-[0.22em] text-bone/40">Package</p>
+              <div className="mt-3 grid gap-2 sm:grid-cols-3">
+                {plans.map((option) => {
+                  const on = option.slug === plan?.slug;
+                  return (
+                    <button
+                      key={option.slug}
+                      type="button"
+                      onClick={() => setPlanSlug(option.slug)}
+                      aria-pressed={on}
+                      className={`border px-4 py-3 text-left transition-colors ${
+                        on ? "border-ember-300/55 bg-ember-500/8" : "border-bone/12 hover:border-bone/30"
+                      }`}
+                    >
+                      <span className={`block text-[0.8rem] font-semibold ${on ? "text-bone" : "text-bone/65"}`}>
+                        {option.name}
+                      </span>
+                      <span className="mt-1 block font-mono text-[0.5rem] uppercase leading-relaxed tracking-[0.1em] text-bone/40">
+                        {option.priceLabel ?? `$${option.priceUsd}`} · {option.turnaround}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
 
             <div className="mt-6">
               <p className="font-mono text-[0.56rem] uppercase tracking-[0.22em] text-bone/40">
@@ -240,10 +277,10 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
                       type="button"
                       onClick={() => setMethodId(option.id)}
                       aria-pressed={on}
-                      className={`rounded-2xl border px-4 py-3 text-left transition-all duration-300 ${
+                      className={`border px-4 py-3 text-left transition-all duration-300 ${
                         on
                           ? "border-ember-300/50 bg-ember-500/10"
-                          : "border-royal-300/12 bg-royal-950/40 hover:border-royal-300/25"
+                          : "border-bone/12 bg-[#08090a] hover:border-bone/30"
                       }`}
                     >
                       <span className={`block text-[0.82rem] font-semibold ${on ? "text-bone" : "text-bone/65"}`}>
@@ -300,7 +337,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
               <ActionButton
                 type="submit"
                 disabled={loading}
-                event={{ name: "checkout_submit", label: "website" }}
+                event={{ name: "checkout_submit", label: plan?.slug ?? "package" }}
               >
                 {loading ? "Creating your order" : "Get my payment details"}
               </ActionButton>
@@ -325,7 +362,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
 
         <div className="space-y-5">
           <Reveal delay={90}>
-            <div className="glass rounded-[1.75rem] p-8">
+            <div className="border border-bone/12 bg-[#08090a] p-8">
               <p className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-ember-300/75">
                 How payment works
               </p>
@@ -343,7 +380,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
           </Reveal>
 
           <Reveal delay={150}>
-            <div className="glass rounded-[1.75rem] p-8">
+            <div className="border border-bone/12 bg-[#08090a] p-8">
               <p className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-ember-300/75">
                 Why pay this way
               </p>
@@ -352,7 +389,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
                   ? "Gift cards are the easiest route if you don't use crypto: buy them anywhere, send the codes after we issue your order code, and the total has to match the invoice exactly."
                   : invoiceMethod.id === "crypto"
                     ? "Ethereum and USDT settle in minutes and keep the payment direct, without a card company taking a cut or reversing it months later. We name the network on your invoice so nothing goes astray."
-                    : "Card companies add fees and can reverse payments months later. Bitcoin is one payment, straight between us — which is part of how the price stays at $100."}
+                    : "Card companies add fees and can reverse payments months later. Bitcoin is one payment, straight between us, which is part of how the prices stay this low."}
               </p>
               <p className="mt-5 text-[0.92rem] leading-relaxed text-bone/60">
                 The amount is confirmed by email before you send anything. Nothing is ever

@@ -25,7 +25,7 @@ export default function Capabilities() {
 
             <Reveal delay={200}>
               <figure className="mt-10 border border-bone/10">
-                <div className="relative aspect-square overflow-hidden bg-royal-950">
+                <div className="relative aspect-[4/5] overflow-hidden bg-royal-950">
                   <Image
                     src="/media/void-poster.jpg"
                     alt="A rendered black hole with a white-hot accretion disk around a dark event horizon"

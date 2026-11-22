@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
+import Ticker from "@/components/ui/Ticker";
 import Capabilities from "@/components/sections/Capabilities";
 import Creative from "@/components/sections/Creative";
 import Work from "@/components/sections/Work";
@@ -26,7 +27,7 @@ export const revalidate = 3600;
 
 const TITLE = "VoidBuilds — websites, promo films, ads & posters";
 const DESCRIPTION =
-  "Custom websites from $100 flat, plus cinematic promo films, ads and posters for small businesses. Paid once in crypto or gift cards, and the code is yours.";
+  "Custom websites from $100, plus cinematic promo films, ads and posters for small businesses. Starter, Builder and Premium packages, paid once in crypto or gift cards.";
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },
@@ -35,6 +36,8 @@ export const metadata: Metadata = {
     "small business website design",
     "affordable website design",
     "$100 website",
+    "$200 website",
+    "three tier website pricing",
     "custom website for small business",
     "website design and development",
     "free promo video",
@@ -51,14 +54,14 @@ export const metadata: Metadata = {
     siteName: "VoidBuilds",
     title: "Websites, promo films, ads & posters",
     description:
-      "Custom websites from $100 flat, with a promo film included — plus ads and posters. Paid once, and you own the code.",
+      "Custom websites from $100, with promo videos included — plus ads and posters. Starter, Builder and Premium, paid once.",
     images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: "VoidBuilds — websites, promo films, ads & posters",
     description:
-      "$100 flat during beta. You own the code, a promo film is included, and ads or posters are quoted per project.",
+      "Starter $100, Builder $200, Premium from $500. You own the code, promo videos are included, and ads or posters are quoted per project.",
     images: [DEFAULT_OG_IMAGE.url],
   },
 };
@@ -83,6 +86,7 @@ export default async function HomePage() {
     <>
       <JsonLd data={jsonLd} />
       <Hero />
+      <Ticker />
       <Capabilities />
       <Work />
       <Creative />

@@ -176,7 +176,7 @@ export function demoProject(): CutProject {
         duration: 3.5,
         trimStart: 0,
         headline: "Websites",
-        caption: "Fast, owned outright, $100 flat.",
+        caption: "Fast, owned outright, from $100.",
       },
       {
         id: "clip-video",

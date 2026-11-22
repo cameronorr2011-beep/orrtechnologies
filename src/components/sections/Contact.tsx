@@ -149,7 +149,7 @@ export default function Contact() {
                     {state === "loading" ? "Sending" : "Send message"}
                   </ActionButton>
                   <ActionButton
-                    href={purchaseMailto({ planName: "Your website", amountUsd: 100 })}
+                    href={purchaseMailto({ planName: "Website project" })}
                     external
                     variant="ghost"
                     event={{ name: "purchase_click", label: "contact_purchase" }}

@@ -125,12 +125,12 @@ vec3 diskSample(float r, float phi, vec3 rd, out float alpha) {
 void main() {
   vec2 p = (gl_FragCoord.xy - 0.5 * u_res) / u_res.y;
 
-  float dist = 23.0 + 0.4 * sin(u_phase);
-  vec3 ro = vec3(0.0, 6.4, dist);
+  float dist = 33.0 + 0.5 * sin(u_phase);
+  vec3 ro = vec3(0.0, 8.6, dist);
   vec3 ww = normalize(-ro);
   vec3 uu = normalize(cross(vec3(0.0, 1.0, 0.0), ww));
   vec3 vv = cross(ww, uu);
-  vec3 rd = normalize(p.x * uu + p.y * vv + 1.55 * ww);
+  vec3 rd = normalize(p.x * uu + p.y * vv + 1.52 * ww);
 
   vec3 pos = ro;
   vec3 dir = rd;

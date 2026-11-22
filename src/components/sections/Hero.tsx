@@ -1,7 +1,6 @@
 import VoidLoop from "@/components/brand/VoidLoop";
 import Reveal from "@/components/fx/Reveal";
 import ActionButton from "@/components/ui/ActionButton";
-import { purchaseMailto } from "@/lib/content";
 
 const INDEX = [
   { n: "01", label: "Websites" },
@@ -11,8 +10,8 @@ const INDEX = [
 ];
 
 const FACTS = [
-  { value: "$100", label: "Flat, paid once" },
-  { value: "1–2 wk", label: "Typical build" },
+  { value: "From $100", label: "Starter, paid once" },
+  { value: "2–6 days", label: "Typical delivery" },
   { value: "100%", label: "Yours to keep" },
 ];
 
@@ -23,7 +22,7 @@ export default function Hero() {
         <div className="relative z-10 flex flex-col justify-center px-5 pb-12 pt-28 sm:px-8 lg:py-24">
           <Reveal>
             <div className="flex items-center gap-3">
-              <span className="h-1.5 w-1.5 bg-ember-300" aria-hidden="true" />
+              <span className="kicker-dot h-1.5 w-1.5 bg-ember-300" aria-hidden="true" />
               <span className="kicker">VoidBuilds — independent web studio</span>
             </div>
           </Reveal>
@@ -38,19 +37,15 @@ export default function Hero() {
 
           <Reveal delay={140}>
             <p className="mt-8 max-w-[31rem] text-[1.02rem] leading-relaxed text-bone/60">
-              We build websites for small businesses. One payment of $100 covers the design, the copy and
-              the build, and the finished code goes into your GitHub. No monthly fee, and nothing to renew.
+              Websites for small businesses, built once and handed over. Starter is $100 for one page,
+              Builder is $200 for up to five, and Premium starts at $500 when you need a backend.
             </p>
           </Reveal>
 
           <Reveal delay={210}>
             <div className="mt-9 flex flex-wrap items-center gap-3">
-              <ActionButton
-                href={purchaseMailto({ planName: "Your website", amountUsd: 100 })}
-                external
-                event={{ name: "purchase_click", label: "hero_purchase", meta: { plan: "website" } }}
-              >
-                Start your build
+              <ActionButton href="/pricing" event={{ name: "nav", label: "hero_pricing" }}>
+                Choose a package
               </ActionButton>
               <ActionButton href="/#work" variant="ghost" event={{ name: "nav", label: "hero_work" }}>
                 See the work
@@ -60,7 +55,7 @@ export default function Hero() {
 
           <Reveal delay={270}>
             <p className="mt-6 font-mono text-[0.58rem] uppercase leading-relaxed tracking-[0.18em] text-bone/35">
-              Most builds take 10 to 14 days. One invoice, sent before we start.
+              Starter in 2–3 days, Builder in 4–6. One invoice, sent before we start.
             </p>
           </Reveal>
 
@@ -80,8 +75,10 @@ export default function Hero() {
           </Reveal>
         </div>
 
-        <div className="relative h-[58svh] min-h-[360px] border-t border-bone/10 lg:h-auto lg:min-h-0 lg:border-l lg:border-t-0">
-          <VoidLoop />
+        <div className="relative h-[58svh] min-h-[360px] overflow-hidden border-t border-bone/10 lg:h-auto lg:min-h-0 lg:border-l lg:border-t-0">
+          <div className="hero-media absolute inset-0">
+            <VoidLoop />
+          </div>
 
           <div className="pointer-events-none absolute inset-0 flex flex-col justify-between px-5 pb-5 pt-5 sm:px-7 sm:pb-7 lg:pt-24">
             <div className="flex items-start justify-between font-mono text-[0.56rem] uppercase tracking-[0.2em] text-bone/60">

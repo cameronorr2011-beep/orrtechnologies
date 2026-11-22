@@ -7,9 +7,9 @@ import { PAYMENT_METHODS, SITE, TRUST, purchaseMailto } from "@/lib/content";
 
 const LEDGER = [
   { k: "Design", v: "matched to your business" },
-  { k: "Copy", v: "written for you" },
-  { k: "Build", v: "up to five pages" },
-  { k: "Film", v: "included" },
+  { k: "Copy", v: "placed and edited" },
+  { k: "Build", v: "one to eight pages" },
+  { k: "Promo videos", v: "one to three, by package" },
   { k: "Handover", v: "GitHub + domain" },
 ];
 
@@ -46,7 +46,7 @@ export default function Trust() {
                     Total, paid once
                   </dt>
                   <dd className="font-display text-[1.5rem] font-extrabold leading-none tracking-[-0.04em] text-ember-300">
-                    $100
+                    From $100
                   </dd>
                 </div>
               </dl>

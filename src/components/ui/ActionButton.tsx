@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import type { ReactNode } from "react";
+import type { PointerEvent as ReactPointerEvent, ReactNode } from "react";
 import { trackEvent } from "@/lib/track";
 
 type Variant = "primary" | "ghost" | "quiet";
 
 const base =
-  "group relative inline-flex items-center justify-center gap-3 rounded-none px-6 py-4 text-[0.7rem] font-semibold uppercase tracking-[0.2em] transition-colors duration-300 active:translate-y-px";
+  "magnetic group relative inline-flex items-center justify-center gap-3 rounded-none px-6 py-4 text-[0.7rem] font-semibold uppercase tracking-[0.2em] active:translate-y-px";
 
 const variants: Record<Variant, string> = {
   primary: `${base} btn-primary`,
@@ -41,6 +41,20 @@ export default function ActionButton({
     onClick?.();
   };
 
+  const pull = (e: ReactPointerEvent<HTMLElement>) => {
+    if (e.pointerType !== "mouse") return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = Math.max(-6, Math.min(6, (e.clientX - (r.left + r.width / 2)) * 0.12));
+    const y = Math.max(-6, Math.min(6, (e.clientY - (r.top + r.height / 2)) * 0.18));
+    e.currentTarget.style.setProperty("--mx", `${x}px`);
+    e.currentTarget.style.setProperty("--my", `${y}px`);
+  };
+
+  const release = (e: ReactPointerEvent<HTMLElement>) => {
+    e.currentTarget.style.setProperty("--mx", "0px");
+    e.currentTarget.style.setProperty("--my", "0px");
+  };
+
   const classes = `${variants[variant]} ${disabled ? "pointer-events-none opacity-45" : ""} ${className}`;
 
   const inner = (
@@ -58,20 +72,27 @@ export default function ActionButton({
   if (href) {
     if (external || href.startsWith("mailto:") || href.startsWith("http")) {
       return (
-        <a href={href} onClick={handle} className={classes}>
+        <a href={href} onClick={handle} className={classes} onPointerMove={pull} onPointerLeave={release}>
           {inner}
         </a>
       );
     }
     return (
-      <Link href={href} onClick={handle} className={classes}>
+      <Link href={href} onClick={handle} className={classes} onPointerMove={pull} onPointerLeave={release}>
         {inner}
       </Link>
     );
   }
 
   return (
-    <button type={type} disabled={disabled} onClick={handle} className={classes}>
+    <button
+      type={type}
+      disabled={disabled}
+      onClick={handle}
+      className={classes}
+      onPointerMove={pull}
+      onPointerLeave={release}
+    >
       {inner}
     </button>
   );

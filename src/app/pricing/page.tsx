@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import PricingTable, { type PlanView } from "@/components/sections/PricingTable";
+import PricingTable from "@/components/sections/PricingTable";
 import Trust from "@/components/sections/Trust";
 import Contact from "@/components/sections/Contact";
 import Reveal from "@/components/fx/Reveal";
 import PageHero from "@/components/ui/PageHero";
 import ActionButton from "@/components/ui/ActionButton";
 import JsonLd from "@/components/seo/JsonLd";
-import { SITE, purchaseMailto } from "@/lib/content";
+import { PLANS, SITE, purchaseMailto } from "@/lib/content";
 import {
   DEFAULT_OG_IMAGE,
   breadcrumbSchema,
@@ -15,13 +15,14 @@ import {
 } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: { absolute: "Website Pricing: $100 and $500 Plans | VoidBuilds" },
+  title: { absolute: "Website Pricing: Starter $100, Builder $200, Premium $500 | VoidBuilds" },
   description:
-    "Website pricing: $100 flat for a complete small business website, $500 for a dynamic site with backend features. Pay once, own the code.",
+    "Three one-time website packages: Starter $100 for one page, Builder $200 for up to five pages, Premium from $500 for backend work and integrations. Code delivered to your GitHub.",
   keywords: [
     "small business website pricing",
     "$100 website",
-    "$500 dynamic website",
+    "$200 website",
+    "$500 website",
     "website design cost",
     "one-time website price",
     "website with backend",
@@ -32,75 +33,22 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "/pricing",
     siteName: SITE.name,
-    title: "Website Pricing: $100 and $500 Plans",
+    title: "Website pricing: Starter, Builder and Premium",
     description:
-      "$100 flat for a complete small business website. $500 for a dynamic site with backend features. One-time prices, code delivered to your GitHub.",
+      "Starter $100, Builder $200, Premium from $500. One-time prices, code delivered to your GitHub, no subscription.",
     images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Website Pricing: $100 and $500 Plans | VoidBuilds",
+    title: "Website Pricing: Starter $100, Builder $200, Premium $500 | VoidBuilds",
     description:
-      "$100 flat for a complete website, $500 for a dynamic site with backend features. Pay once in Bitcoin and own the code.",
+      "Three one-time packages: Starter $100, Builder $200, Premium from $500. Pay once in Bitcoin and own the code.",
     images: [DEFAULT_OG_IMAGE.url],
   },
 };
 
-const PRICING_PLANS: PlanView[] = [
-  {
-    slug: "website",
-    name: "Your website",
-    tagline: "A complete website for your business — designed, built, and delivered to your GitHub.",
-    priceUsd: 100,
-    renewalUsd: 0,
-    turnaround: "About 1–2 weeks",
-    bestFor: "Every small business",
-    pages: "1–5 pages, whatever you need",
-    revisions: 99,
-    features: [
-      "Up to 5 pages — home, services, about, pricing, contact, or just one",
-      "Custom design matched to your colours and logo",
-      "A free promo video for your business, made by us",
-      "Your text and photos placed for you — we help write the words",
-      "Contact form that emails you directly",
-      "Blog set up so you can post updates yourself",
-      "Set up so customers can find you on Google",
-      "Fast on phones and computers, no clutter",
-      "Delivered to your own GitHub — you own it",
-      "Unlimited small changes for 30 days after launch",
-    ],
-    featured: true,
-  },
-  {
-    slug: "dynamic-website",
-    name: "Dynamic Website",
-    tagline:
-      "Only for websites that need interactive functionality, data processing, or features that require a backend.",
-    priceUsd: 500,
-    renewalUsd: 0,
-    turnaround: "Quoted per project",
-    bestFor: "Sites that need a backend",
-    pages: "Scoped to what your features need",
-    revisions: 2,
-    features: [
-      "Custom dynamic website development",
-      "Backend functionality",
-      "Database integration when required",
-      "Interactive forms and data handling",
-      "User accounts/login systems when required",
-      "Admin functionality when required",
-      "API integrations when required",
-      "Deployment and configuration of the dynamic functionality",
-      "Responsive design for desktop, tablet, and mobile",
-      "Testing of the website's dynamic features",
-      "Basic post-launch technical support",
-    ],
-    featured: false,
-  },
-];
-
 const DESCRIPTION =
-  "Website pricing: $100 flat for a complete small business website, $500 for a dynamic site with backend features. Pay once, own the code.";
+  "Website pricing: Starter $100 for one page, Builder $200 for up to five pages, Premium from $500 for backend work and integrations. One-time prices, code delivered to your GitHub.";
 
 export default function PricingPage() {
   const jsonLd = {
@@ -108,10 +56,10 @@ export default function PricingPage() {
     "@graph": [
       webPageSchema({
         path: "/pricing",
-        name: "Website pricing: $100 and $500 plans",
+        name: "Website pricing: Starter, Builder and Premium",
         description: DESCRIPTION,
       }),
-      serviceSchema(PRICING_PLANS),
+      serviceSchema(PLANS),
       breadcrumbSchema([
         { name: "Home", path: "/" },
         { name: "Pricing", path: "/pricing" },
@@ -127,34 +75,34 @@ export default function PricingPage() {
         kicker="Pricing"
         title={
           <>
-            A complete website{" "}
-            <span className="text-ember-300">is $100.</span>
+            Pick a scope.{" "}
+            <span className="text-ember-300">Pay once.</span>
           </>
         }
-        body="Design, copy, build and the promo film. Paid once. The code goes into your GitHub when we finish."
+        body="Starter is $100, Builder is $200, Premium starts at $500. Nothing renews, and the code goes into your GitHub when we finish."
       />
 
-      <PricingTable plans={PRICING_PLANS} />
+      <PricingTable plans={PLANS} showHeading={false} />
 
       <section className="relative z-10 py-20">
         <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
           <Reveal delay={120}>
-            <div className="flex flex-col items-start justify-between gap-6 rounded-3xl glass-warm p-8 sm:flex-row sm:items-center">
+            <div className="flex flex-col items-start justify-between gap-6 border border-bone/12 p-8 sm:flex-row sm:items-center">
               <div>
                 <p className="font-display text-[1.4rem] font-semibold text-bone">
-                  Ready when you are — one email starts it.
+                  Not sure which one fits?
                 </p>
-                <p className="mt-2 max-w-xl text-[0.9rem] text-bone/55">
-                  Write to {SITE.emailDisplay} with what your business does. You&apos;ll get a simple plan, a
-                  start date, and the Bitcoin payment details.
+                <p className="mt-2 max-w-xl text-[0.9rem] leading-relaxed text-bone/55">
+                  Write to {SITE.emailDisplay} with what the business does. We&apos;ll point you to Starter,
+                  Builder or Premium, usually within one business day.
                 </p>
               </div>
               <ActionButton
-                href={purchaseMailto({ planName: "Your website" })}
+                href={purchaseMailto({ planName: "Website project" })}
                 external
                 event={{ name: "purchase_click", label: "pricing_page_footer" }}
               >
-                Get started
+                Ask first
               </ActionButton>
             </div>
           </Reveal>

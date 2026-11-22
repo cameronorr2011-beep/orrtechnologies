@@ -1,4 +1,4 @@
-import { desc, sql } from "drizzle-orm";
+import { desc, inArray, sql } from "drizzle-orm";
 import { db } from "@/db";
 import { events, forgeBuilds, inquiries, orders, plans, subscribers, type Plan } from "@/db/schema";
 import { PLANS } from "@/lib/content";
@@ -9,8 +9,7 @@ let seeded = false;
 
 /**
  * Idempotent plan catalog seed so any fresh database self-heals.
- * Uses upsert semantics so price/copy changes (e.g. the $100 beta price)
- * propagate to existing databases instead of being ignored.
+ * Uses upsert semantics so package changes propagate to existing databases.
  */
 export async function ensureSeed() {
   if (seeded) return;
@@ -54,17 +53,22 @@ export async function ensureSeed() {
 }
 
 export function toPlanView(row: Plan): PlanView {
+  const extras = PLANS.find((p) => p.slug === row.slug);
   return {
     slug: row.slug,
     name: row.name,
     tagline: row.tagline,
     priceUsd: row.priceUsd,
+    priceLabel: extras?.priceLabel,
     renewalUsd: row.renewalUsd,
     turnaround: row.turnaround,
+    delivery: extras?.delivery ?? row.turnaround,
     bestFor: row.bestFor,
     pages: row.pages,
     revisions: row.revisions,
+    videos: extras?.videos ?? "",
     features: Array.isArray(row.features) ? row.features : [],
+    notIncluded: extras?.notIncluded ?? "",
     featured: row.featured,
   };
 }
@@ -73,8 +77,12 @@ export function toPlanView(row: Plan): PlanView {
 export async function getPlans(): Promise<PlanView[]> {
   try {
     await ensureSeed();
-    const rows = await db.select().from(plans).orderBy(plans.sortOrder);
-    if (rows.length === 0) return [...PLANS];
+    const rows = await db
+      .select()
+      .from(plans)
+      .where(inArray(plans.slug, PLANS.map((p) => p.slug)))
+      .orderBy(plans.sortOrder);
+    if (rows.length === 0) return PLANS.map((p) => ({ ...p }));
     return rows.map(toPlanView);
   } catch {
     return [...PLANS];

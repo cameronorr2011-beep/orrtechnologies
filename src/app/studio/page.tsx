@@ -80,11 +80,11 @@ export default function StudioPage() {
         body="Void Studio is a demo of how we start: describe the business and it returns a palette, layout and opening copy. The real build starts with a conversation."
       >
         <ActionButton
-          href={purchaseMailto({ planName: "Your website", amountUsd: 100 })}
+          href={purchaseMailto({ planName: "Starter package", amountUsd: 100 })}
           external
           event={{ name: "purchase_click", label: "studio_hero" }}
         >
-          Start your website — $100
+          Start with Starter — $100
         </ActionButton>
         <ActionButton href="/pricing" variant="ghost" event={{ name: "nav", label: "studio_pricing" }}>
           See pricing

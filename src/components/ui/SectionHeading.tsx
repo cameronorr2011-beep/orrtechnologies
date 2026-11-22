@@ -18,7 +18,7 @@ export default function SectionHeading({
     <div className={align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-4xl"}>
       <Reveal>
         <span className="kicker inline-flex items-center gap-3">
-          <span className="inline-block h-1.5 w-1.5 bg-ember-300" aria-hidden="true" />
+          <span className="kicker-dot inline-block h-1.5 w-1.5 bg-ember-300" aria-hidden="true" />
           {kicker}
         </span>
       </Reveal>

@@ -18,7 +18,7 @@ export default function Process() {
                 <span className="text-ember-300">runs.</span>
               </>
             }
-            body="Ten to fourteen days from your first message to handover. You see the first build in week one and approve it before it goes live."
+            body="Starter takes 2–3 business days; Builder 4–6. You see the first build before the revision round and approve it before launch."
           />
           <p className="hidden font-mono text-[0.56rem] uppercase leading-relaxed tracking-[0.18em] text-bone/30 lg:block">
             Start to handover

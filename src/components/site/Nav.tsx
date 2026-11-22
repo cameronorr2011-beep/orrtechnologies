@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import VoidMark from "@/components/brand/VoidMark";
 import ActionButton from "@/components/ui/ActionButton";
-import { NAV_LINKS, purchaseMailto } from "@/lib/content";
+import { NAV_LINKS } from "@/lib/content";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -61,12 +61,11 @@ export default function Nav() {
 
           <div className="flex items-center gap-3">
             <ActionButton
-              href={purchaseMailto({ planName: "Your website" })}
-              external
-              event={{ name: "purchase_click", label: "nav_purchase_website" }}
+              href="/pricing"
+              event={{ name: "nav", label: "nav_pricing" }}
               className="max-sm:hidden !px-5 !py-3 !text-[0.62rem]"
             >
-              $100 build
+              Start a build
             </ActionButton>
 
             <button
@@ -116,12 +115,11 @@ export default function Nav() {
             </Link>
           ))}
           <ActionButton
-            href={purchaseMailto({ planName: "Your website" })}
-            external
-            event={{ name: "purchase_click", label: "mobile_nav_purchase" }}
+            href="/pricing"
+            event={{ name: "nav", label: "mobile_nav_pricing" }}
             className="mt-6 w-full"
           >
-            Start your build — $100
+            Choose a package
           </ActionButton>
         </div>
       </div>

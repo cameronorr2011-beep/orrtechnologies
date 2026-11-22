@@ -14,7 +14,7 @@ export const SITE = {
   email: "service@orrbiologicals.com",
   emailDisplay: "service@orrbiologicals.com",
   tagline:
-    "Custom websites, films, ads and posters for small businesses. $100 flat during beta, or $500 if the site needs a backend. You pay once and own the code.",
+    "Custom websites, films, ads and posters for small businesses. Starter is $100, Builder is $200, Premium starts at $500. You pay once and own the code.",
   btcNetwork: "Bitcoin",
   btcAddress: process.env.NEXT_PUBLIC_BTC_ADDRESS ?? "bc1q-issued-per-invoice",
   btcMemo:
@@ -69,7 +69,7 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
     name: "Gift cards",
     short: "Amazon · Apple · Steam",
     blurb: "Pay with cards you can buy anywhere.",
-    amount: "$100 in cards — $25, $50 or $100 each",
+    amount: "The full invoice in cards — $25, $50 or $100 each",
     accepted: ["Amazon", "Apple", "Steam", "Google Play", "Visa prepaid"],
     steps: [
       "Send the request below — it opens an email thread with us.",
@@ -104,14 +104,14 @@ export const CREATIVE_SERVICES: CreativeService[] = [
     kicker: "01 · Built",
     line: "A site that looks like your business, not a template.",
     detail:
-      "Designed, written and built from whatever you send us, then delivered to your own GitHub. $100 flat during beta; $500 when the site genuinely needs a backend.",
+      "Designed, written and built from whatever you send us, then delivered to your own GitHub. Starter is $100, Builder is $200, Premium starts at $500.",
     deliverables: [
       "Up to 5 pages, designed around your business",
       "All the copy written for you",
       "Contact form and blog included",
       "Code delivered to your GitHub — you own it",
     ],
-    price: "$100 flat · one time",
+    price: "From $100 · one time",
     image: "/media/art/facade.jpg",
     alt: "Black stone office facade at dusk, used as the plate for a VoidBuilds website build",
     cta: { href: "/pricing", label: "Website pricing" },
@@ -206,92 +206,116 @@ export function purchaseMailto(params: {
   return `mailto:${MAILTO.to}?subject=${subject}&body=${body}`;
 }
 
-/**
- * Plain-language note so nobody buys the wrong package: the Dynamic plan is
- * strictly for sites that need backend/interactive functionality. The standard
- * $100 website covers most small businesses and is unchanged.
- */
-export const DYNAMIC_PLAN_POSITIONING = {
-  kicker: "Is this plan for you?",
-  body: "Need more than a standard website? The Dynamic Website plan is designed for businesses that need backend functionality, databases, user accounts, APIs, data processing, or other interactive features. If you need a straightforward website for your business, the standard plan above is the right fit — most businesses don't need this plan.",
-} as const;
-
 export type PlanSeed = {
   slug: string;
   name: string;
   tagline: string;
   priceUsd: number;
+  priceLabel?: string;
   renewalUsd: number;
   turnaround: string;
+  delivery: string;
   bestFor: string;
   pages: string;
   revisions: number;
+  videos: string;
   features: string[];
+  notIncluded: string;
   accent: string;
   featured: boolean;
   sortOrder: number;
 };
 
 /**
- * Two packages, one flat price each during beta:
- *  - website: the standard static website ($100) — unchanged
- *  - dynamic-website: for sites that need backend/interactive functionality ($500)
- * Slugs stay stable (they appear in checkout URLs and the database).
+ * Three packages, one payment each. Starter and Builder are fixed scope;
+ * Premium starts at $500 and is scoped after the brief.
  */
 export const PLANS: PlanSeed[] = [
   {
-    slug: "website",
-    name: "Your website",
-    tagline: "A complete website for your business — designed, built, and delivered to your GitHub.",
+    slug: "starter",
+    name: "Starter",
+    tagline: "A professional web presence without the unnecessary complexity.",
     priceUsd: 100,
     renewalUsd: 0,
-    turnaround: "About 1–2 weeks",
-    bestFor: "Every small business",
-    pages: "1–5 pages, whatever you need",
-    revisions: 99,
+    turnaround: "2–3 business days",
+    delivery: "2–3 business days",
+    bestFor: "Individuals and small businesses getting online",
+    pages: "One page",
+    revisions: 1,
+    videos: "One promo video, up to 15 seconds",
     accent: "ember",
-    featured: true,
+    featured: false,
     sortOrder: 1,
     features: [
-      "Up to 5 pages — home, services, about, pricing, contact, or just one",
-      "Custom design matched to your colours and logo",
-      "A free promo video for your business, made by us",
-      "Send whatever you have — photos, videos, a menu, or just notes",
-      "Your text written for you — no writing skills needed",
-      "Contact form that emails you directly",
-      "Blog set up so you can post updates yourself",
-      "Set up so customers can find you on Google",
-      "Fast on phones and computers, no clutter",
-      "Delivered to your own GitHub — you own it",
-      "Unlimited small changes for 30 days after launch",
+      "One-page responsive website",
+      "Custom styling matched to your brand",
+      "Hero, services, about and contact sections",
+      "One primary call to action: call, email or request a quote",
+      "Basic on-page SEO: title, meta description, headings and image alt text",
+      "Mobile, desktop and basic browser testing",
+      "One revision round",
+      "One short promotional video, up to 15 seconds",
     ],
+    notIncluded: "Custom backend, database, booking systems, e-commerce or ongoing maintenance.",
   },
   {
-    slug: "dynamic-website",
-    name: "Dynamic Website",
-    tagline: "Only for websites that need interactive functionality, data processing, or features that require a backend.",
-    priceUsd: 500,
+    slug: "builder",
+    name: "Builder",
+    tagline: "More pages, more content and more room to grow.",
+    priceUsd: 200,
     renewalUsd: 0,
-    turnaround: "Quoted per project",
-    bestFor: "Sites that need a backend",
-    pages: "Scoped to what your features need",
-    revisions: 2,
-    accent: "royal",
-    featured: false,
+    turnaround: "4–6 business days",
+    delivery: "4–6 business days",
+    bestFor: "Businesses ready to grow their online presence",
+    pages: "Up to 5 pages",
+    revisions: 3,
+    videos: "Two promo videos, up to 15 seconds each",
+    accent: "ember",
+    featured: true,
     sortOrder: 2,
     features: [
-      "Custom dynamic website development",
-      "Backend functionality",
-      "Database integration when required",
-      "Interactive forms and data handling",
-      "User accounts/login systems when required",
-      "Admin functionality when required",
-      "API integrations when required",
-      "Deployment and configuration of the dynamic functionality",
-      "Responsive design for desktop, tablet, and mobile",
-      "Testing of the website's dynamic features",
-      "Basic post-launch technical support",
+      "Up to 5 pages, including Home, About, Services, Portfolio and Contact",
+      "Everything included in Starter",
+      "Dynamic content sections, such as project galleries, service listings or testimonials",
+      "Working contact form using a supported third-party form service",
+      "Navigation, footer and consistent design across pages",
+      "Basic SEO across included pages",
+      "Social media links and sharing metadata",
+      "Three revision rounds",
+      "Two short promotional videos, up to 15 seconds each",
     ],
+    notIncluded: "Custom authentication, user accounts, complex databases, paid APIs or custom application development.",
+  },
+  {
+    slug: "premium",
+    name: "Premium",
+    tagline: "A tailored website with integrations and functionality beyond static pages.",
+    priceUsd: 500,
+    priceLabel: "From $500",
+    renewalUsd: 0,
+    turnaround: "Scoped per project",
+    delivery: "Scope agreed after the brief",
+    bestFor: "Businesses that need custom functionality",
+    pages: "Up to 8 pages",
+    revisions: 3,
+    videos: "Three promo videos, up to 20 seconds each",
+    accent: "royal",
+    featured: false,
+    sortOrder: 3,
+    features: [
+      "Up to 8 standard pages, subject to agreed scope",
+      "Bespoke design system and expanded content layout",
+      "Analytics integration and basic event tracking",
+      "Up to 2 agreed third-party integrations",
+      "Backend setup using an appropriate existing service or framework",
+      "One agreed functional workflow: appointment requests, lead capture or a simple data submission system",
+      "Technical SEO, sitemap, robots.txt and structured data where appropriate",
+      "Performance, accessibility and security checks",
+      "Three revision rounds",
+      "Three short promotional videos, up to 20 seconds each",
+      "Deployment assistance and handover documentation",
+    ],
+    notIncluded: "Anything outside the agreed scope, quoted separately.",
   },
 ];
 
@@ -326,10 +350,10 @@ export const CAPABILITIES = [
   },
   {
     id: "video",
-    kicker: "05 — Free promo video",
-    title: "A video for your business, free",
-    body: "Every website includes a short promo video we make for you — built from your photos and clips, with clean text and music. It plays on your site and you can post it anywhere: social media, Google, messages to customers.",
-    points: ["Made from your photos and clips", "Ready to post on social media", "Included at no extra cost"],
+    kicker: "05 — Promo video included",
+    title: "A promo video, included",
+    body: "Every package includes at least one short promo video, built from your photos and clips with clean text and music. Starter gets one, Builder two, and Premium three.",
+    points: ["Made from your photos and clips", "Ready to post on social media", "One to three, by package"],
   },
   {
     id: "bring-anything",
@@ -353,21 +377,21 @@ export const PROCESS = [
     label: "We build",
     title: "We design and build your site",
     body: "We put together your pages, write the wording with you, and make it look good on every screen. You get a link to preview it while we work.",
-    duration: "Days 2–7",
+    duration: "Days 1–3",
   },
   {
     step: "03",
     label: "You review",
     title: "You ask for changes",
     body: "Look it over and tell us what to change. Every package includes revision rounds, and we don't launch until you're happy.",
-    duration: "Days 8–10",
+    duration: "Days 3–5",
   },
   {
     step: "04",
     label: "It's yours",
     title: "We hand over everything",
     body: "The site goes live and the full code is delivered to your GitHub. You own it outright — no ongoing fees from us unless you ask for more work.",
-    duration: "Day 10+",
+    duration: "Day 5+",
   },
 ];
 
@@ -436,12 +460,12 @@ export const TRUST = [
     body: "No advertising trackers, no data selling, no creepy scripts. Your visitors trust you with their attention; we help you keep that trust.",
   },
   {
-    title: "No high costs",
-    body: "$100 flat during beta. That's the whole price — no hourly billing, no surprise invoices, no mandatory monthly plan. Optional extras are quoted up front and you can always say no.",
+    title: "A fixed price",
+    body: "Starter is $100, Builder is $200, Premium starts at $500. The price is fixed on your invoice before work begins, with no hourly billing, no surprise invoices and no mandatory monthly plan.",
   },
   {
-    title: "Free promo video included",
-    body: "Every website comes with a short promo video for your business, made by us from your photos and clips. It's included in the $100 — never an add-on bill.",
+    title: "Promo videos included",
+    body: "Every package includes short promo videos made from your photos and clips: one with Starter, two with Builder, three with Premium. They are part of the package, not an add-on.",
   },
   {
     title: "You don't need anything ready",
@@ -455,24 +479,24 @@ export const TRUST = [
 
 export const FAQ = [
   {
-    q: "What do I actually get for $100?",
-    a: "A finished website, built for you: designed, written, tested on phones and computers, and put online — plus a free promo video for your business. The complete code is delivered to your own GitHub account. One package, one price — $100 during beta.",
+    q: "What do I get with Starter?",
+    a: "A one-page website: design, copy, hero, services, about and contact sections, basic on-page SEO, mobile and desktop testing, one revision round and one promo video up to 15 seconds. The code is delivered to your GitHub. $100, paid once.",
   },
   {
     q: "What if I don't have any photos or text ready?",
-    a: "That's normal, and it's fine. Send whatever you have — phone photos, a price list, an old advert, or just a few sentences about what you do. We write all the website text for you and can use high-quality stock images where needed. You don't need anything prepared before you contact us.",
+    a: "That's normal, and it's fine. Send whatever you have — phone photos, a price list, an old advert, or just a few sentences about what you do. We place and tighten the text, write what's missing, and can use licensed images where needed. You don't need anything prepared before you contact us.",
   },
   {
-    q: "How does the free promo video work?",
-    a: "Once your website is nearly done, we build a short video from your photos and video clips — with clean text, smooth movement, and music. It plays on your website, and you also get a copy to post on social media or send to customers. It's included with every website at no extra cost.",
+    q: "How do the promo videos work?",
+    a: "Once the site is nearly done, we cut short videos from your photos and clips, with clean text, movement and music. Starter includes one up to 15 seconds, Builder two, and Premium three up to 20 seconds. You get the files to post anywhere.",
   },
   {
     q: "Do I really own the website?",
     a: "Yes, completely. The code is delivered to your GitHub, so you own it like you own any file on your computer. You can change it yourself, hire anyone to change it, or move it anywhere. We keep nothing locked away.",
   },
   {
-    q: "Why is it so cheap during beta?",
-    a: "We're testing our process and building a portfolio of happy customers. $100 covers our costs while we do that. When beta ends, the price goes up for new customers — early customers keep the simple deal they signed up for.",
+    q: "Why is Starter so cheap?",
+    a: "We keep Starter at $100 while we build the portfolio. Builder and Premium are priced by scope. The price on your invoice is the price you pay, and it does not change after the work starts.",
   },
   {
     q: "How can I pay?",
@@ -480,7 +504,7 @@ export const FAQ = [
   },
   {
     q: "What if I need changes after launch?",
-    a: "Every website includes unlimited small changes for 30 days after launch. After that, tweaks are cheap and always quoted up front — never a surprise bill.",
+    a: "Each package includes revision rounds during the build: one on Starter, three on Builder and Premium. After launch, extra changes are quoted up front before any work starts.",
   },
   {
     q: "Will my site show up on Google?",
@@ -488,15 +512,15 @@ export const FAQ = [
   },
   {
     q: "How much does a small business website cost?",
-    a: "During beta, a complete website is $100 flat: up to five pages, written and designed for you, with a contact form, a blog and a free promo video. The $500 Dynamic Website plan is only for sites that need a backend. Both are one-time prices, paid in Bitcoin, other crypto, or gift cards.",
+    a: "Starter is $100 for one page. Builder is $200 for up to five pages, three revision rounds and two promo videos. Premium starts at $500 for backend setup, integrations, analytics and up to eight pages. All are one-time prices, paid in Bitcoin, other crypto or gift cards.",
   },
   {
     q: "What is a dynamic website?",
-    a: "A dynamic website does more than display pages. It can store data, handle user accounts, take bookings, or connect to other systems through APIs. If you only need a clear brochure site with a contact form, the standard $100 plan covers everything you need.",
+    a: "A dynamic site stores data or runs a workflow rather than only displaying pages. Premium includes one agreed workflow, such as appointment requests, lead capture or a simple data submission, plus up to two integrations. Starter and Builder are static sites.",
   },
   {
     q: "How long does a website take?",
-    a: "Most websites are ready in about one to two weeks. You send your details on day one, preview the build during the first week, and review changes before launch. Dynamic projects with custom backend features are scoped separately.",
+    a: "Starter usually takes 2–3 business days and Builder 4–6, measured from when we have your content. Premium is scoped after the brief and we confirm the date before starting.",
   },
   {
     q: "Do you work with businesses outside the UK?",
@@ -524,11 +548,11 @@ export const NAV_LINKS = [
 
 /** Plain-language stats for the hero. Rendered as text, not counted up. */
 export const STATS = [
-  { value: "$100", label: "flat price during beta" },
-  { value: "$500", label: "dynamic plan, if you need a backend" },
+  { value: "$100", label: "Starter, one page" },
+  { value: "$200", label: "Builder, up to five pages" },
+  { value: "$500+", label: "Premium, backend and integrations" },
   { value: "100%", label: "code you own" },
-  { value: "Free", label: "promo video with every site" },
-  { value: "3 ways", label: "crypto or gift cards" },
+  { value: "1–3", label: "promo videos by package" },
 ];
 
 /** The studio's own brand film, shown on the site as proof of the craft. */

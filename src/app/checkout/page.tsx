@@ -7,9 +7,9 @@ import { getPlans } from "@/db/queries";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: { absolute: "Checkout: Crypto or Gift Cards | VoidBuilds" },
+  title: { absolute: "Checkout: Starter, Builder or Premium | VoidBuilds" },
   description:
-    "Get a one-time invoice and pay in Bitcoin, other crypto, or gift cards. $100 flat during beta. No subscriptions, no surprise charges.",
+    "Choose a website package and get a one-time invoice. Pay in Bitcoin, other crypto or gift cards. Starter from $100, Builder $200, Premium from $500.",
   robots: { index: false, follow: false },
 };
 
@@ -22,11 +22,11 @@ export default async function CheckoutPage() {
         kicker="Payment"
         title={
           <>
-            $100, paid once,{" "}
-            <span className="text-ember-300">in crypto or gift cards.</span>
+            Choose a package.{" "}
+            <span className="text-ember-300">Pay once.</span>
           </>
         }
-        body="Tell us about the business and we'll email the amount and payment details for Bitcoin, another crypto or gift cards. Nothing is charged automatically."
+        body="Starter, Builder or Premium. Tell us about the business and we'll email the amount and payment details for Bitcoin, another crypto or gift cards. Nothing is charged automatically."
       />
 
       <Suspense

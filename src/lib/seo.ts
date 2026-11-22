@@ -14,13 +14,15 @@ export const DEFAULT_OG_IMAGE = {
   url: "/media/voidbuilds-og.jpg",
   width: 1200,
   height: 630,
-  alt: "VoidBuilds — a website with gravity. $100 flat, paid once.",
+  alt: "VoidBuilds — a website with gravity. Starter $100, Builder $200, Premium from $500.",
 };
 
 export const SITE_KEYWORDS = [
   "small business website design",
   "affordable website design",
   "$100 website",
+  "$200 website",
+  "three tier website pricing",
   "custom website development",
   "dynamic website with backend",
   "website ownership",
@@ -46,7 +48,7 @@ export function organizationSchema() {
     legalName: SITE.legalName,
     url: SITE_URL,
     description:
-      "VoidBuilds designs and builds custom websites for small businesses: $100 flat during beta, or $500 for a site that needs a backend. Copy, contact form, blog and a free promo video are included, and the finished code is delivered to the client's GitHub.",
+      "VoidBuilds designs and builds custom websites for small businesses. Starter is $100 for one page, Builder is $200 for up to five pages, and Premium starts at $500 for backend work and integrations. Promo videos are included, and the finished code is delivered to the client's GitHub.",
     email: SITE.email,
     image: absoluteUrl(DEFAULT_OG_IMAGE.url),
     logo: {
@@ -55,7 +57,7 @@ export function organizationSchema() {
       width: 512,
       height: 512,
     },
-    priceRange: "$100 - $500",
+    priceRange: "$100 - $500+",
     paymentAccepted: "Bitcoin, Ethereum, USDT, gift cards",
     currenciesAccepted: "USD",
     areaServed: "Worldwide",
@@ -138,7 +140,7 @@ export function serviceSchema(plans: OfferPlan[]) {
     name: "Small business website design and development",
     serviceType: "Small business website design and development",
     description:
-      "Custom websites for small businesses, written and built by VoidBuilds. The standard plan is $100 flat during beta; the Dynamic Website plan is $500 for projects that need a backend, database, accounts or APIs. Both are one-time prices paid in Bitcoin.",
+      "Custom websites for small businesses, written and built by VoidBuilds. Starter is $100 for one page, Builder is $200 for up to five pages, and Premium starts at $500 for projects that need a backend, integrations or analytics. All are one-time prices paid in Bitcoin.",
     provider: { "@id": ORG_ID },
     areaServed: "Worldwide",
     offers: plans.map((plan) => ({

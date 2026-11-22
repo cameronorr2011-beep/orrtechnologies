@@ -18,7 +18,7 @@ export default function PageHero({
       <div className="mx-auto max-w-[1480px] px-5 pb-12 sm:px-8 sm:pb-16">
         <Reveal>
           <span className="kicker inline-flex items-center gap-3">
-            <span className="inline-block h-1.5 w-1.5 bg-ember-300" aria-hidden="true" />
+            <span className="kicker-dot inline-block h-1.5 w-1.5 bg-ember-300" aria-hidden="true" />
             {kicker}
           </span>
         </Reveal>

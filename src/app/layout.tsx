@@ -6,6 +6,7 @@ import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
 import CookieConsent from "@/components/site/CookieConsent";
 import ScrollProgress from "@/components/fx/ScrollProgress";
+import StarDrift from "@/components/fx/StarDrift";
 import JsonLd from "@/components/seo/JsonLd";
 import { SITE } from "@/lib/content";
 import {
@@ -29,9 +30,9 @@ const monoFont = JetBrains_Mono({
   display: "swap",
 });
 
-const HOME_TITLE = "VoidBuilds — $100 websites, built once and owned forever";
+const HOME_TITLE = "VoidBuilds — websites from $100, built once and owned forever";
 const HOME_DESCRIPTION =
-  "VoidBuilds designs and builds custom websites for small businesses. $100 flat during beta, delivered to your GitHub with a free promo film. Paid once, no subscriptions.";
+  "VoidBuilds designs and builds custom websites for small businesses. Starter $100, Builder $200, Premium from $500. One payment, promo videos included, and the code is delivered to your GitHub.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -53,14 +54,14 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     title: "VoidBuilds — a website with gravity",
     description:
-      "A custom small business website, written and built for you. $100 flat during beta, delivered to your GitHub, with a free promo film. Paid once.",
+      "A custom small business website, written and built for you. Starter $100, Builder $200, Premium from $500. Paid once, with promo videos included.",
     images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "VoidBuilds — $100 websites, built once and owned forever",
+    title: "VoidBuilds — websites from $100, built once and owned forever",
     description:
-      "$100 flat during beta. The code is yours, the site loads fast, and a free promo film is included. Paid once, no subscriptions.",
+      "Starter $100, Builder $200, Premium from $500. The code is yours, the site loads fast, and promo videos are included. Paid once, no subscriptions.",
     images: [DEFAULT_OG_IMAGE.url],
   },
   robots: {
@@ -106,6 +107,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             "@graph": [organizationSchema(), websiteSchema()],
           }}
         />
+        <StarDrift />
         <ScrollProgress />
         <Nav />
         <main className="relative">{children}</main>
