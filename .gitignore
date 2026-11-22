@@ -13,6 +13,17 @@ next-env.d.ts
 .DS_Store
 *.pem
 
+# studio bridge output
+tools/blender/
+studio-out/
+
+# third-party DaVinci Resolve MCP checkout (brings its own venv)
+tools/resolve-mcp/
+
+# python caches from the bundled ffmpeg tools
+__pycache__/
+*.pyc
+
 # debug
 npm-debug.log*
 yarn-debug.log*

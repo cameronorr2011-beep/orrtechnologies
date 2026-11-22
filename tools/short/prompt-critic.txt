@@ -1,0 +1,21 @@
+You are a ruthless short-form copy critic. Below is a draft script for a 22-second vertical ad for Orr Technologies, which builds complete websites for $100 flat, paid once, delivered as code to the client's GitHub, with a free promo film, ads and posters.
+
+DRAFT:
+1. WHO REALLY OWNS YOUR WEBSITE?
+2. MOST SITES ARE RENTED.
+3. A COMPLETE WEBSITE.
+4. $100. PAID ONCE.
+5. NO SUBSCRIPTIONS. EVER.
+6. A FILM. INCLUDED.
+7. ADS. POSTERS.
+8. DELIVERED TO YOUR GITHUB.
+9. THE CODE IS YOURS.
+10. ORR TECHNOLOGIES / MADE TO BE SEEN / $100 ONCE / ORRTECHNOLOGIES.VERCEL.APP
+
+Do exactly this:
+1. Name the two weakest lines and say why in one sentence each.
+2. Rewrite each weak line. Keep every line five words or fewer. Keep the brand's quiet, cinematic voice: no exclamation marks, no emoji, no hype words like "unlock", "elevate", "game-changer", "stunning".
+3. Give the single strongest three-word line for the very first frame, the one that stops a thumb.
+4. Give one line for the final call to action that creates urgency without lying or shouting.
+
+Output as four short numbered sections, no preamble, no summary.

@@ -1,0 +1,19 @@
+You are the creative director on a 22-second vertical YouTube Short for Orr Technologies.
+
+THE OFFER: a complete website for $100 flat, paid once. Included free: a promo film, ad creative and posters. The code is delivered to the client's own GitHub, so they own it. No subscriptions, ever.
+
+THE VOICE: quiet, cinematic, confident, a little poetic. Never salesy, never "unlock your potential", no exclamation marks, no emoji.
+
+THE CONSTRAINT: the entire film is ONE cinematic still (a dark indigo workshop, warm copper light) animated only with camera pushes, light sweeps, dust and kinetic type. Music is 108 BPM, ten bars, 2.22 seconds per bar.
+
+Produce the final shooting script, exactly this structure and nothing else:
+
+A. Three opening hooks, six words or fewer each, one of them a question. Then one line: which wins for retention, and why.
+
+B. A ten-row table. Columns: bar, timecode, ON-SCREEN TEXT (five words max), VISUAL EFFECT, VOICEOVER (or a dash). Every row must be production-ready and specific. Text must be readable in under 1.5 seconds. Do not put more than one thought on screen at a time.
+
+C. The last two beats as a call to action that a viewer can act on inside the app.
+
+D. One sentence: what specifically makes this read as premium rather than cheap.
+
+Rules: no preamble, no notes, no alternatives inside the table. Keep all on-screen lines five words or fewer. Write like a director, not a marketer.
