@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  canvas { display: block; position: absolute; inset: 0; width: 100vw; height: 100vh; }
+  #scrim {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 96% 40% at 50% 76%, rgba(2,4,9,0.62) 0%, rgba(2,4,9,0.34) 44%, rgba(2,4,9,0) 80%);
+  }
+  #type {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-end; pointer-events: none;
+    font-family: Bahnschrift, "Segoe UI", sans-serif; color: #f6f1e8;
+    text-align: center; padding: 0 6vw 21vh;
+  }
+  #type .line {
+    display: block; font-weight: 700; line-height: 0.94; letter-spacing: 0.01em;
+    text-shadow: 0 6px 34px rgba(0, 0, 0, 0.85), 0 1px 2px rgba(0, 0, 0, 0.9);
+    white-space: nowrap;
+  }
+  #type .small { font-weight: 600; letter-spacing: 0.42em; font-size: 20px; opacity: 0.82; }
+  #type .rule { width: 0; height: 2px; background: #f2a65a; margin: 22px 0; }
+  #type .brand { font-weight: 700; letter-spacing: 0.24em; color: #fff; }
+  #type .sub { font-family: Consolas, monospace; font-weight: 400; letter-spacing: 0.28em; font-size: 19px; color: #e8b27a; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="scrim"></div>
+<div id="type"></div>
+<script>
+const canvas = document.getElementById("c");
+const gl = canvas.getContext("webgl", {
+  alpha: false, antialias: false, depth: false,
+  preserveDrawingBuffer: true, powerPreference: "high-performance",
+});
+
+const VS = `attribute vec2 a_pos; void main(){ gl_Position = vec4(a_pos,0.0,1.0); }`;
+
+const FS = `
+precision highp float;
+uniform vec2 u_res;
+uniform float u_time;
+uniform vec3 u_ro;
+uniform vec3 u_ta;
+uniform float u_fov;
+uniform float u_streak;
+
+float hash21(vec2 p){ p = fract(p*vec2(123.34,456.21)); p += dot(p,p+45.32); return fract(p.x*p.y); }
+
+float noise(vec2 p){
+  vec2 i = floor(p), f = fract(p);
+  vec2 u = f*f*(3.0-2.0*f);
+  float a = hash21(i), b = hash21(i+vec2(1.0,0.0));
+  float c = hash21(i+vec2(0.0,1.0)), d = hash21(i+vec2(1.0,1.0));
+  return mix(mix(a,b,u.x), mix(c,d,u.x), u.y);
+}
+
+float fbm(vec2 p){
+  float v = 0.0, a = 0.5;
+  for(int i=0;i<4;i++){ v += a*noise(p); p = p*2.03 + vec2(17.1,9.7); a *= 0.5; }
+  return v;
+}
+
+vec3 starLayer(vec3 d, float scale, float thresh, float bright, float phase){
+  float az = atan(d.z, d.x), el = asin(clamp(d.y,-1.0,1.0));
+  vec2 uv = vec2(az, el);
+  vec2 g = uv*vec2(scale, scale*0.78);
+  vec2 id = floor(g), f = fract(g)-0.5;
+  float h = hash21(id + phase);
+  if(h <= thresh) return vec3(0.0);
+  vec2 o = vec2(hash21(id+3.1), hash21(id+8.7))-0.5;
+  float dd = length((f - o*0.75) * vec2(1.0, 1.0 + u_streak*7.0));
+  float tw = 0.72 + 0.28*sin(u_time*2.0 + h*62.0);
+  return vec3(0.86,0.92,1.0) * smoothstep(0.11,0.0,dd) * tw * bright * (0.55+0.75*h);
+}
+
+vec3 starField(vec3 d, vec3 rd){
+  vec3 col = vec3(0.0);
+  col += starLayer(d, 58.0, 0.982, 1.00, 0.0);
+  col += starLayer(d, 99.0, 0.976, 0.60, 19.7);
+  col += starLayer(d, 160.0, 0.970, 0.34, 41.3);
+  float az = atan(d.z, d.x), el = asin(clamp(d.y,-1.0,1.0));
+  float n = fbm(vec2(az,el)*vec2(3.0,4.2) + vec2(2.0,5.0));
+  col += vec3(0.020,0.024,0.040) * pow(n, 4.0);
+  // motion drag on the starfield during the fly-through
+  if(u_streak > 0.001){
+    vec3 acc = vec3(0.0);
+    for(int k=1;k<=3;k++){
+      float o = float(k)*0.012*u_streak;
+      acc += starLayer(normalize(d - rd*o), 120.0, 0.972, 0.22, 7.7);
+    }
+    col += acc*0.5;
+  }
+  return col;
+}
+
+vec3 diskSample(float r, float phi, vec3 rd, out float alpha){
+  alpha = 0.0;
+  const float rin = 2.5;
+  const float rout = 7.0;
+  float t = (r-rin)/(rout-rin);
+  if(t < 0.0 || t > 1.0) return vec3(0.0);
+
+  float ang = phi - u_time*0.55;
+  vec2 q = vec2(cos(ang), sin(ang))*r;
+
+  float n1 = fbm(q*1.15 + vec2(3.1,0.7));
+  float n2 = fbm(q*3.40 + vec2(7.7,1.9));
+  float n3 = fbm(q*9.00 + vec2(1.3,5.1));
+  float dens = smoothstep(0.34,0.70, n1*0.46 + n2*0.32 + n3*0.22);
+  dens = pow(dens, 1.25);
+
+  float edge = smoothstep(0.0,0.03,t) * smoothstep(1.0,0.55,t);
+  float radial = pow(rin/r, 1.15);
+  float streak = 0.84 + 0.16*sin(ang*30.0 + r*7.0 + n1*6.0);
+  float bright = edge * (0.10 + 2.6*dens) * radial * streak;
+
+  vec3 c = mix(vec3(0.98,0.93,0.86), vec3(1.0,0.88,0.70), smoothstep(0.0,0.14,t));
+  c = mix(c, vec3(1.0,0.63,0.24), smoothstep(0.12,0.48,t));
+  c = mix(c, vec3(1.0,0.30,0.04), smoothstep(0.52,1.0,t));
+  c += vec3(1.0,0.96,0.90) * exp(-pow((r-2.62)/0.16,2.0)) * 2.6;
+  c += vec3(1.0,0.62,0.24) * pow(dens,4.0) * 1.1;
+
+  vec3 vel = vec3(-sin(phi),0.0,cos(phi));
+  float beta = clamp(1.25/sqrt(r), 0.0, 0.6);
+  float dop = 1.0/(1.0 - dot(vel,-rd)*beta);
+  dop = pow(max(dop,0.15), 2.4);
+
+  c *= bright * clamp(dop, 0.18, 7.5);
+  alpha = clamp(edge*(0.18 + 0.82*dens), 0.0, 1.0);
+  return c;
+}
+
+void main(){
+  vec2 p = (gl_FragCoord.xy - 0.5*u_res)/u_res.y;
+
+  vec3 ww = normalize(u_ta - u_ro);
+  vec3 uu = normalize(cross(vec3(0.0,1.0,0.0), ww));
+  vec3 vv = cross(ww, uu);
+  vec3 rd = normalize(p.x*uu + p.y*vv + u_fov*ww);
+
+  vec3 pos = u_ro;
+  vec3 dir = rd;
+  vec3 hv = cross(pos, dir);
+  float h2 = dot(hv,hv);
+
+  vec3 col = vec3(0.0);
+  float trans = 1.0;
+  bool escaped = false;
+
+  for(int i=0;i<150;i++){
+    float r = length(pos);
+    if(r < 1.0) break;
+    if(r > 60.0){ escaped = true; break; }
+    float dt = clamp(0.035*r + 0.012, 0.012, 0.55);
+    vec3 acc = -1.5*h2*pos/pow(r,5.0);
+    vec3 nd = normalize(dir + acc*dt);
+    vec3 np = pos + nd*dt;
+    if(pos.y*np.y < 0.0){
+      float f = pos.y/(pos.y-np.y);
+      vec3 hit = mix(pos,np,f);
+      float hr = length(hit.xz);
+      float a;
+      vec3 dc = diskSample(hr, atan(hit.z,hit.x), nd, a);
+      col += trans*dc*(0.35 + a*0.9);
+      trans *= 1.0 - a*0.38;
+    }
+    pos = np; dir = nd;
+  }
+
+  if(escaped) col += trans*starField(dir, rd);
+
+  col *= 1.22;
+  col = col/(1.0 + col*0.82);
+  col = pow(max(col,0.0), vec3(1.0/2.2));
+  float lum = dot(col, vec3(0.299,0.587,0.114));
+  col = mix(vec3(lum), col, 1.12);
+
+  float vig = 1.0 - 0.26*pow(length(p*vec2(0.86,0.72)),2.0);
+  col *= vig;
+
+  float g = hash21(gl_FragCoord.xy + fract(u_time)*13.0);
+  col += (g-0.5)*0.014;
+
+  gl_FragColor = vec4(max(col,0.0), 1.0);
+}
+`;
+
+function compile(type, src) {
+  const sh = gl.createShader(type);
+  gl.shaderSource(sh, src);
+  gl.compileShader(sh);
+  if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(sh) || "compile failed");
+  return sh;
+}
+
+const program = gl.createProgram();
+gl.attachShader(program, compile(gl.VERTEX_SHADER, VS));
+gl.attachShader(program, compile(gl.FRAGMENT_SHADER, FS));
+gl.linkProgram(program);
+if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(program) || "link failed");
+gl.useProgram(program);
+
+const buf = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+const loc = gl.getAttribLocation(program, "a_pos");
+gl.enableVertexAttribArray(loc);
+gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+const U = {
+  res: gl.getUniformLocation(program, "u_res"),
+  time: gl.getUniformLocation(program, "u_time"),
+  ro: gl.getUniformLocation(program, "u_ro"),
+  ta: gl.getUniformLocation(program, "u_ta"),
+  fov: gl.getUniformLocation(program, "u_fov"),
+  streak: gl.getUniformLocation(program, "u_streak"),
+};
+
+/* ------------------------------------------------------------------ shots ---
+ * Every shot is a real camera move: the black hole, its lensing and the disk
+ * are raymarched per frame, so the parallax is geometry, not a zoom on a photo.
+ */
+const SHOTS = [
+  { a: [0.0, 2.4, 27.0], b: [0.0, 3.4, 14.5], fov: [1.50, 1.40], streak: 0.0, spin: 1.0 }, // approach
+  { a: [0.0, 3.4, 14.5], b: [11.5, 8.0, 9.5], fov: [1.40, 1.28], streak: 0.0, spin: 1.5 }, // rise + orbit
+  { a: [11.5, 8.0, 9.5], b: [-9.0, 1.7, 10.5], fov: [1.28, 1.18], streak: 0.0, spin: 2.0 }, // sweep low
+  { a: [-9.0, 1.7, 10.5], b: [-3.6, 0.9, 5.6], fov: [1.18, 1.06], streak: 0.0, spin: 2.6 }, // dive in
+  { a: [-3.6, 0.9, 5.6], b: [-19.0, 11.0, 23.0], fov: [1.06, 1.55], streak: 1.0, spin: 3.4 }, // rip out
+  { a: [-19.0, 11.0, 23.0], b: [-13.0, 8.2, 18.0], fov: [1.55, 1.42], streak: 0.25, spin: 1.2 }, // settle: brand
+  { a: [-13.0, 8.2, 18.0], b: [-8.0, 5.6, 14.0], fov: [1.42, 1.36], streak: 0.0, spin: 1.0 }, // close
+  { a: [-8.0, 5.6, 14.0], b: [0.0, 2.4, 27.0], fov: [1.36, 1.50], streak: 0.0, spin: 1.0 }, // return to start
+];
+
+const CUTS = [0, 7, 15, 23, 31, 39, 47, 54, 60];
+
+const easeInOut = (p) => (p < 0.5 ? 4*p*p*p : 1 - Math.pow(-2*p+2, 3)/2);
+const clamp01 = (v) => Math.max(0, Math.min(1, v));
+
+function shotAt(t) {
+  let i = 0;
+  for (let k = 0; k < SHOTS.length; k++) if (t >= CUTS[k] && t < CUTS[k+1]) { i = k; break; }
+  const s = SHOTS[i];
+  const local = (t - CUTS[i]) / (CUTS[i+1] - CUTS[i]);
+  const e = easeInOut(clamp01(local));
+  const lerp = (a, b) => a + (b - a) * e;
+  // handheld micro-drift keeps the frame alive even when the move settles
+  const drift = (k, amp) => Math.sin(t * 0.9 + k) * amp;
+  return {
+    i, local,
+    ro: [lerp(s.a[0], s.b[0]) + drift(1, 0.10), lerp(s.a[1], s.b[1]) + drift(2, 0.07), lerp(s.a[2], s.b[2])],
+    fov: lerp(s.fov[0], s.fov[1]),
+    streak: s.streak,
+    spin: s.spin,
+  };
+}
+
+/* ------------------------------------------------------------------- type ---
+ * Timed cards. Everything sits inside the Shorts safe box.
+ */
+const CARDS = [
+  { from: 0.0,  to: 3.4,  cls: "line", size: 118, text: "MOST SITES" },
+  { from: 3.4,  to: 6.8,  cls: "line", size: 112, text: "BEG FOR A CLICK" },
+  { from: 7.6,  to: 10.8, cls: "line", size: 106, text: "THIS ONE" },
+  { from: 10.8, to: 14.4, cls: "line", size: 122, text: "BENDS LIGHT" },
+  { from: 15.4, to: 19.0, cls: "line", size: 102, text: "REAL MOTION" },
+  { from: 19.0, to: 22.4, cls: "line", size: 102, text: "REAL WEIGHT" },
+  { from: 23.4, to: 26.6, cls: "line", size: 112, text: "5 SECONDS" },
+  { from: 26.6, to: 30.4, cls: "line", size: 108, text: "TO BE WORTH IT" },
+  { from: 31.5, to: 38.4, cls: "line", size: 94,  text: "EVERY FRAME DRAWN" },
+  { from: 39.5, to: 43.4, cls: "brand", size: 112, text: "VOIDBUILDS" },
+  { from: 43.4, to: 46.6, cls: "sub",   size: 22, text: "SITES WITH GRAVITY" },
+  { from: 47.4, to: 51.2, cls: "line", size: 100, text: "BUILD SOMETHING" },
+  { from: 51.2, to: 54.2, cls: "line", size: 128, text: "THAT PULLS" },
+  { from: 54.8, to: 59.6, cls: "small", size: 24, text: "VOIDBUILDS" },
+];
+
+const typeEl = document.getElementById("type");
+function setType(t) {
+  const card = CARDS.find((c) => t >= c.from && t < c.to);
+  if (!card) { typeEl.innerHTML = ""; return; }
+  const age = t - card.from;
+  const remain = card.to - t;
+  const inP = clamp01(age / 0.34);
+  const outP = clamp01(remain / 0.26);
+  const e = 1 - Math.pow(1 - inP, 3);
+  const scale = 1.06 - 0.06 * e;
+  const op = Math.min(e, outP);
+  const dy = (1 - e) * 26;
+  typeEl.innerHTML =
+    `<span class="line ${card.cls}" style="font-size:${card.size}px;opacity:${op.toFixed(3)};transform:translateY(${dy.toFixed(1)}px) scale(${scale.toFixed(4)})">${card.text}</span>`;
+}
+
+/* ------------------------------------------------------------------ draw --- */
+// The page stays at full output size so the type is rendered natively crisp;
+// only the raymarch buffer is scaled down, then stretched by the compositor.
+const SCALE = 0.55;
+function resize() {
+  const w = Math.max(1, Math.round(window.innerWidth * SCALE));
+  const h = Math.max(1, Math.round(window.innerHeight * SCALE));
+  if (canvas.width !== w || canvas.height !== h) {
+    canvas.width = w; canvas.height = h;
+    gl.viewport(0, 0, w, h);
+    gl.uniform2f(U.res, w, h);
+  }
+}
+
+function draw(t) {
+  resize();
+  const s = shotAt(t);
+  gl.uniform1f(U.time, t * 0.6);
+  gl.uniform3f(U.ro, s.ro[0], s.ro[1], s.ro[2]);
+  gl.uniform3f(U.ta, 0, 0, 0);
+  gl.uniform1f(U.fov, s.fov);
+  gl.uniform1f(U.streak, s.streak);
+  gl.drawArrays(gl.TRIANGLES, 0, 3);
+  setType(t);
+}
+
+window.setTime = (t) => { draw(t); };
+draw(0);
+window.ready = true;
+</script>
+</body>
+</html>
