@@ -8,7 +8,7 @@ export const WEBSITE_ID = `${SITE_URL}/#website`;
 export const GITHUB_URL = SITE.github;
 
 /** Stable date for pages whose content changed with the SEO rewrite. */
-export const CONTENT_UPDATED = "2026-11-21";
+export const CONTENT_UPDATED = "2026-11-23";
 
 export const DEFAULT_OG_IMAGE = {
   url: "/media/voidbuilds-og.jpg",
@@ -181,6 +181,8 @@ export function blogPostingSchema(post: BlogPost) {
     url,
     headline: post.title,
     description: post.description,
+    // Post art is SVG, which Google and social cards do not accept, so the
+    // raster card stays here until each post ships a 1200x630 JPG/PNG.
     image: [absoluteUrl(DEFAULT_OG_IMAGE.url)],
     datePublished: `${post.date}T12:00:00.000Z`,
     dateModified: `${post.date}T12:00:00.000Z`,

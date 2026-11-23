@@ -25,9 +25,9 @@ import {
 // catalog still refreshes without a redeploy.
 export const revalidate = 3600;
 
-const TITLE = "VoidBuilds — websites, promo films, ads & posters";
+const TITLE = "Custom websites for small businesses from $100 | VoidBuilds";
 const DESCRIPTION =
-  "Custom websites from $100, plus cinematic promo films, ads and posters for small businesses. Starter, Builder and Premium packages, paid once in crypto or gift cards.";
+  "Custom websites for small businesses. Starter $100, Builder $200, Premium from $500. Paid once, promo video included, code delivered to your GitHub.";
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },

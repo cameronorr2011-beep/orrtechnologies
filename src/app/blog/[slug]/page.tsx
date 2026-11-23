@@ -45,6 +45,7 @@ export async function generateMetadata({
       authors: [SITE.name],
       section: post.tag,
       tags: [post.tag, "small business website", "website design"],
+      // post.image is SVG; social cards need raster, so the shared JPG stays.
       images: [DEFAULT_OG_IMAGE],
     },
     twitter: {

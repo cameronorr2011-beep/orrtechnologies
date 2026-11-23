@@ -1,3 +1,4 @@
+import Link from "next/link";
 import VoidLoop from "@/components/brand/VoidLoop";
 import Reveal from "@/components/fx/Reveal";
 import ActionButton from "@/components/ui/ActionButton";
@@ -108,7 +109,7 @@ export default function Hero() {
       <div className="border-y border-bone/10 bg-void">
         <div className="mx-auto grid max-w-[1480px] grid-cols-2 sm:grid-cols-4">
           {INDEX.map((item, i) => (
-            <a
+            <Link
               key={item.label}
               href="/#studio"
               className={`group flex items-baseline justify-between gap-3 border-bone/10 px-5 py-5 sm:px-8 ${
@@ -124,7 +125,7 @@ export default function Hero() {
               <span className="font-mono text-[0.7rem] text-bone/25 transition-colors group-hover:text-ember-300">
                 ↗
               </span>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

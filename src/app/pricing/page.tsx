@@ -15,9 +15,9 @@ import {
 } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: { absolute: "Website Pricing: Starter $100, Builder $200, Premium $500 | VoidBuilds" },
+  title: { absolute: "Website pricing: $100, $200, from $500 | VoidBuilds" },
   description:
-    "Three one-time website packages: Starter $100 for one page, Builder $200 for up to five pages, Premium from $500 for backend work and integrations. Code delivered to your GitHub.",
+    "Starter $100 for one page, Builder $200 for up to five, Premium from $500 for backend work. One-time prices, code to your GitHub.",
   keywords: [
     "small business website pricing",
     "$100 website",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Website Pricing: Starter $100, Builder $200, Premium $500 | VoidBuilds",
+    title: "Website pricing: $100, $200, from $500 | VoidBuilds",
     description:
       "Three one-time packages: Starter $100, Builder $200, Premium from $500. Pay once in Bitcoin and own the code.",
     images: [DEFAULT_OG_IMAGE.url],
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
 };
 
 const DESCRIPTION =
-  "Website pricing: Starter $100 for one page, Builder $200 for up to five pages, Premium from $500 for backend work and integrations. One-time prices, code delivered to your GitHub.";
+  "Website pricing: Starter $100 for one page, Builder $200 for up to five, Premium from $500 for backend work. One-time prices, code to your GitHub.";
 
 export default function PricingPage() {
   const jsonLd = {

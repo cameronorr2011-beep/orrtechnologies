@@ -30,9 +30,9 @@ const monoFont = JetBrains_Mono({
   display: "swap",
 });
 
-const HOME_TITLE = "VoidBuilds — websites from $100, built once and owned forever";
+const HOME_TITLE = "Custom websites for small businesses from $100 | VoidBuilds";
 const HOME_DESCRIPTION =
-  "VoidBuilds designs and builds custom websites for small businesses. Starter $100, Builder $200, Premium from $500. One payment, promo videos included, and the code is delivered to your GitHub.";
+  "Custom websites for small businesses. Starter $100, Builder $200, Premium from $500. Paid once, promo video included, code delivered to your GitHub.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
