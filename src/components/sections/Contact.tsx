@@ -27,37 +27,58 @@ export default function Contact() {
       const data = (await res.json()) as { ok?: boolean; error?: string };
       if (!res.ok || !data.ok) throw new Error(data.error ?? "failed");
       setState("done");
-      setFeedback("Got it. We'll reply within one business day with a plan and next steps.");
+      setFeedback("Brief received. Cameron will reply within one business day with a plan, a start date and a fixed price.");
       setForm({ name: "", email: "", company: "", message: "" });
     } catch {
       setState("error");
-      setFeedback(`Something went wrong. Email us directly at ${SITE.emailDisplay}.`);
+      setFeedback(`The form could not send. Email ${SITE.emailDisplay} directly and it will land in the same inbox.`);
     }
   };
 
   const field =
-    "w-full border border-bone/15 bg-transparent px-4 py-3.5 text-[0.9rem] text-bone placeholder:text-bone/25 transition-colors focus:border-ember-300 focus:outline-none";
+    "w-full border-2 border-ink/20 bg-white/55 px-4 py-3.5 text-[0.9rem] text-ink placeholder:text-ink/30 transition-colors focus:border-electric focus:bg-white focus:outline-none";
 
   return (
-    <section id="contact" className="relative border-t border-bone/10 py-24 sm:py-32">
+    <section id="contact" className="relative border-t-2 border-ink/15 py-24 sm:py-32">
       <div className="mx-auto max-w-[1480px] px-5 sm:px-8">
         <div className="grid gap-16 lg:grid-cols-[1fr_1fr] lg:gap-20">
           <div>
             <SectionHeading
-              kicker="10 / Questions"
+              kicker="09 / Questions"
               title={
                 <>
                   Common
                   <br />
-                  <span className="text-ember-300">questions.</span>
+                  <span className="text-electric">questions.</span>
                 </>
               }
             />
-            <div className="mt-9 border-t border-bone/10">
+
+            <Reveal delay={100}>
+              <div className="mt-9 flex flex-col gap-4 border-2 border-ink bg-[#eef1ff] p-5 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="font-mono text-[0.52rem] uppercase tracking-[0.18em] text-ink/50">
+                    Prefer email?
+                  </p>
+                  <a
+                    href={`mailto:${SITE.email}`}
+                    className="font-display mt-1 inline-block text-[1.05rem] font-bold tracking-[-0.01em] text-ink underline decoration-electric decoration-2 underline-offset-4 hover:text-electric"
+                  >
+                    {SITE.emailDisplay}
+                  </a>
+                </div>
+                <span className="inline-flex w-fit items-center gap-2 border-2 border-ink bg-paper px-3 py-1.5 font-mono text-[0.5rem] uppercase tracking-[0.14em] text-ink/60">
+                  <span className="h-2 w-2 bg-mint" aria-hidden="true" />
+                  Replies in 1 business day
+                </span>
+              </div>
+            </Reveal>
+
+            <div className="mt-9 border-t-2 border-ink/15">
               {FAQ.map((f, i) => {
                 const isOpen = open === i;
                 return (
-                  <div key={f.q} className="border-b border-bone/10">
+                  <div key={f.q} className="border-b-2 border-ink/10">
                     <button
                       type="button"
                       onClick={() => setOpen(isOpen ? null : i)}
@@ -66,14 +87,14 @@ export default function Contact() {
                     >
                       <span
                         className={`text-[0.95rem] font-medium leading-snug transition-colors ${
-                          isOpen ? "text-bone" : "text-bone/70 group-hover:text-bone"
+                          isOpen ? "text-ink" : "text-ink/70 group-hover:text-ink"
                         }`}
                       >
                         {f.q}
                       </span>
                       <span
                         className={`mt-0.5 shrink-0 font-mono text-[0.9rem] transition-transform duration-300 ${
-                          isOpen ? "rotate-45 text-ember-300" : "text-bone/35"
+                          isOpen ? "rotate-45 text-electric" : "text-ink/35"
                         }`}
                         aria-hidden="true"
                       >
@@ -85,7 +106,7 @@ export default function Contact() {
                       style={{ gridTemplateRows: isOpen ? "1fr" : "0fr", opacity: isOpen ? 1 : 0 }}
                     >
                       <div className="min-h-0 overflow-hidden">
-                        <p className="pb-6 pr-8 text-[0.88rem] leading-relaxed text-bone/50">{f.a}</p>
+                        <p className="pb-6 pr-8 text-[0.88rem] leading-relaxed text-ink/60">{f.a}</p>
                       </div>
                     </div>
                   </div>
@@ -96,16 +117,33 @@ export default function Contact() {
 
           <div>
             <Reveal delay={100}>
-              <form onSubmit={submit} className="border border-bone/12 p-6 sm:p-8">
-                <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-ember-300">Start here</p>
-                <h3 className="font-display mt-3 text-[1.7rem] font-semibold uppercase leading-tight tracking-[-0.03em] text-bone">
+              <form
+                onSubmit={submit}
+                className="border-2 border-ink bg-paper p-6 shadow-[12px_12px_0_0_#14130f] sm:p-8"
+              >
+                <div className="flex items-center justify-between gap-4">
+                  <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-coral">
+                    Start here
+                  </p>
+                  <span className="flex gap-1.5" aria-hidden="true">
+                    <span className="h-2 w-2 bg-coral" />
+                    <span className="h-2 w-2 bg-sun" />
+                    <span className="h-2 w-2 bg-mint" />
+                    <span className="h-2 w-2 bg-electric" />
+                  </span>
+                </div>
+                <h3 className="font-display mt-3 text-[1.7rem] font-bold uppercase leading-tight tracking-[-0.03em] text-ink">
                   Tell us what you&apos;re building.
                 </h3>
+                <p className="mt-2 text-[0.86rem] leading-relaxed text-ink/55">
+                  Two minutes now saves a week later. Rough notes are fine.
+                </p>
 
                 <div className="mt-7 space-y-3">
                   <div className="grid gap-3 sm:grid-cols-2">
                     <input
                       required
+                      autoComplete="name"
                       value={form.name}
                       onChange={set("name")}
                       placeholder="Your name"
@@ -115,6 +153,7 @@ export default function Contact() {
                     <input
                       required
                       type="email"
+                      autoComplete="email"
                       value={form.email}
                       onChange={set("email")}
                       placeholder="Your email"
@@ -123,6 +162,7 @@ export default function Contact() {
                     />
                   </div>
                   <input
+                    autoComplete="organization"
                     value={form.company}
                     onChange={set("company")}
                     placeholder="Business name"
@@ -160,15 +200,15 @@ export default function Contact() {
 
                 {feedback ? (
                   <p
-                    className={`mt-5 font-mono text-[0.66rem] leading-relaxed ${
-                      state === "error" ? "text-maple" : "text-ember-300/85"
+                    className={`mt-5 border-l-2 pl-3 font-mono text-[0.66rem] leading-relaxed ${
+                      state === "error" ? "border-maple text-maple" : "border-mint text-ink/70"
                     }`}
                   >
                     {feedback}
                   </p>
                 ) : (
-                  <p className="mt-5 font-mono text-[0.56rem] uppercase leading-relaxed tracking-[0.16em] text-bone/30">
-                    Or write straight to {SITE.emailDisplay}
+                  <p className="mt-5 border-l-2 border-ink/15 pl-3 font-mono text-[0.56rem] uppercase leading-relaxed tracking-[0.14em] text-ink/40">
+                    Goes straight to {SITE.emailDisplay}
                   </p>
                 )}
               </form>

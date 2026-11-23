@@ -3,13 +3,13 @@ import { SITE } from "@/lib/content";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "VoidBuilds — websites with gravity",
+    name: "VoidBuilds — websites for small businesses",
     short_name: "VoidBuilds",
     description: SITE.tagline,
     start_url: "/",
     display: "standalone",
-    background_color: "#060607",
-    theme_color: "#060607",
+    background_color: "#f6f1e7",
+    theme_color: "#f6f1e7",
     icons: [
       {
         src: "/icon.svg",

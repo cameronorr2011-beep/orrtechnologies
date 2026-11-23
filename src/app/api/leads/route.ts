@@ -3,6 +3,8 @@ import { desc } from "drizzle-orm";
 import { db } from "@/db";
 import { inquiries } from "@/db/schema";
 import { createLead } from "@/db/queries";
+import { SITE } from "@/lib/content";
+import { sendLeadNotification } from "@/lib/mail";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -12,27 +14,50 @@ export async function POST(request: Request) {
     const name = String(body.name ?? "").trim().slice(0, 120);
     const email = String(body.email ?? "").trim().toLowerCase().slice(0, 160);
     const message = String(body.message ?? "").trim().slice(0, 4000);
+    const company = body.company ? String(body.company).trim().slice(0, 160) : null;
+    const source = body.source ? String(body.source).slice(0, 60) : "site";
 
     if (!name || !EMAIL.test(email) || message.length < 8) {
       return NextResponse.json(
-        { ok: false, error: "Name, a valid work email and a short brief are required." },
+        { ok: false, error: "Name, a valid email and a short brief are required." },
         { status: 400 },
       );
     }
 
-    const row = await createLead({
-      name,
-      email,
-      company: body.company ? String(body.company).slice(0, 160) : null,
-      planSlug: body.planSlug ? String(body.planSlug).slice(0, 60) : null,
-      budgetUsd: Number.isFinite(Number(body.budgetUsd)) && Number(body.budgetUsd) > 0 ? Number(body.budgetUsd) : null,
-      message,
-      source: body.source ? String(body.source).slice(0, 60) : "site",
-    });
+    let saved = false;
+    try {
+      await createLead({
+        name,
+        email,
+        company,
+        planSlug: body.planSlug ? String(body.planSlug).slice(0, 60) : null,
+        budgetUsd:
+          Number.isFinite(Number(body.budgetUsd)) && Number(body.budgetUsd) > 0
+            ? Number(body.budgetUsd)
+            : null,
+        message,
+        source,
+      });
+      saved = true;
+    } catch {
+      /* the public site runs without a database; email still has to work */
+    }
 
-    return NextResponse.json({ ok: true, id: row?.id ?? null });
+    const emailed = await sendLeadNotification({ name, email, company, message, source });
+
+    if (!saved && !emailed) {
+      return NextResponse.json(
+        { ok: false, error: `Could not send the brief. Email ${SITE.email}.` },
+        { status: 500 },
+      );
+    }
+
+    return NextResponse.json({ ok: true, saved, emailed });
   } catch {
-    return NextResponse.json({ ok: false, error: "Could not save the brief. Email service@orrbiologicals.com." }, { status: 500 });
+    return NextResponse.json(
+      { ok: false, error: `Could not send the brief. Email ${SITE.email}.` },
+      { status: 500 },
+    );
   }
 }
 

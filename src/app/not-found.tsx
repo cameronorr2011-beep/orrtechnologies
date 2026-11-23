@@ -1,5 +1,4 @@
 import Link from "next/link";
-import VoidDust from "@/components/fx/VoidDust";
 import ActionButton from "@/components/ui/ActionButton";
 import { purchaseMailto } from "@/lib/content";
 
@@ -7,9 +6,10 @@ export default function NotFound() {
   return (
     <section className="relative flex min-h-[100svh] items-center overflow-hidden">
       <div className="absolute inset-0 z-0" aria-hidden="true">
-        <VoidDust />
+        <div className="blueprint absolute inset-0 opacity-80" />
+        <div className="absolute -right-24 top-10 h-96 w-96 rounded-full bg-coral/20 blur-[110px]" />
+        <div className="absolute -left-24 bottom-10 h-96 w-96 rounded-full bg-electric/15 blur-[110px]" />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-b from-void/60 via-void/85 to-void" aria-hidden="true" />
       <div className="relative z-10 mx-auto grid max-w-[1280px] gap-10 px-5 py-32 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <div>
           <p className="font-mono text-[0.62rem] uppercase tracking-[0.32em] text-ember-300/75">
@@ -46,7 +46,7 @@ export default function NotFound() {
               { href: "/#work", label: "Selected work" },
             ].map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className="ember-underline text-bone/70 hover:text-ember-100">
+                <Link href={l.href} className="ember-underline text-bone/70 hover:text-electric">
                   {l.label}
                 </Link>
               </li>

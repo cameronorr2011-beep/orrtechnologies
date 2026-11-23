@@ -6,7 +6,7 @@ import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
 import CookieConsent from "@/components/site/CookieConsent";
 import ScrollProgress from "@/components/fx/ScrollProgress";
-import StarDrift from "@/components/fx/StarDrift";
+import StudioBackdrop from "@/components/site/StudioBackdrop";
 import JsonLd from "@/components/seo/JsonLd";
 import { SITE } from "@/lib/content";
 import {
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "/",
     siteName: SITE.name,
-    title: "VoidBuilds — a website with gravity",
+    title: "VoidBuilds — websites that look like your business",
     description:
       "A custom small business website, written and built for you. Starter $100, Builder $200, Premium from $500. Paid once, with promo videos included.",
     images: [DEFAULT_OG_IMAGE],
@@ -81,8 +81,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#060607",
-  colorScheme: "dark",
+  themeColor: "#f6f1e7",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -90,7 +90,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html
       lang="en"
       className={`${displayFont.variable} ${monoFont.variable}`}
-      style={{ backgroundColor: "#060607", colorScheme: "dark" }}
+      style={{ backgroundColor: "#f6f1e7", colorScheme: "light" }}
     >
       <head>
         <link
@@ -107,10 +107,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             "@graph": [organizationSchema(), websiteSchema()],
           }}
         />
-        <StarDrift />
+        <StudioBackdrop />
         <ScrollProgress />
         <Nav />
-        <main className="relative">{children}</main>
+        <main className="relative z-10">{children}</main>
         <Footer />
         <CookieConsent />
         <Analytics />

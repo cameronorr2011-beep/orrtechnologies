@@ -166,10 +166,10 @@ export default function PrivacyPage() {
               You may ask what personal information we hold about you, ask us to correct or delete
               it, or withdraw consent for optional storage. Email{" "}
               <a
-                href="mailto:service@orrbiologicals.com"
+                href="mailto:cameronorr2011@gmail.com"
                 className="text-ember-200 underline underline-offset-4"
               >
-                service@orrbiologicals.com
+                cameronorr2011@gmail.com
               </a>{" "}
               and we will respond promptly. If you are in the UK/EU: our legal basis for the
               strictly necessary choice-record is legitimate interest; optional storage is used only
@@ -194,10 +194,10 @@ export default function PrivacyPage() {
             <p className="mt-4">
               Questions about this policy:{" "}
               <a
-                href="mailto:service@orrbiologicals.com"
+                href="mailto:cameronorr2011@gmail.com"
                 className="text-ember-200 underline underline-offset-4"
               >
-                service@orrbiologicals.com
+                cameronorr2011@gmail.com
               </a>
             </p>
           </div>

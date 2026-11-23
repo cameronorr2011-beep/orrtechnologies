@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
 import Ticker from "@/components/ui/Ticker";
-import Capabilities from "@/components/sections/Capabilities";
-import Creative from "@/components/sections/Creative";
 import Work from "@/components/sections/Work";
-import Manifesto from "@/components/sections/Manifesto";
-import Voices from "@/components/sections/Voices";
+import Capabilities from "@/components/sections/Capabilities";
 import Process from "@/components/sections/Process";
 import PricingTable from "@/components/sections/PricingTable";
+import Creative from "@/components/sections/Creative";
+import Manifesto from "@/components/sections/Manifesto";
+import Voices from "@/components/sections/Voices";
 import Trust from "@/components/sections/Trust";
-import LiveSignal from "@/components/sections/LiveSignal";
 import Contact from "@/components/sections/Contact";
 import JsonLd from "@/components/seo/JsonLd";
 import { getPlans } from "@/db/queries";
@@ -52,14 +51,14 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "/",
     siteName: "VoidBuilds",
-    title: "Websites, promo films, ads & posters",
+    title: "Website design for small businesses, from $100",
     description:
       "Custom websites from $100, with promo videos included — plus ads and posters. Starter, Builder and Premium, paid once.",
     images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "VoidBuilds — websites, promo films, ads & posters",
+    title: "VoidBuilds — websites that look like your business",
     description:
       "Starter $100, Builder $200, Premium from $500. You own the code, promo videos are included, and ads or posters are quoted per project.",
     images: [DEFAULT_OG_IMAGE.url],
@@ -74,7 +73,7 @@ export default async function HomePage() {
     "@graph": [
       webPageSchema({
         path: "/",
-        name: "Websites, promo films, ads and posters",
+        name: "Website design, promo films, ads and posters",
         description: DESCRIPTION,
       }),
       serviceSchema(plans),
@@ -87,15 +86,14 @@ export default async function HomePage() {
       <JsonLd data={jsonLd} />
       <Hero />
       <Ticker />
-      <Capabilities />
       <Work />
+      <Capabilities />
+      <Process />
+      <PricingTable plans={plans} />
       <Creative />
       <Manifesto />
-      <Process />
       <Voices />
-      <PricingTable plans={plans} />
       <Trust />
-      <LiveSignal />
       <Contact />
     </>
   );

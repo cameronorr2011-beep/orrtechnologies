@@ -14,7 +14,7 @@ export const DEFAULT_OG_IMAGE = {
   url: "/media/voidbuilds-og.jpg",
   width: 1200,
   height: 630,
-  alt: "VoidBuilds — a website with gravity. Starter $100, Builder $200, Premium from $500.",
+  alt: "VoidBuilds — websites that look like your business. Starter $100, Builder $200, Premium from $500.",
 };
 
 export const SITE_KEYWORDS = [

@@ -45,7 +45,13 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative z-10 border-t border-bone/10 bg-void">
+    <footer className="relative z-10 border-t-2 border-ink bg-paper-2">
+      <div className="grid grid-cols-4" aria-hidden="true">
+        <span className="h-2 bg-coral" />
+        <span className="h-2 bg-sun" />
+        <span className="h-2 bg-mint" />
+        <span className="h-2 bg-electric" />
+      </div>
       <div className="mx-auto max-w-[1480px] px-5 pt-16 sm:px-8">
         <div className="grid gap-12 border-b border-bone/10 pb-16 lg:grid-cols-[1.4fr_0.7fr_0.7fr_1fr]">
           <div>

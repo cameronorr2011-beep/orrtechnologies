@@ -374,7 +374,7 @@ export default function ForgeStudio({ initial }: { initial: ForgeResult | null }
                   key={i}
                   type="button"
                   onClick={() => setPrompt(ex)}
-                  className="rounded-full border border-royal-300/15 px-3.5 py-1.5 text-[0.66rem] text-bone/50 transition-colors hover:border-ember-300/40 hover:text-ember-100"
+                  className="rounded-full border border-royal-300/15 px-3.5 py-1.5 text-[0.66rem] text-bone/50 transition-colors hover:border-ember-300/40 hover:text-electric"
                 >
                   Brief {i + 1}
                 </button>
@@ -518,7 +518,7 @@ export default function ForgeStudio({ initial }: { initial: ForgeResult | null }
                     </ActionButton>
                   </div>
                   <p className="mt-4 font-mono text-[0.62rem] uppercase leading-relaxed tracking-[0.14em] text-bone/35">
-                    Invoice + BTC address returned by email from service@orrbiologicals.com
+                    Invoice + BTC address returned by email from cameronorr2011@gmail.com
                   </p>
                 </>
               ) : null}

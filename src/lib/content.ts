@@ -11,8 +11,8 @@ export const SITE = {
   domain: new URL(siteUrl).host,
   url: siteUrl,
   github: "https://github.com/cameronorr2011-beep/voidbuilds",
-  email: "service@orrbiologicals.com",
-  emailDisplay: "service@orrbiologicals.com",
+  email: "cameronorr2011@gmail.com",
+  emailDisplay: "cameronorr2011@gmail.com",
   tagline:
     "Custom websites, films, ads and posters for small businesses. Starter is $100, Builder is $200, Premium starts at $500. You pay once and own the code.",
   btcNetwork: "Bitcoin",
@@ -112,8 +112,8 @@ export const CREATIVE_SERVICES: CreativeService[] = [
       "Code delivered to your GitHub — you own it",
     ],
     price: "From $100 · one time",
-    image: "/media/art/facade.jpg",
-    alt: "Black stone office facade at dusk, used as the plate for a VoidBuilds website build",
+    image: "/media/work/cafe.jpg",
+    alt: "Sunlit neighbourhood coffee shop, the hero photograph of a VoidBuilds website build",
     cta: { href: "/pricing", label: "Website pricing" },
   },
   {
@@ -130,8 +130,8 @@ export const CREATIVE_SERVICES: CreativeService[] = [
       "Included free with every website",
     ],
     price: "Included with a website",
-    image: "/media/art/freight.jpg",
-    alt: "Foggy freight yard at night, the opening frame of a VoidBuilds promo film",
+    image: "/media/work/joinery.jpg",
+    alt: "Carpenter's bench in warm afternoon light, the opening frame of a VoidBuilds promo film",
     cta: { href: "/studio/editor", label: "Open the cut room" },
   },
   {
@@ -148,8 +148,8 @@ export const CREATIVE_SERVICES: CreativeService[] = [
       "Every aspect ratio you post in",
     ],
     price: "Quoted per campaign",
-    image: "/media/art/precision.jpg",
-    alt: "Machined metal components on a workshop table, the plate for a VoidBuilds ad campaign",
+    image: "/media/work/physio.jpg",
+    alt: "Bright mint physiotherapy studio, the plate for a VoidBuilds ad campaign",
     cta: { href: "/#contact", label: "Brief an ad" },
   },
   {
@@ -166,8 +166,8 @@ export const CREATIVE_SERVICES: CreativeService[] = [
       "Print-ready PDF",
     ],
     price: "Quoted per set",
-    image: "/media/art/lab.jpg",
-    alt: "Laboratory vials on a steel bench, the plate for a VoidBuilds poster design",
+    image: "/media/work/florist.jpg",
+    alt: "Buckets of coral and yellow flowers in a florist's shop, the plate for a VoidBuilds poster",
     cta: { href: "/#contact", label: "Brief a poster" },
   },
 ];
@@ -450,6 +450,155 @@ export const CASE_STUDIES = [
   },
 ];
 
+/* ------------------------------------------------------------------ *
+ * The four sites shown on the home page. Each one is a miniature website
+ * rendered inside a browser frame, so the work reads as websites at a
+ * glance instead of abstract photography.
+ * ------------------------------------------------------------------ */
+export type PreviewTheme = {
+  bg: string;
+  ink: string;
+  accent: string;
+  accentText: string;
+};
+
+export type SitePreviewData = {
+  brand: string;
+  url: string;
+  nav: string[];
+  headline: string;
+  sub: string;
+  cta: string;
+  cards: string[];
+  image: string;
+  imageAlt: string;
+  badge?: string;
+  theme: PreviewTheme;
+};
+
+export type Build = {
+  slug: string;
+  client: string;
+  sector: string;
+  url: string;
+  headline: string;
+  body: string;
+  metrics: { value: string; label: string }[];
+  accent: string;
+  preview: SitePreviewData;
+};
+
+export const BUILDS: Build[] = [
+  {
+    slug: "marlow-and-sons",
+    client: "Marlow & Sons",
+    sector: "Coffee shop",
+    url: "marlowandsons.coffee",
+    headline: "A menu, a story and a map — all on one page.",
+    body: "The old site was a PDF menu and a phone number. The new one opens with the room, the bread and a table booking that actually works on a phone.",
+    metrics: [
+      { value: "+38%", label: "weekend bookings" },
+      { value: "0.8s", label: "load on 4G" },
+      { value: "1", label: "page to maintain" },
+    ],
+    accent: "#ff5a36",
+    preview: {
+      brand: "Marlow & Sons",
+      url: "marlowandsons.coffee",
+      nav: ["Coffee", "Bakery", "Visit"],
+      headline: "Coffee, baked slow.",
+      sub: "A neighbourhood roastery and bakery on Bridge Street.",
+      cta: "Book a table",
+      cards: ["Single origin", "Fresh bread", "Open 7–4"],
+      badge: "Open today",
+      image: "/media/work/cafe.jpg",
+      imageAlt: "Sunlit coffee shop counter with pastries and hanging plants",
+      theme: { bg: "#f7ead8", ink: "#3a2418", accent: "#c94f2c", accentText: "#fff7ec" },
+    },
+  },
+  {
+    slug: "hearth-and-grain",
+    client: "Hearth & Grain",
+    sector: "Joinery studio",
+    url: "hearthandgrain.works",
+    headline: "Their craft, shown at the size it deserves.",
+    body: "Full-width workshop photography, a clear range of fitted furniture, and one enquiry form that asks the right questions before a quote call.",
+    metrics: [
+      { value: "4.1×", label: "more quote requests" },
+      { value: "9", label: "project pages" },
+      { value: "0", label: "stock photos" },
+    ],
+    accent: "#f5b72f",
+    preview: {
+      brand: "Hearth & Grain",
+      url: "hearthandgrain.works",
+      nav: ["Kitchens", "Furniture", "Studio"],
+      headline: "Built to outlast the trend.",
+      sub: "Bespoke oak kitchens and fitted furniture, made in small batches.",
+      cta: "Start a commission",
+      cards: ["Fitted kitchens", "Oak furniture", "Est. 2009"],
+      badge: "Taking 2027 work",
+      image: "/media/work/joinery.jpg",
+      imageAlt: "Warm carpenter's workshop with hand tools and wood shavings",
+      theme: { bg: "#efe6d2", ink: "#2d2a1f", accent: "#a96a1f", accentText: "#fff8ea" },
+    },
+  },
+  {
+    slug: "northside-physio",
+    client: "Northside Physio",
+    sector: "Clinic",
+    url: "northsidephysio.care",
+    headline: "Calm, clear, and easy to book.",
+    body: "Clinic information now leads with the thing patients need: a same-week appointment. Treatment pages, prices and referrals all sit under one navigation.",
+    metrics: [
+      { value: "AA", label: "accessibility checked" },
+      { value: "+62%", label: "online bookings" },
+      { value: "3", label: "clicks to book" },
+    ],
+    accent: "#1fae8a",
+    preview: {
+      brand: "Northside Physio",
+      url: "northsidephysio.care",
+      nav: ["Services", "Team", "Fees"],
+      headline: "Move better, sooner.",
+      sub: "Assessment, treatment and a plan you can keep up with.",
+      cta: "Book now",
+      cards: ["Same-week", "Sports injury", "Central clinic"],
+      badge: "3 slots left",
+      image: "/media/work/physio.jpg",
+      imageAlt: "Mint-green physiotherapy room with a treatment bench and daylight",
+      theme: { bg: "#e4f2ec", ink: "#12312b", accent: "#1fae8a", accentText: "#06251f" },
+    },
+  },
+  {
+    slug: "wild-stem",
+    client: "Wild Stem",
+    sector: "Florist",
+    url: "wildstem.shop",
+    headline: "The shop window, moved online.",
+    body: "Seasonal bouquets with real prices, a same-day cut-off that is impossible to miss, and a workshop page that fills seats without a single DM.",
+    metrics: [
+      { value: "+54%", label: "same-day orders" },
+      { value: "100%", label: "colour photography" },
+      { value: "2 days", label: "build time" },
+    ],
+    accent: "#7c5cff",
+    preview: {
+      brand: "Wild Stem",
+      url: "wildstem.shop",
+      nav: ["Bouquets", "Workshops", "Weddings"],
+      headline: "Flowers with a bit of wild.",
+      sub: "Seasonal bouquets and wedding work from the shop on Mill Lane.",
+      cta: "Order flowers",
+      cards: ["Same-day", "Seasonal", "Workshops"],
+      badge: "Cut-off 2pm",
+      image: "/media/work/florist.jpg",
+      imageAlt: "Coral, pink and yellow flowers in buckets at a florist's shop",
+      theme: { bg: "#fbe9e4", ink: "#3b1d22", accent: "#c53a54", accentText: "#fff7f4" },
+    },
+  },
+];
+
 export const TRUST = [
   {
     title: "You own the website",
@@ -537,7 +686,7 @@ export const FAQ = [
 ];
 
 export const NAV_LINKS = [
-  { href: "/#capabilities", label: "What you get" },
+  { href: "/#capabilities", label: "What's included" },
   { href: "/#studio", label: "Studio" },
   { href: "/#work", label: "Work" },
   { href: "/#process", label: "Process" },

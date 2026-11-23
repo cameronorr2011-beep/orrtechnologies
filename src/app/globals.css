@@ -1,35 +1,46 @@
 @import "tailwindcss";
 
 /*
-  VOIDBUILDS — design tokens.
-  Three colours: void, bone, signal. Everything else is a neutral step.
-  Old token names (royal/ember) are kept as aliases so every route keeps
-  working, but they now resolve into the monochrome + signal system.
+  VOIDBUILDS — "studio paper" design tokens.
+
+  The site was a black room with one neon line. It is now a warm paper desk:
+  ink type, four working colours, real photography in browser frames, and a
+  blueprint grid underneath. The old token names (void/bone/royal/ember) are
+  kept as aliases so every route inherits the new surface without a rewrite.
 */
 @theme {
-  --color-void: #060607;
-  --color-ink: #0a0b0c;
+  --color-paper: #f6f1e7;
+  --color-paper-2: #efe8d9;
+  --color-ink: #14130f;
 
-  --color-royal-950: #0a0b0c;
-  --color-royal-900: #0e0f11;
-  --color-royal-800: #15171a;
-  --color-royal-700: #1e2125;
-  --color-royal-600: #2b2f34;
-  --color-royal-500: #42474d;
-  --color-royal-400: #6b7178;
-  --color-royal-300: #b9bec4;
+  --color-void: #f6f1e7;
+  --color-royal-950: #fcf8ef;
+  --color-royal-900: #f6f0e3;
+  --color-royal-800: #ede5d4;
+  --color-royal-700: #dfd4be;
+  --color-royal-600: #c9bda4;
+  --color-royal-500: #a3977d;
+  --color-royal-400: #7d725d;
+  --color-royal-300: #4b463a;
 
-  --color-ember-600: #6f8a1c;
-  --color-ember-500: #93b82a;
-  --color-ember-400: #b4e03a;
-  --color-ember-300: #c8f751;
-  --color-ember-200: #dcff8f;
-  --color-ember-100: #efffc7;
+  --color-electric: #2f4bff;
+  --color-coral: #ff5a36;
+  --color-sun: #f5b72f;
+  --color-mint: #1fae8a;
+  --color-plum: #7c5cff;
+  --color-lime: #c8f751;
 
-  --color-copper: #b4e03a;
-  --color-maple: #ff6a45;
-  --color-gold: #fffdf4;
-  --color-bone: #f2efe8;
+  --color-ember-600: #1c2fb8;
+  --color-ember-500: #2440e8;
+  --color-ember-400: #2f4bff;
+  --color-ember-300: #2f4bff;
+  --color-ember-200: #1c2fb8;
+  --color-ember-100: #dfe4ff;
+
+  --color-copper: #2f4bff;
+  --color-maple: #c9341a;
+  --color-gold: #14130f;
+  --color-bone: #14130f;
 
   --font-display: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
   --font-sans: var(--font-archivo), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -94,15 +105,15 @@
 }
 
 :root {
-  color-scheme: dark;
-  --grain-opacity: 0.03;
-  --hairline: rgba(242, 239, 232, 0.12);
-  --hairline-strong: rgba(242, 239, 232, 0.22);
+  color-scheme: light;
+  --grain-opacity: 0.055;
+  --hairline: rgba(20, 19, 15, 0.14);
+  --hairline-strong: rgba(20, 19, 15, 0.34);
 }
 
 html,
 body {
-  background-color: #060607;
+  background-color: #f6f1e7;
 }
 
 html {
@@ -111,8 +122,8 @@ html {
 }
 
 body {
-  background-color: var(--color-void);
-  color: rgba(242, 239, 232, 0.86);
+  background-color: var(--color-paper);
+  color: rgba(20, 19, 15, 0.84);
   font-family: var(--font-sans);
   overflow-x: hidden;
   font-synthesis-weight: none;
@@ -120,21 +131,21 @@ body {
 }
 
 ::selection {
-  background: var(--color-ember-300);
-  color: #060607;
+  background: var(--color-electric);
+  color: #fffdf6;
 }
 
 ::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: #060607; }
+::-webkit-scrollbar-track { background: #efe8d9; }
 ::-webkit-scrollbar-thumb {
-  background: #2b2f34;
-  border: 3px solid #060607;
+  background: #c9bda4;
+  border: 3px solid #efe8d9;
   border-radius: 99px;
 }
-::-webkit-scrollbar-thumb:hover { background: #42474d; }
+::-webkit-scrollbar-thumb:hover { background: #a3977d; }
 
 :focus-visible {
-  outline: 2px solid var(--color-ember-300);
+  outline: 2px solid var(--color-electric);
   outline-offset: 3px;
 }
 
@@ -143,16 +154,13 @@ body {
 .tracking-mega { letter-spacing: 0.32em; }
 
 /* Flat type. No gradient text anywhere. */
-.text-ember-gradient {
-  background: none;
-  color: var(--color-ember-300);
-  animation: none;
-}
+.text-ember-gradient,
 .text-bone-gradient {
   background: none;
-  color: var(--color-bone);
   animation: none;
 }
+.text-ember-gradient { color: var(--color-electric); }
+.text-bone-gradient { color: var(--color-ink); }
 
 .kicker-dot {
   animation: kickerPulse 5.5s ease-in-out infinite;
@@ -168,7 +176,7 @@ body {
   line-height: 1.4;
   letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: rgba(242, 239, 232, 0.5);
+  color: rgba(20, 19, 15, 0.56);
 }
 
 .display {
@@ -189,19 +197,19 @@ body {
 /* ---------- Surfaces ---------- */
 .glass,
 .glass-warm {
-  background: #0a0b0c;
+  background: #fbf7ee;
   border: 1px solid var(--hairline);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
 
 .glass-warm {
-  background: #0c0d0b;
-  border-color: rgba(200, 247, 81, 0.24);
+  background: #fffaf0;
+  border-color: rgba(47, 75, 255, 0.28);
 }
 
 .hairline { border: 1px solid var(--hairline); }
-.frame { border: 1px solid var(--hairline); }
+.frame { border: 2px solid var(--color-ink); }
 
 .edge-glow { position: relative; }
 .edge-glow::after {
@@ -209,7 +217,7 @@ body {
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  border: 1px solid var(--color-ember-300);
+  border: 1px solid var(--color-electric);
   opacity: 0;
   transition: opacity 0.35s ease;
   pointer-events: none;
@@ -217,7 +225,7 @@ body {
 .edge-glow:hover::after { opacity: 0.55; }
 
 .ember-underline {
-  background-image: linear-gradient(90deg, var(--color-bone), var(--color-bone));
+  background-image: linear-gradient(90deg, var(--color-ink), var(--color-ink));
   background-size: 0% 1px;
   background-repeat: no-repeat;
   background-position: 0 100%;
@@ -225,13 +233,30 @@ body {
 }
 .ember-underline:hover { background-size: 100% 1px; }
 
-/* subtle architectural grid, reused across dark panels */
+/* print / blueprint textures */
+.blueprint {
+  background-image:
+    linear-gradient(to right, rgba(20, 19, 15, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20, 19, 15, 0.055) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+
+.dot-grid {
+  background-image: radial-gradient(rgba(20, 19, 15, 0.16) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
 .noise-panel {
   background-image:
-    repeating-linear-gradient(90deg, rgba(242, 239, 232, 0.055) 0 1px, transparent 1px 96px),
-    repeating-linear-gradient(0deg, rgba(242, 239, 232, 0.04) 0 1px, transparent 1px 96px);
+    radial-gradient(rgba(20, 19, 15, 0.14) 1px, transparent 1px),
+    linear-gradient(to right, rgba(20, 19, 15, 0.04) 1px, transparent 1px);
+  background-size: 18px 18px, 72px 72px;
   background-position: center;
 }
+
+.shadow-print { box-shadow: 10px 10px 0 0 var(--color-ink); }
+.shadow-print-blue { box-shadow: 10px 10px 0 0 var(--color-electric); }
+.shadow-print-coral { box-shadow: 10px 10px 0 0 var(--color-coral); }
 
 /* magnetic CTA: 6px of pull, only where the pointer is precise */
 .magnetic {
@@ -248,26 +273,30 @@ body {
 .btn-primary {
   position: relative;
   overflow: hidden;
-  background: var(--color-bone);
-  color: #060607;
+  background: var(--color-ink);
+  color: var(--color-paper);
   border-radius: 0;
-  box-shadow: none;
-  transition: background-color 0.25s ease, color 0.25s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 5px 5px 0 0 var(--color-electric);
+  transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .btn-primary:hover {
-  background: var(--color-ember-300);
+  background: var(--color-electric);
+  color: #fffdf6;
+  box-shadow: 5px 5px 0 0 var(--color-coral);
 }
 .btn-primary::before { content: none; }
 
 .btn-ghost {
-  border: 1px solid var(--hairline-strong);
+  border: 2px solid var(--color-ink);
   border-radius: 0;
   background: transparent;
+  color: var(--color-ink);
   transition: border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .btn-ghost:hover {
-  border-color: rgba(242, 239, 232, 0.72);
-  background: rgba(242, 239, 232, 0.04);
+  border-color: var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-paper);
 }
 
 /* ---------- Reveal ---------- */
@@ -292,6 +321,7 @@ body {
   pointer-events: none;
   z-index: 60;
   opacity: var(--grain-opacity);
+  mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: drift 18s steps(6) infinite;
 }
@@ -304,10 +334,10 @@ body {
   z-index: 55;
   background: linear-gradient(
     180deg,
-    rgba(6, 6, 7, 0.55) 0%,
-    transparent 14%,
-    transparent 86%,
-    rgba(6, 6, 7, 0.7) 100%
+    rgba(246, 241, 231, 0.35) 0%,
+    transparent 12%,
+    transparent 88%,
+    rgba(246, 241, 231, 0.5) 100%
   );
 }
 
@@ -347,13 +377,13 @@ body {
   animation: dashFlow 14s linear infinite;
 }
 
-/* editorial image treatment: monochrome, signal only where it matters */
+/* colour editorial photography, contained in print-like frames */
 .plate {
-  filter: grayscale(1) contrast(1.06);
+  filter: saturate(1.04) contrast(1.02);
   transition: filter 0.6s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .group:hover .plate {
-  filter: grayscale(0.75) contrast(1.1);
+  filter: saturate(1.12) contrast(1.04);
 }
 
 @media (prefers-reduced-motion: reduce) {

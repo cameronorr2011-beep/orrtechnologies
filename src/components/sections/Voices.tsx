@@ -50,10 +50,10 @@ export default function Voices() {
   const active = VOICES[index];
 
   return (
-    <section className="relative border-t border-bone/10 py-24 sm:py-32">
+    <section className="relative border-t-2 border-ink/15 py-24 sm:py-32">
       <div className="mx-auto max-w-[1480px] px-5 sm:px-8">
         <SectionHeading
-          kicker="06 / Client voices"
+          kicker="07 / Client voices"
           title={
             <>
               What clients
@@ -79,7 +79,7 @@ export default function Voices() {
                 className="font-display max-w-4xl text-[clamp(1.35rem,2.8vw,2.15rem)] font-medium leading-[1.25] tracking-[-0.02em] text-bone/90"
                 style={{ animation: "revealUp .6s cubic-bezier(.22,1,.36,1) both" }}
               >
-                <span className="mr-1 text-ember-300">“</span>
+                <span className="mr-1 text-electric">“</span>
                 {active.quote}
               </blockquote>
               <figcaption className="mt-10 flex flex-wrap items-end justify-between gap-4 border-t border-bone/10 pt-5">

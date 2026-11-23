@@ -53,13 +53,13 @@ export default function PricingTable({ plans, showHeading = true }: { plans: Pla
   return (
     <section
       id="pricing"
-      className={`relative overflow-hidden ${showHeading ? "border-t border-bone/10 py-24 sm:py-32" : "pb-24 pt-14 sm:pb-32 sm:pt-16"}`}
+      className={`relative overflow-hidden ${showHeading ? "border-t-2 border-ink/15 py-24 sm:py-32" : "pb-24 pt-14 sm:pb-32 sm:pt-16"}`}
     >
       <div className="relative mx-auto max-w-[1480px] px-5 sm:px-8">
         {showHeading ? (
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <SectionHeading
-              kicker="07 / Packages"
+              kicker="04 / Packages"
               title={
                 <>
                   Three packages.
@@ -85,12 +85,12 @@ export default function PricingTable({ plans, showHeading = true }: { plans: Pla
                 <article
                   className={`relative flex h-full flex-col border p-7 transition-transform duration-500 hover:-translate-y-1 sm:p-8 ${
                     featured
-                      ? "border-ember-300/45 bg-[#0a0b08]"
-                      : "border-bone/12 bg-void hover:border-bone/30"
+                      ? "border-ink bg-[#fff7e6] shadow-[8px_8px_0_0_#2f4bff]"
+                      : "border-ink/20 bg-paper hover:border-ink"
                   }`}
                 >
                   {featured ? (
-                    <span className="absolute -top-3 left-7 bg-ember-300 px-3 py-1 font-mono text-[0.54rem] uppercase tracking-[0.18em] text-void">
+                    <span className="absolute -top-3 left-7 bg-electric px-3 py-1 font-mono text-[0.54rem] uppercase tracking-[0.18em] text-white">
                       Recommended
                     </span>
                   ) : null}

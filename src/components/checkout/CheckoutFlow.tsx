@@ -52,7 +52,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
   const steps = invoice ? invoiceMethod.steps : method.steps;
 
   const field =
-    "w-full border border-bone/15 bg-[#08090a] px-5 py-3.5 text-[0.92rem] text-bone placeholder:text-bone/25 transition-colors focus:border-ember-300/55 focus:outline-none";
+    "w-full border border-bone/15 bg-white px-5 py-3.5 text-[0.92rem] text-bone placeholder:text-bone/25 transition-colors focus:border-ember-300/55 focus:outline-none";
 
   const copy = async (value: string, key: string) => {
     try {
@@ -121,12 +121,12 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
     <div className="mx-auto max-w-[1280px] px-5 pb-24 sm:px-8">
       {invoice ? (
         <Reveal>
-          <div className="relative overflow-hidden border border-bone/15 bg-[#0a0b08] p-8 sm:p-10">
+          <div className="relative overflow-hidden border border-bone/15 bg-[#fff7e6] p-8 sm:p-10">
             <div className="pointer-events-none absolute inset-0 noise-panel opacity-70" />
             <div className="relative">
               <div className="flex flex-wrap items-start justify-between gap-6">
                 <div>
-                  <p className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-ember-100/75">
+                  <p className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-electric">
                     Your order
                   </p>
                   <h2 className="font-display mt-4 text-[2.2rem] font-semibold leading-none text-bone">
@@ -140,7 +140,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
                   <p className="font-mono text-[0.56rem] uppercase tracking-[0.22em] text-bone/40">
                     {invoice.payment.id === "giftcard" ? "In gift cards" : "Roughly, in Bitcoin"}
                   </p>
-                  <p className="font-display mt-2 text-2xl text-ember-100">
+                  <p className="font-display mt-2 text-2xl text-electric">
                     {invoice.payment.id === "giftcard" ? `$${invoice.amountUsd}` : `${invoice.btcAmount} BTC`}
                   </p>
                   <p className="mt-1 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-bone/35">
@@ -152,7 +152,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
               </div>
 
               <div className="mt-8 grid gap-5 sm:grid-cols-2">
-                <div className="border border-bone/12 bg-[#08090a] p-6">
+                <div className="border border-bone/12 bg-white p-6">
                   <p className="font-mono text-[0.56rem] uppercase tracking-[0.22em] text-bone/40">
                     How you pay
                   </p>
@@ -174,7 +174,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
                     </div>
                   ) : null}
                 </div>
-                <div className="border border-bone/12 bg-[#08090a] p-6">
+                <div className="border border-bone/12 bg-white p-6">
                   <p className="font-mono text-[0.56rem] uppercase tracking-[0.22em] text-bone/40">
                     Questions?
                   </p>
@@ -191,7 +191,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
                 </div>
               </div>
 
-              <div className="mt-8 border border-ember-300/30 bg-[#0a0b08] p-7">
+              <div className="mt-8 border border-ember-300/30 bg-[#fff7e6] p-7">
                 <p className="text-[0.95rem] leading-relaxed text-bone/80">
                   Next step: send the email below. It includes your order code and your chosen payment
                   method — we reply with the final details on the same thread.
@@ -227,7 +227,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
 
       <div className={`mt-8 grid gap-8 ${invoice ? "opacity-70" : ""} lg:grid-cols-[1.05fr_0.95fr]`}>
         <Reveal>
-          <form onSubmit={submit} className="border border-bone/12 bg-[#08090a] p-8">
+          <form onSubmit={submit} className="border border-bone/12 bg-white p-8">
             <p className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-ember-300/75">
               Your package{plan ? ` — ${plan.priceLabel ?? `$${plan.priceUsd}`}` : ""}
             </p>
@@ -280,7 +280,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
                       className={`border px-4 py-3 text-left transition-all duration-300 ${
                         on
                           ? "border-ember-300/50 bg-ember-500/10"
-                          : "border-bone/12 bg-[#08090a] hover:border-bone/30"
+                          : "border-bone/12 bg-white hover:border-bone/30"
                       }`}
                     >
                       <span className={`block text-[0.82rem] font-semibold ${on ? "text-bone" : "text-bone/65"}`}>
@@ -362,7 +362,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
 
         <div className="space-y-5">
           <Reveal delay={90}>
-            <div className="border border-bone/12 bg-[#08090a] p-8">
+            <div className="border border-bone/12 bg-white p-8">
               <p className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-ember-300/75">
                 How payment works
               </p>
@@ -380,7 +380,7 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
           </Reveal>
 
           <Reveal delay={150}>
-            <div className="border border-bone/12 bg-[#08090a] p-8">
+            <div className="border border-bone/12 bg-white p-8">
               <p className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-ember-300/75">
                 Why pay this way
               </p>

@@ -1,133 +1,153 @@
-import Link from "next/link";
-import VoidLoop from "@/components/brand/VoidLoop";
-import Reveal from "@/components/fx/Reveal";
 import ActionButton from "@/components/ui/ActionButton";
-
-const INDEX = [
-  { n: "01", label: "Websites" },
-  { n: "02", label: "Films" },
-  { n: "03", label: "Ads" },
-  { n: "04", label: "Posters" },
-];
+import Reveal from "@/components/fx/Reveal";
+import SitePreview from "@/components/ui/SitePreview";
+import { BUILDS } from "@/lib/content";
 
 const FACTS = [
-  { value: "From $100", label: "Starter, paid once" },
-  { value: "2–6 days", label: "Typical delivery" },
-  { value: "100%", label: "Yours to keep" },
+  { value: "From $100", label: "Starter website", dot: "bg-electric" },
+  { value: "2–6 days", label: "Design to launch", dot: "bg-coral" },
+  { value: "100%", label: "Code handed to you", dot: "bg-mint" },
+  { value: "1–3", label: "Promo videos included", dot: "bg-sun" },
+];
+
+const TICKS = [
+  { copy: "No template", dot: "bg-coral" },
+  { copy: "No page builder", dot: "bg-electric" },
+  { copy: "No monthly fee", dot: "bg-mint" },
 ];
 
 export default function Hero() {
+  const cafe = BUILDS[0];
+  const joinery = BUILDS[1];
+
   return (
     <section className="relative overflow-hidden">
-      <div className="mx-auto grid max-w-[1480px] lg:min-h-[100svh] lg:grid-cols-[1.04fr_0.96fr]">
-        <div className="relative z-10 flex flex-col justify-center px-5 pb-12 pt-28 sm:px-8 lg:py-24">
-          <Reveal>
-            <div className="flex items-center gap-3">
-              <span className="kicker-dot h-1.5 w-1.5 bg-ember-300" aria-hidden="true" />
-              <span className="kicker">VoidBuilds — independent web studio</span>
-            </div>
-          </Reveal>
-
-          <Reveal delay={70}>
-            <h1 className="display mt-6 text-[clamp(2.9rem,7vw,6rem)] text-bone">
-              <span className="block">A website</span>
-              <span className="block">with</span>
-              <span className="block text-ember-300">gravity.</span>
-            </h1>
-          </Reveal>
-
-          <Reveal delay={140}>
-            <p className="mt-8 max-w-[31rem] text-[1.02rem] leading-relaxed text-bone/60">
-              Websites for small businesses, built once and handed over. Starter is $100 for one page,
-              Builder is $200 for up to five, and Premium starts at $500 when you need a backend.
-            </p>
-          </Reveal>
-
-          <Reveal delay={210}>
-            <div className="mt-9 flex flex-wrap items-center gap-3">
-              <ActionButton href="/pricing" event={{ name: "nav", label: "hero_pricing" }}>
-                Choose a package
-              </ActionButton>
-              <ActionButton href="/#work" variant="ghost" event={{ name: "nav", label: "hero_work" }}>
-                See the work
-              </ActionButton>
-            </div>
-          </Reveal>
-
-          <Reveal delay={270}>
-            <p className="mt-6 font-mono text-[0.58rem] uppercase leading-relaxed tracking-[0.18em] text-bone/35">
-              Starter in 2–3 days, Builder in 4–6. One invoice, sent before we start.
-            </p>
-          </Reveal>
-
-          <Reveal delay={330}>
-            <dl className="mt-10 grid max-w-lg grid-cols-3 gap-4 border-t border-bone/10 pt-5">
-              {FACTS.map((f) => (
-                <div key={f.label}>
-                  <dt className="font-display text-[1.45rem] font-semibold leading-none tracking-[-0.03em] text-bone">
-                    {f.value}
-                  </dt>
-                  <dd className="mt-2 font-mono text-[0.54rem] uppercase leading-relaxed tracking-[0.16em] text-bone/35">
-                    {f.label}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </Reveal>
-        </div>
-
-        <div className="relative h-[58svh] min-h-[360px] overflow-hidden border-t border-bone/10 lg:h-auto lg:min-h-0 lg:border-l lg:border-t-0">
-          <div className="hero-media absolute inset-0">
-            <VoidLoop />
-          </div>
-
-          <div className="pointer-events-none absolute inset-0 flex flex-col justify-between px-5 pb-5 pt-5 sm:px-7 sm:pb-7 lg:pt-24">
-            <div className="flex items-start justify-between font-mono text-[0.56rem] uppercase tracking-[0.2em] text-bone/60">
-              <span>Fig. 01 — Event horizon</span>
-              <span className="text-right">
-                VB / 001
-                <br />
-                Rendered loop
-              </span>
-            </div>
-            <div className="hidden items-end justify-between gap-6 lg:flex">
-              <p className="bg-void/55 px-2 py-1 font-mono text-[0.56rem] uppercase leading-relaxed tracking-[0.18em] text-bone/60">
-                A dark centre
-                <br />
-                with a bright edge.
-              </p>
-              <p className="max-w-[12rem] bg-void/55 px-2 py-1 text-right font-mono text-[0.52rem] uppercase leading-relaxed tracking-[0.18em] text-bone/60">
-                180 frames, rendered.
-                <br />
-                No stock image.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="border-y border-bone/10 bg-void">
-        <div className="mx-auto grid max-w-[1480px] grid-cols-2 sm:grid-cols-4">
-          {INDEX.map((item, i) => (
-            <Link
-              key={item.label}
-              href="/#studio"
-              className={`group flex items-baseline justify-between gap-3 border-bone/10 px-5 py-5 sm:px-8 ${
-                i > 0 ? "border-l" : ""
-              } ${i === 2 ? "border-t sm:border-t-0" : ""} ${i === 3 ? "border-l border-t sm:border-t-0" : ""}`}
-            >
-              <span className="flex items-baseline gap-3">
-                <span className="font-mono text-[0.56rem] tracking-[0.1em] text-ember-300/80">{item.n}</span>
-                <span className="font-display text-[1.02rem] font-medium uppercase tracking-[0.02em] text-bone/75 transition-colors group-hover:text-bone">
-                  {item.label}
+      <div className="mx-auto max-w-[1480px] px-5 pb-14 pt-28 sm:px-8 lg:pb-20 lg:pt-32">
+        <div className="grid gap-16 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:gap-10">
+          <div className="relative z-10">
+            <Reveal>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+                <span className="inline-flex items-center gap-2 border-2 border-ink bg-paper px-3 py-1.5 font-mono text-[0.56rem] uppercase tracking-[0.18em] text-ink">
+                  <span className="h-2 w-2 rounded-full bg-coral" aria-hidden="true" />
+                  Web design + build studio
                 </span>
-              </span>
-              <span className="font-mono text-[0.7rem] text-bone/25 transition-colors group-hover:text-ember-300">
-                ↗
-              </span>
-            </Link>
-          ))}
+                <span className="font-mono text-[0.56rem] uppercase tracking-[0.18em] text-ink/45">
+                  Remote · working worldwide
+                </span>
+              </div>
+            </Reveal>
+
+            <Reveal delay={70}>
+              <h1 className="display mt-7 text-[clamp(2.9rem,7.3vw,6.7rem)] text-ink">
+                <span className="block">Websites</span>
+                <span className="block">that look like</span>
+                <span className="mt-1 block font-serif text-[0.92em] font-normal italic normal-case tracking-[-0.035em] text-electric">
+                  your business.
+                </span>
+              </h1>
+            </Reveal>
+
+            <Reveal delay={140}>
+              <p className="mt-8 max-w-[34rem] text-[1.04rem] leading-relaxed text-ink/65">
+                Custom websites for small businesses — designed, written, built and handed over in
+                2–6 days. Starter is $100, Builder is $200, Premium from $500. You pay once and the
+                code is yours.
+              </p>
+            </Reveal>
+
+            <Reveal delay={210}>
+              <div className="mt-9 flex flex-wrap items-center gap-3">
+                <ActionButton href="/pricing" event={{ name: "nav", label: "hero_pricing" }}>
+                  See website packages
+                </ActionButton>
+                <ActionButton
+                  href="/#work"
+                  variant="ghost"
+                  event={{ name: "nav", label: "hero_work" }}
+                >
+                  Browse recent builds
+                </ActionButton>
+              </div>
+            </Reveal>
+
+            <Reveal delay={270}>
+              <ul className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
+                {TICKS.map((tick) => (
+                  <li
+                    key={tick.copy}
+                    className="flex items-center gap-2 font-mono text-[0.56rem] uppercase tracking-[0.16em] text-ink/55"
+                  >
+                    <span className={`h-1.5 w-1.5 ${tick.dot}`} aria-hidden="true" />
+                    {tick.copy}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          </div>
+
+          <Reveal delay={120}>
+            <div className="relative mx-auto w-full max-w-[620px] lg:mr-0">
+              <div className="relative aspect-[5/5.05] sm:aspect-[5/4.9]">
+                <div
+                  aria-hidden="true"
+                  className="absolute left-[12%] top-[1%] h-[74%] w-[82%] rotate-[3deg] border-2 border-ink bg-sun/40"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute bottom-[7%] left-0 h-[34%] w-[48%] -rotate-[4deg] border-2 border-ink bg-mint/30"
+                />
+
+                <div className="absolute left-0 top-[2%] z-20 w-[82%] -rotate-[1.2deg] shadow-print">
+                  <SitePreview
+                    site={cafe.preview}
+                    sizes="(max-width: 640px) 82vw, 420px"
+                  />
+                </div>
+
+                <div className="absolute right-0 top-[46%] z-30 w-[64%] rotate-[2deg] shadow-[8px_8px_0_0_#2f4bff]">
+                  <SitePreview
+                    site={joinery.preview}
+                    sizes="(max-width: 640px) 64vw, 320px"
+                  />
+                </div>
+
+                <span className="absolute -left-1 top-[63%] z-40 hidden rotate-[-3deg] border-2 border-ink bg-paper px-3 py-2 font-mono text-[0.5rem] uppercase leading-relaxed tracking-[0.14em] text-ink shadow-[4px_4px_0_0_#14130f] sm:block">
+                  Real type.
+                  <br />
+                  Real photos.
+                </span>
+
+                <span className="absolute -right-1 top-[27%] z-50 rotate-[3deg] border-2 border-ink bg-electric px-3 py-2 font-mono text-[0.5rem] uppercase leading-relaxed tracking-[0.14em] text-white shadow-[4px_4px_0_0_#14130f]">
+                  Built in
+                  <br />
+                  4 days
+                </span>
+
+                <span className="absolute -bottom-2 right-[4%] z-50 rotate-[-2deg] border-2 border-ink bg-lime px-3 py-2 font-mono text-[0.5rem] uppercase leading-relaxed tracking-[0.14em] text-ink shadow-[4px_4px_0_0_#14130f]">
+                  You own
+                  <br />
+                  the code
+                </span>
+              </div>
+            </div>
+          </Reveal>
         </div>
+
+        <Reveal delay={200}>
+          <dl className="mt-16 grid grid-cols-2 gap-px border-2 border-ink bg-ink sm:grid-cols-4">
+            {FACTS.map((fact) => (
+              <div key={fact.label} className="bg-paper px-5 py-5 sm:px-6">
+                <dd className="flex items-center gap-2 font-display text-[clamp(1.35rem,2.4vw,1.9rem)] font-extrabold leading-none tracking-[-0.04em] text-ink">
+                  <span className={`h-2 w-2 shrink-0 rounded-full ${fact.dot}`} aria-hidden="true" />
+                  {fact.value}
+                </dd>
+                <dt className="mt-2.5 font-mono text-[0.52rem] uppercase leading-relaxed tracking-[0.16em] text-ink/50">
+                  {fact.label}
+                </dt>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
       </div>
     </section>
   );

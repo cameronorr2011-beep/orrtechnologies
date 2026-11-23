@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/fx/Reveal";
-import VoidDust from "@/components/fx/VoidDust";
 import ActionButton from "@/components/ui/ActionButton";
 import JsonLd from "@/components/seo/JsonLd";
 import { BLOG_POSTS, formatDate, getPostBySlug } from "@/lib/blog";
@@ -89,10 +88,12 @@ export default async function BlogPostPage({
     <>
       <JsonLd data={jsonLd} />
       <article className="relative overflow-hidden pt-36 pb-16 sm:pt-44">
-        <div className="absolute inset-x-0 top-0 z-0 h-[420px] opacity-60" aria-hidden="true">
-          <VoidDust variant="core" />
+        <div className="absolute inset-x-0 top-0 z-0 h-[440px] overflow-hidden bg-[#eef1ff]" aria-hidden="true">
+          <div className="blueprint absolute inset-0 opacity-80" />
+          <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-coral/20 blur-[90px]" />
+          <div className="absolute -left-24 top-24 h-72 w-72 rounded-full bg-sun/25 blur-[90px]" />
         </div>
-        <div className="absolute inset-x-0 top-0 z-[1] h-[420px] bg-gradient-to-b from-transparent via-void/70 to-void" aria-hidden="true" />
+        <div className="absolute inset-x-0 top-0 z-[1] h-[440px] bg-gradient-to-b from-transparent via-paper/40 to-paper" aria-hidden="true" />
 
         <div className="relative z-10 mx-auto max-w-[760px] px-5 sm:px-8">
           <Reveal>
@@ -118,7 +119,7 @@ export default async function BlogPostPage({
           </Reveal>
           <Reveal delay={60}>
             <div className="mt-8 flex flex-wrap items-center gap-3 font-mono text-[0.6rem] uppercase tracking-[0.22em] text-bone/40">
-              <span className="rounded-full border border-ember-200/25 bg-ember-500/10 px-3 py-1 text-ember-100/85">
+              <span className="rounded-full border border-electric/25 bg-electric/10 px-3 py-1 text-electric">
                 {post.tag}
               </span>
               <span>By VoidBuilds</span>
@@ -172,7 +173,7 @@ export default async function BlogPostPage({
 
           <Reveal delay={120}>
             <div className="mt-16 rounded-3xl glass-warm p-8">
-              <p className="font-mono text-[0.6rem] uppercase tracking-[0.28em] text-ember-100/75">
+              <p className="font-mono text-[0.6rem] uppercase tracking-[0.28em] text-electric/80">
                 Want this done for you?
               </p>
               <p className="font-display mt-4 text-[1.5rem] font-semibold leading-snug text-bone">

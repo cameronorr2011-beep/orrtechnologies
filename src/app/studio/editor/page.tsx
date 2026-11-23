@@ -153,7 +153,7 @@ export default function EditorPage() {
             <div className="mt-7 flex flex-wrap gap-3">
               <Link
                 href="/api/cut"
-                className="rounded-full border border-royal-300/20 px-5 py-2.5 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-bone/65 transition-colors hover:text-ember-100"
+                className="rounded-full border border-royal-300/20 px-5 py-2.5 font-mono text-[0.6rem] uppercase tracking-[0.18em] text-bone/65 transition-colors hover:text-electric"
               >
                 GET /api/cut
               </Link>

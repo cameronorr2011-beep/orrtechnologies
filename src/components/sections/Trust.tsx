@@ -15,7 +15,7 @@ const LEDGER = [
 
 export default function Trust() {
   return (
-    <section id="trust" className="relative border-t border-bone/10 py-24 sm:py-32">
+    <section id="trust" className="relative border-t-2 border-ink/15 py-24 sm:py-32">
       <div className="mx-auto max-w-[1480px] px-5 sm:px-8">
         <div className="grid gap-16 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
           <div>
@@ -42,10 +42,10 @@ export default function Trust() {
                   </div>
                 ))}
                 <div className="flex items-baseline justify-between gap-6 py-4">
-                  <dt className="font-display text-[1rem] font-semibold uppercase tracking-[-0.01em] text-bone">
+                  <dt className="font-display text-[1rem] font-semibold uppercase tracking-[-0.01em] text-ink">
                     Total, paid once
                   </dt>
-                  <dd className="font-display text-[1.5rem] font-extrabold leading-none tracking-[-0.04em] text-ember-300">
+                  <dd className="font-display text-[1.5rem] font-extrabold leading-none tracking-[-0.04em] text-electric">
                     From $100
                   </dd>
                 </div>
@@ -56,7 +56,7 @@ export default function Trust() {
             </Reveal>
 
             <Reveal delay={180}>
-              <div className="mt-10 border border-bone/12 p-6">
+              <div className="mt-10 border-2 border-ink bg-[#e7f7f1] p-6">
                 <p className="font-mono text-[0.54rem] uppercase tracking-[0.2em] text-bone/35">Paying your way</p>
                 <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
                   {PAYMENT_METHODS.map((method) => (

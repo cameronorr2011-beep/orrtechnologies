@@ -180,10 +180,10 @@ export default function TermsPage() {
             <p className="mt-4">
               Questions:{" "}
               <a
-                href="mailto:service@orrbiologicals.com"
+                href="mailto:cameronorr2011@gmail.com"
                 className="text-ember-200 underline underline-offset-4"
               >
-                service@orrbiologicals.com
+                cameronorr2011@gmail.com
               </a>
             </p>
           </div>

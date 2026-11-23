@@ -60,6 +60,10 @@ export default function Nav() {
           </div>
 
           <div className="flex items-center gap-3">
+            <span className="hidden items-center gap-2 font-mono text-[0.5rem] uppercase tracking-[0.16em] text-ink/45 xl:flex">
+              <span className="h-1.5 w-1.5 bg-mint" aria-hidden="true" />
+              Websites from $100
+            </span>
             <ActionButton
               href="/pricing"
               event={{ name: "nav", label: "nav_pricing" }}
