@@ -35,18 +35,6 @@ const TILES = [
     label: "Trade",
     tone: "bg-sun",
   },
-  {
-    src: "/media/work/physio.jpg",
-    alt: "Mint physiotherapy room from the Northside Physio build",
-    label: "Clinic",
-    tone: "bg-mint",
-  },
-  {
-    src: "/media/work/florist.jpg",
-    alt: "Colourful flower buckets from the Wild Stem build",
-    label: "Retail",
-    tone: "bg-plum",
-  },
 ];
 
 export default function Manifesto() {
@@ -87,7 +75,7 @@ export default function Manifesto() {
                   No template. No page builder.
                 </p>
                 <p className="font-mono text-[0.5rem] uppercase tracking-[0.16em] text-ink/60">
-                  Four businesses / one studio
+                  Two builds / one studio
                 </p>
               </div>
             </div>
