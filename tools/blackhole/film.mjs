@@ -1,8 +1,9 @@
-// Renders tools/blackhole/film.html frame by frame through headless Chrome.
+// Renders a blackhole page frame by frame through headless Chrome.
 // Every frame is a fresh raymarch at its own timestamp — no stills, no zoom.
 //
-//   node tools/blackhole/film.mjs --fps 24 --dur 60 --w 1080 --h 1920 \
-//        --out studio-out/film2/frames [--from N --to N --resume]
+//   node tools/blackhole/film.mjs --page film3.html --fps 24 --dur 60 \
+//        --w 1080 --h 1920 --out studio-out/film3/frames [--from N --to N --resume]
+//   node tools/blackhole/film.mjs --page film3.html --times 1.5,4.2,9 --out studio-out/film3/stills
 import { spawn } from "node:child_process";
 import { mkdir, writeFile, access } from "node:fs/promises";
 import path from "node:path";
@@ -23,9 +24,10 @@ const W = Number(args.w ?? 1080);
 const H = Number(args.h ?? 1920);
 const PORT = Number(args.port ?? 9334);
 const OUT = path.resolve(args.out ?? "studio-out/film2/frames");
+const PAGE = args.page ?? "film.html";
 const CHROME = args.chrome ?? "C:/Program Files/Google/Chrome/Application/chrome.exe";
 
-const fileUrl = "file:///" + path.resolve("tools/blackhole/film.html").replace(/\\/g, "/");
+const fileUrl = "file:///" + path.resolve("tools/blackhole", PAGE).replace(/\\/g, "/");
 await mkdir(OUT, { recursive: true });
 
 const extraFlags = String(args.flags ?? "").split(" ").filter(Boolean);
@@ -55,7 +57,7 @@ const chrome = spawn(
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function getTarget() {
-  for (let i = 0; i < 120; i++) {
+  for (let i = 0; i < 160; i++) {
     try {
       const res = await fetch(`http://127.0.0.1:${PORT}/json`);
       const list = await res.json();
@@ -103,12 +105,37 @@ for (let i = 0; i < 160; i++) {
   if (await evaluate("Boolean(window.ready)")) break;
   await sleep(250);
 }
-if (!(await evaluate("Boolean(window.ready)"))) throw new Error("renderer never became ready");
+if (!(await evaluate("Boolean(window.ready)"))) {
+  const err = await evaluate("window.__err || 'no error captured'");
+  throw new Error("renderer never became ready: " + err);
+}
 
 const renderer = await evaluate(
   "(()=>{const gl=document.getElementById('c').getContext('webgl');const e=gl.getExtension('WEBGL_debug_renderer_info');return e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):'unknown';})()",
 );
 console.log(`renderer: ${renderer}`);
+
+async function grab(t, file) {
+  await evaluate(
+    `new Promise((resolve)=>{ window.setTime(${t}); requestAnimationFrame(()=>requestAnimationFrame(()=>resolve(true))); })`,
+    true,
+  );
+  const shot = await send("Page.captureScreenshot", { format: "png", fromSurface: true, captureBeyondViewport: false });
+  await writeFile(file, Buffer.from(shot.data, "base64"));
+}
+
+if (args.times) {
+  const list = String(args.times).split(",").map(Number);
+  let i = 0;
+  for (const t of list) {
+    const file = path.join(OUT, `s${String(i++).padStart(2, "0")}.png`);
+    const started = Date.now();
+    await grab(t, file);
+    console.log(`${t.toFixed(2)}s -> ${path.basename(file)} (${((Date.now() - started) / 1000).toFixed(2)}s)`);
+  }
+  ws.close(); chrome.kill(); process.exit(0);
+}
+
 console.log(`ready ${W}x${H} @ ${FPS}fps — frames ${FROM}..${TO - 1} of ${TOTAL}`);
 
 const started = Date.now();
@@ -117,13 +144,7 @@ for (let f = FROM; f < TO; f++) {
   if (args.resume === "true") {
     try { await access(file); continue; } catch {}
   }
-  const t = f / FPS;
-  await evaluate(
-    `new Promise((resolve)=>{ window.setTime(${t}); requestAnimationFrame(()=>requestAnimationFrame(()=>resolve(true))); })`,
-    true,
-  );
-  const shot = await send("Page.captureScreenshot", { format: "png", fromSurface: true, captureBeyondViewport: false });
-  await writeFile(file, Buffer.from(shot.data, "base64"));
+  await grab(f / FPS, file);
   if ((f - FROM) % 12 === 0 || f === TO - 1) {
     const done = f - FROM + 1;
     const rate = (Date.now() - started) / 1000 / done;

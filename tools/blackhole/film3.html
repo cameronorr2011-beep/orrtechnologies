@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>VoidBuilds — 60s film</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  canvas { display: block; position: absolute; inset: 0; width: 100vw; height: 100vh; }
+  #scrim {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 96% 40% at 50% 76%, rgba(2,4,9,0.62) 0%, rgba(2,4,9,0.34) 44%, rgba(2,4,9,0) 80%);
+  }
+  #type {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-end; pointer-events: none;
+    font-family: Bahnschrift, "Segoe UI", sans-serif; color: #f6f1e8;
+    text-align: center; padding: 0 5vw 20vh;
+  }
+  #type .line {
+    display: block; font-weight: 700; line-height: 0.94; letter-spacing: 0.01em;
+    text-shadow: 0 6px 34px rgba(0, 0, 0, 0.85), 0 1px 2px rgba(0, 0, 0, 0.9);
+    white-space: nowrap;
+  }
+  #type .small { font-weight: 600; letter-spacing: 0.42em; font-size: 20px; opacity: 0.82; }
+  #type .brand { font-weight: 700; letter-spacing: 0.24em; color: #fff; }
+  #type .sub { font-family: Consolas, monospace; font-weight: 400; letter-spacing: 0.28em; font-size: 19px; color: #e8b27a; }
+  #type .tiny { font-family: Consolas, monospace; font-weight: 400; letter-spacing: 0.34em; font-size: 15px; color: #c9a887; }
+  #fade { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="scrim"></div>
+<div id="type"></div>
+<div id="fade"></div>
+<script>
+const canvas = document.getElementById("c");
+const gl = canvas.getContext("webgl", {
+  alpha: false, antialias: false, depth: false,
+  preserveDrawingBuffer: true, powerPreference: "high-performance",
+});
+
+const VS = `attribute vec2 a_pos; void main(){ gl_Position = vec4(a_pos,0.0,1.0); }`;
+
+/* --------------------------------------------------------------- shaders --- */
+
+const HEAD = `
+precision highp float;
+uniform vec2 u_res;
+uniform float u_time;
+
+float hash21(vec2 p){ p = fract(p*vec2(123.34,456.21)); p += dot(p,p+45.32); return fract(p.x*p.y); }
+
+float noise(vec2 p){
+  vec2 i = floor(p), f = fract(p);
+  vec2 u = f*f*(3.0-2.0*f);
+  float a = hash21(i), b = hash21(i+vec2(1.0,0.0));
+  float c = hash21(i+vec2(0.0,1.0)), d = hash21(i+vec2(1.0,1.0));
+  return mix(mix(a,b,u.x), mix(c,d,u.x), u.y);
+}
+
+float fbm(vec2 p){
+  float v = 0.0, a = 0.5;
+  for(int i=0;i<4;i++){ v += a*noise(p); p = p*2.03 + vec2(17.1,9.7); a *= 0.5; }
+  return v;
+}
+
+`;
+
+/* ------------------------------------------------------------- black hole --- */
+
+const FS_HOLE = HEAD + `
+uniform vec3 u_ro;
+uniform vec3 u_ta;
+uniform float u_fov;
+uniform float u_roll;
+uniform float u_streak;
+uniform float u_spin;
+uniform float u_shine;
+uniform float u_flash;
+uniform float u_shock;
+uniform vec3 u_sunDir;
+uniform float u_sunI;
+
+vec3 starLayer(vec3 d, float scale, float thresh, float bright, float phase){
+  float az = atan(d.z, d.x), el = asin(clamp(d.y,-1.0,1.0));
+  vec2 uv = vec2(az, el);
+  vec2 g = uv*vec2(scale, scale*0.78);
+  vec2 id = floor(g), f = fract(g)-0.5;
+  float h = hash21(id + phase);
+  if(h <= thresh) return vec3(0.0);
+  vec2 o = vec2(hash21(id+3.1), hash21(id+8.7))-0.5;
+  float dd = length((f - o*0.75) * vec2(1.0, 1.0 + u_streak*7.0));
+  float tw = 0.72 + 0.28*sin(u_time*2.0 + h*62.0);
+  return vec3(0.86,0.92,1.0) * smoothstep(0.11,0.0,dd) * tw * bright * (0.55+0.75*h);
+}
+
+vec3 starField(vec3 d, vec3 rd){
+  vec3 col = vec3(0.0);
+  col += starLayer(d, 58.0, 0.982, 1.00, 0.0);
+  col += starLayer(d, 99.0, 0.976, 0.60, 19.7);
+  col += starLayer(d, 160.0, 0.970, 0.34, 41.3);
+  float az = atan(d.z, d.x), el = asin(clamp(d.y,-1.0,1.0));
+  float n = fbm(vec2(az,el)*vec2(3.0,4.2) + vec2(2.0,5.0));
+  float n2 = fbm(vec2(az,el)*vec2(7.0,9.0) + vec2(11.0,3.0));
+  float band = exp(-pow((el - 0.30*sin(az*0.8))/0.34, 2.0));
+  col += mix(vec3(0.020,0.024,0.042), vec3(0.070,0.036,0.058), n2) * pow(n, 3.0) * (0.5 + band*1.6);
+  if(u_streak > 0.001){
+    vec3 acc = vec3(0.0);
+    for(int k=1;k<=3;k++){
+      float o = float(k)*0.012*u_streak;
+      acc += starLayer(normalize(d - rd*o), 120.0, 0.972, 0.22, 7.7);
+    }
+    col += acc*0.5;
+  }
+  return col;
+}
+
+vec3 sunDisk(vec3 d){
+  float cs = dot(d, normalize(u_sunDir));
+  float disc = smoothstep(0.99820, 0.99930, cs);
+  float halo = pow(max(cs,0.0), 260.0)*1.1 + pow(max(cs,0.0), 24.0)*0.05;
+  return vec3(1.0,0.90,0.72) * (disc*9.0 + halo) * u_sunI;
+}
+
+vec3 diskSample(float r, float phi, vec3 rd, out float alpha){
+  alpha = 0.0;
+  const float rin = 2.5;
+  float rout = 6.4 + 7.5*u_shock;
+  float t = (r-rin)/(rout-rin);
+  if(t < 0.0 || t > 1.0) return vec3(0.0);
+
+  // differential rotation: inner orbits sweep faster, so the texture shears
+  float omega = 1.7 * pow(2.5/r, 1.5);
+  float ang = phi - u_time*omega*u_spin;
+  // spiral-warp the sampling so the noise reads as filaments, not rings
+  float sa = ang + 1.7*log(r);
+  vec2 q = vec2(cos(sa), sin(sa))*r;
+
+  float n1 = fbm(q*0.95 + vec2(3.1,0.7));
+  float n2 = fbm(q*2.30 + vec2(7.7,1.9));
+  float n3 = fbm(q*4.60 + vec2(1.3,5.1));
+  float dens = smoothstep(0.30,0.64, n1*0.46 + n2*0.34 + n3*0.20);
+  dens = pow(dens, 1.15);
+
+  float edge = smoothstep(0.0,0.02,t) * smoothstep(1.0,0.55,t);
+  float radial = pow(rin/r, 1.40);
+  float streak = 0.62 + 0.55*n2 + 0.12*sin(ang*3.0);
+  float bright = edge * (0.07 + 1.75*dens) * radial * streak;
+
+  vec3 c = mix(vec3(1.00,0.96,0.90), vec3(1.00,0.82,0.58), smoothstep(0.0,0.16,t));
+  c = mix(c, vec3(1.00,0.52,0.13), smoothstep(0.14,0.50,t));
+  c = mix(c, vec3(0.92,0.19,0.03), smoothstep(0.55,1.0,t));
+  c += vec3(1.0,0.88,0.72) * exp(-pow((r-2.60)/0.11,2.0)) * 1.25;
+  c += vec3(1.0,0.45,0.10) * pow(dens,3.0) * 1.2;
+
+  vec3 vel = vec3(-sin(phi),0.0,cos(phi));
+  float beta = clamp(1.25/sqrt(r), 0.0, 0.6);
+  float dop = 1.0/(1.0 - dot(vel,-rd)*beta);
+  dop = pow(max(dop,0.2), 2.0);
+  c *= bright * clamp(dop, 0.22, 5.0);
+
+  if(u_shock > 0.001){
+    // a ring of debris racing outward along the disk
+    float front = smoothstep(0.72, 1.0, t);
+    c *= 1.0 + u_shock*2.2*front;
+    c += vec3(1.0,0.86,0.70) * exp(-pow((t-0.90)/0.055,2.0)) * (1.0-u_shock*0.4) * 4.5 * u_shock;
+  }
+
+  alpha = clamp(edge*(0.18 + 0.82*dens), 0.0, 1.0);
+  return c;
+}
+
+void main(){
+  vec2 p = (gl_FragCoord.xy - 0.5*u_res)/u_res.y;
+
+  vec3 ww = normalize(u_ta - u_ro);
+  vec3 uu = normalize(cross(vec3(0.0,1.0,0.0), ww));
+  vec3 vv = cross(ww, uu);
+  float cr = cos(u_roll), sr = sin(u_roll);
+  vec3 u2 = uu*cr + vv*sr;
+  vec3 v2 = -uu*sr + vv*cr;
+  vec3 rd = normalize(p.x*u2 + p.y*v2 + u_fov*ww);
+
+  vec3 pos = u_ro;
+  vec3 dir = rd;
+  vec3 hv = cross(pos, dir);
+  float h2 = dot(hv,hv);
+
+  vec3 col = vec3(0.0);
+  float trans = 1.0;
+  bool escaped = false;
+
+  for(int i=0;i<150;i++){
+    float r = length(pos);
+    if(r < 1.0) break;
+    if(r > 60.0){ escaped = true; break; }
+    float dt = clamp(0.035*r + 0.012, 0.012, 0.55);
+    vec3 acc = -1.5*h2*pos/pow(r,5.0);
+    vec3 nd = normalize(dir + acc*dt);
+    vec3 np = pos + nd*dt;
+    if(pos.y*np.y < 0.0){
+      float f = pos.y/(pos.y-np.y);
+      vec3 hit = mix(pos,np,f);
+      float hr = length(hit.xz);
+      float a;
+      vec3 dc = diskSample(hr, atan(hit.z,hit.x), nd, a);
+      col += trans*dc*(0.35 + a*0.9);
+      trans *= 1.0 - a*0.38;
+    }
+    pos = np; dir = nd;
+  }
+
+  if(escaped){
+    col += trans*(starField(dir, rd) + sunDisk(dir));
+  }
+
+  col *= 1.06 * u_shine;
+  col = col/(1.0 + col*1.45);
+  col = pow(max(col,0.0), vec3(1.0/2.2));
+  float lum = dot(col, vec3(0.299,0.587,0.114));
+  col = mix(vec3(lum), col, 1.26);
+
+  col += u_flash*vec3(1.0,0.92,0.84);
+
+  float vig = 1.0 - 0.30*pow(length(p*vec2(0.86,0.72)),2.0);
+  col *= vig;
+
+  float g = hash21(gl_FragCoord.xy + fract(u_time)*13.0);
+  col += (g-0.5)*0.014;
+
+  gl_FragColor = vec4(max(col,0.0), 1.0);
+}
+`;
+
+/* ------------------------------------------------------------------- warp --- */
+
+const FS_WARP = HEAD + `
+uniform float u_roll;
+uniform float u_speed;
+uniform float u_flash;
+uniform vec3 u_tint;
+
+vec3 warpField(vec2 p){
+  float r = length(p) + 0.0015;
+  float a = atan(p.y, p.x);
+  float la = log(r);
+  vec3 col = vec3(0.0);
+
+  col += u_tint * exp(-r*22.0) * 0.55;
+
+  for(int s=0;s<3;s++){
+    float fs = float(s);
+    float rr = r*(1.0 + fs*0.07);
+    float lr = log(rr);
+    for(int i=0;i<3;i++){
+      float k = float(i);
+      vec2 g = vec2(a*46.0, lr*5.0 + u_time*u_speed*0.55 + k*0.33 + fs*0.06);
+      vec2 id = floor(g), f = fract(g) - 0.5;
+      float h = hash21(id + k*13.7 + fs*3.1);
+      float m = smoothstep(0.90, 0.965, h);
+      float d = length(f*vec2(1.0, 0.95));
+      col += mix(u_tint, vec3(1.0,0.88,0.72), fract(h*9.0)) * m *
+             smoothstep(0.5,0.0,d) * (0.35+0.65*fract(h*31.0)) /
+             (0.20 + rr*3.2);
+    }
+  }
+
+  float n  = fbm(vec2(a*2.4, la*3.0 + u_time*u_speed*0.6));
+  float n2 = fbm(vec2(a*5.0, la*7.0 + u_time*u_speed*0.9) + 3.1);
+  col += u_tint * pow(smoothstep(0.30,0.92, n*0.7+n2*0.3), 2.0) * 0.12 * smoothstep(0.02,0.38,r);
+
+  return col;
+}
+
+void main(){
+  vec2 p = (gl_FragCoord.xy - 0.5*u_res)/u_res.y;
+  float cr = cos(u_roll), sr = sin(u_roll);
+  vec2 q = vec2(p.x*cr - p.y*sr, p.x*sr + p.y*cr);
+
+  vec3 col = warpField(q);
+  col = col/(1.0+col*0.95);
+  col = pow(max(col,0.0), vec3(1.0/2.2));
+
+  float vig = 1.0 - 0.34*pow(length(p*vec2(0.9,1.15)),2.0);
+  col *= vig;
+  col += u_flash*vec3(0.92,0.94,1.0);
+  col += (hash21(gl_FragCoord.xy + fract(u_time)*17.0)-0.5)*0.012;
+
+  gl_FragColor = vec4(max(col,0.0), 1.0);
+}
+`;
+
+/* ----------------------------------------------------------------- nebula --- */
+
+const FS_NEB = HEAD + `
+uniform float u_roll;
+uniform float u_dir;
+uniform float u_flash;
+uniform vec3 u_tintA;
+uniform vec3 u_tintB;
+
+vec3 nebulaField(vec2 p){
+  vec3 col = vec3(0.0);
+  float fade = 1.0;
+
+  for(int i=0;i<3;i++){
+    float k = float(i);
+    float sc = 1.0 + k*2.2;
+    vec2 uv = p*sc*2.40 + vec2(k*23.1, k*13.7);
+    uv += vec2(u_time*0.16*(0.40 + k*0.70)*u_dir, u_time*0.05*(k+1.0));
+
+    // domain warp turns smooth fbm into swirling filaments
+    vec2 w = vec2(fbm(uv*0.60 + 1.3), fbm(uv*0.60 + 8.9)) - 0.5;
+    float n = fbm(uv*1.10 + w*1.5);
+    float m = fbm(uv*2.60 + w*2.1 + 4.0);
+    float f = n*0.70 + m*0.30;
+
+    float dens = smoothstep(0.44,0.62,f) * (0.30 + 0.70*smoothstep(0.50,0.72,f));
+    vec3 tint = mix(u_tintA, u_tintB, smoothstep(0.36,0.70,m));
+    col += tint * dens * fade * 0.95;
+    col += mix(tint, vec3(1.0,0.90,0.78), 0.55) * pow(smoothstep(0.60,0.80,f),3.0) * fade * 0.75;
+
+    vec2 sg = p*168.0*(1.0 + k*0.22) + k*23.0;
+    vec2 si = floor(sg), sf = fract(sg)-0.5;
+    float sh = hash21(si);
+    if(sh > 0.9962) col += vec3(1.0,0.96,0.90) * smoothstep(0.17,0.0,length(sf)) * fade * 1.6;
+
+    fade *= 0.74;
+  }
+
+  // a foreground star gives the eye something to fly past
+  vec2 sp = vec2(0.115*sin(u_time*0.17), -0.16 + 0.03*cos(u_time*0.13));
+  float sd = length(p - sp);
+  col += vec3(1.0,0.94,0.86) * (smoothstep(0.011,0.0,sd)*2.6 + exp(-sd*26.0)*0.35);
+  col += vec3(0.62,0.78,1.0) * (exp(-abs(p.y-sp.y)*300.0) + exp(-abs(p.x-sp.x)*300.0)) * exp(-sd*3.2) * 0.22;
+
+  // a dark dust lane gives the field depth instead of a flat haze
+  float lane = fbm(p*2.4 + vec2(2.0,5.0) + vec2(u_time*0.06*u_dir, 0.0));
+  col *= mix(0.45, 1.0, smoothstep(0.30, 0.60, lane));
+
+  return col;
+}
+
+void main(){
+  vec2 p = (gl_FragCoord.xy - 0.5*u_res)/u_res.y;
+  float cr = cos(u_roll), sr = sin(u_roll);
+  vec2 q = vec2(p.x*cr - p.y*sr, p.x*sr + p.y*cr);
+
+  vec3 col = nebulaField(q);
+  col = col/(1.0+col*1.05);
+  col = pow(max(col,0.0), vec3(1.0/2.2));
+  float lum = dot(col, vec3(0.299,0.587,0.114));
+  col = mix(vec3(lum), col, 1.22);
+
+  float vig = 1.0 - 0.32*pow(length(p*vec2(0.88,1.05)),2.0);
+  col *= vig;
+  col += u_flash*vec3(1.0,0.95,0.88);
+  col += (hash21(gl_FragCoord.xy + fract(u_time)*19.0)-0.5)*0.016;
+
+  gl_FragColor = vec4(max(col,0.0), 1.0);
+}
+`;
+
+/* -------------------------------------------------------------- particles --- */
+
+const VS_DUST = `
+precision highp float;
+attribute vec3 a_seed;
+attribute float a_end;
+uniform vec3 u_ro;
+uniform vec3 u_ta;
+uniform float u_time;
+uniform float u_fov;
+uniform float u_roll;
+uniform float u_aspect;
+uniform float u_trail;
+uniform float u_alpha;
+varying vec3 v_col;
+varying float v_a;
+
+const float TAU = 6.2831853;
+
+void main(){
+  float r0 = mix(3.7, 24.0, pow(fract(a_seed.x*7.13), 0.75));
+  float a0 = a_seed.y*TAU;
+  float y0 = (fract(a_seed.z*11.7)-0.5) * mix(0.10, 1.7, fract(a_seed.x*3.7));
+  float sgn = fract(a_seed.z*5.3) > 0.5 ? 1.0 : -1.0;
+  float w = sgn * 0.92 * pow(max(r0,3.0)/3.0, -1.5);
+
+  vec3 ww = normalize(u_ta - u_ro);
+  vec3 uu = normalize(cross(vec3(0.0,1.0,0.0), ww));
+  vec3 vv = cross(ww, uu);
+  float cr = cos(u_roll), sr = sin(u_roll);
+  vec3 u2 = uu*cr + vv*sr;
+  vec3 v2 = -uu*sr + vv*cr;
+
+  vec3 dO = -u_ro;
+  float wO = max(dot(dO, ww), 0.6);
+  vec2  pO = vec2(u_fov*dot(dO,u2), u_fov*dot(dO,v2)) / wO;
+  float pR = u_fov * 2.45 / wO;
+
+  float tt = u_time - a_end*u_trail;
+  float ang = a0 + w*tt;
+  vec3 P = vec3(cos(ang)*r0, y0, sin(ang)*r0);
+
+  vec3 d = P - u_ro;
+  float wz = dot(d, ww);
+  vec2 pp = vec2(u_fov*dot(d,u2), u_fov*dot(d,v2)) / max(wz, 0.001);
+
+  if(wz < 0.6 || length(pp - pO) < pR*0.86){
+    gl_Position = vec4(9.0, 9.0, 0.0, 1.0);
+    v_col = vec3(0.0); v_a = 0.0;
+    return;
+  }
+
+  vec2 ndc = vec2(pp.x/(0.5*u_aspect), pp.y/0.5);
+  gl_Position = vec4(ndc, 0.0, 1.0);
+
+  v_col = mix(vec3(0.52,0.72,1.0), vec3(1.0,0.74,0.44), smoothstep(22.0, 4.0, r0)) * (0.55 + 0.85*fract(a_seed.y*91.0));
+  v_a = u_alpha * (0.25 + 0.85*fract(a_seed.x*53.1)) * smoothstep(0.6, 2.4, wz);
+}
+`;
+
+const FS_DUST = `
+precision highp float;
+varying vec3 v_col;
+varying float v_a;
+void main(){ gl_FragColor = vec4(v_col*v_a, v_a); }
+`;
+
+/* ------------------------------------------------------------------- setup --- */
+
+function compile(type, src) {
+  const sh = gl.createShader(type);
+  gl.shaderSource(sh, src);
+  gl.compileShader(sh);
+  if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(sh) || "compile failed");
+  return sh;
+}
+
+function program(fs) {
+  const p = gl.createProgram();
+  gl.attachShader(p, compile(gl.VERTEX_SHADER, VS));
+  gl.attachShader(p, compile(gl.FRAGMENT_SHADER, fs));
+  gl.bindAttribLocation(p, 0, "a_pos");
+  gl.linkProgram(p);
+  if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p) || "link failed");
+  return p;
+}
+
+let HOLE, WARP, NEB, DUST, DUST_VAO;
+const U = {};
+
+try {
+  HOLE = program(FS_HOLE);
+  WARP = program(FS_WARP);
+  NEB  = program(FS_NEB);
+
+  DUST = gl.createProgram();
+  gl.attachShader(DUST, compile(gl.VERTEX_SHADER, VS_DUST));
+  gl.attachShader(DUST, compile(gl.FRAGMENT_SHADER, FS_DUST));
+  gl.linkProgram(DUST);
+  if (!gl.getProgramParameter(DUST, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(DUST) || "dust link failed");
+
+  const quad = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, quad);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+
+  U.quad = quad;
+
+  const loc = (p, n) => gl.getUniformLocation(p, n);
+  U.hole = {
+    res: loc(HOLE,"u_res"), time: loc(HOLE,"u_time"), ro: loc(HOLE,"u_ro"), ta: loc(HOLE,"u_ta"),
+    fov: loc(HOLE,"u_fov"), roll: loc(HOLE,"u_roll"), streak: loc(HOLE,"u_streak"),
+    spin: loc(HOLE,"u_spin"), shine: loc(HOLE,"u_shine"), flash: loc(HOLE,"u_flash"),
+    shock: loc(HOLE,"u_shock"), sunDir: loc(HOLE,"u_sunDir"), sunI: loc(HOLE,"u_sunI"),
+  };
+  U.warp = {
+    res: loc(WARP,"u_res"), time: loc(WARP,"u_time"), roll: loc(WARP,"u_roll"),
+    speed: loc(WARP,"u_speed"), flash: loc(WARP,"u_flash"), tint: loc(WARP,"u_tint"),
+  };
+  U.neb = {
+    res: loc(NEB,"u_res"), time: loc(NEB,"u_time"), roll: loc(NEB,"u_roll"),
+    dir: loc(NEB,"u_dir"), flash: loc(NEB,"u_flash"), tintA: loc(NEB,"u_tintA"), tintB: loc(NEB,"u_tintB"),
+  };
+  U.dust = {
+    ro: loc(DUST,"u_ro"), ta: loc(DUST,"u_ta"), time: loc(DUST,"u_time"), fov: loc(DUST,"u_fov"),
+    roll: loc(DUST,"u_roll"), aspect: loc(DUST,"u_aspect"), trail: loc(DUST,"u_trail"), alpha: loc(DUST,"u_alpha"),
+  };
+
+  const COUNT = 2400;
+  const seeds = new Float32Array(COUNT*2*4);
+  let s = 987654321;
+  const rnd = () => { s = (s*1664525 + 1013904223) >>> 0; return s / 4294967296; };
+  for (let i = 0; i < COUNT; i++) {
+    const a = rnd(), b = rnd(), c = rnd();
+    const o = i*8;
+    seeds[o+0]=a; seeds[o+1]=b; seeds[o+2]=c; seeds[o+3]=0;
+    seeds[o+4]=a; seeds[o+5]=b; seeds[o+6]=c; seeds[o+7]=1;
+  }
+
+  DUST_VAO = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, DUST_VAO);
+  gl.bufferData(gl.ARRAY_BUFFER, seeds, gl.STATIC_DRAW);
+
+  const aSeed = gl.getAttribLocation(DUST, "a_seed");
+  const aEnd = gl.getAttribLocation(DUST, "a_end");
+  U.dustVert = { aSeed, aEnd, count: COUNT*2 };
+} catch (e) {
+  window.__err = String(e && e.message ? e.message : e);
+  throw e;
+}
+
+/* ------------------------------------------------------------------ shots ---
+ * 13 shots, three environments. Distances are in horizon radii (r=1 is the
+ * horizon, the disk runs 2.5 -> 7).
+ */
+const SHOTS = [
+  { name:"ignition", from:0.0, to:4.2, ease:0.3, mode:0,
+    a:{ro:[17.0, 3.4, -6.8], ta:[0.0,0.60,0.0], fov:1.16, roll:-0.18},
+    b:{ro:[2.0, -5.0, 10.5], ta:[0.4,0.60,0.0], fov:1.26, roll: 0.22},
+    spin:1.35, streak:0.0, shock:0.0, sunI:0.0, sunDir:[0,0,-1], dust:0.8, ignite:true, curve:1.0 },
+
+  { name:"warp-a", from:4.2, to:8.6, ease:0.15, mode:1,
+    speedA:0.55, speedB:2.35, rollA:-0.35, rollB:0.55, flash:0.35, tint:[0.52,0.70,1.0] },
+
+  { name:"sling", from:8.6, to:13.0, ease:0.2, mode:0,
+    a:{ro:[24.0, 10.0, 13.0], ta:[0,0,0], fov:1.26, roll: 0.20},
+    b:{ro:[9.0, 1.8,-12.0], ta:[0,0,0], fov:1.18, roll:-0.24},
+    spin:1.15, streak:0.15, shock:0.0, sunI:1.0, sunDir:[-0.55,0.30,-0.78], dust:0.9, curve:1.25 },
+
+  { name:"eclipse", from:13.0, to:17.2, ease:0.25, mode:0,
+    a:{ro:[0.8, 5.5, 20.0], ta:[0,1.00,0], fov:1.22, roll:0.0},
+    b:{ro:[-0.6,4.6, 17.0], ta:[0,0.85,0], fov:1.12, roll:0.04},
+    spin:0.9, streak:0.0, shock:0.0, sunI:1.7, sunFollow:true, dust:0.45, curve:1.0 },
+
+  { name:"disk-run", from:17.2, to:21.4, ease:0.15, mode:0,
+    a:{ro:[5.0, 20.0, 2.0], ta:[0,0,0], fov:1.24, roll:-0.12},
+    b:{ro:[2.0, 18.0,-5.0], ta:[0,0,0], fov:1.30, roll: 0.16},
+    spin:2.2, streak:0.35, shock:0.0, sunI:0.0, sunDir:[0,0,-1], dust:1.0, curve:1.0 },
+
+  { name:"nebula-a", from:21.4, to:25.6, ease:0.3, mode:2,
+    rollA:-0.18, rollB:0.22, dir:1.0, tintA:[0.04,0.10,0.24], tintB:[0.36,0.14,0.07], flash:0.15 },
+
+  { name:"fall", from:25.6, to:29.8, ease:0.1, mode:0,
+    a:{ro:[7.0, 27.0, 14.0], ta:[0,0,0], fov:1.24, roll: 0.06},
+    b:{ro:[1.8, 1.90, 9.0], ta:[0,0,0], fov:1.14, roll:-0.28},
+    spin:1.8, streak:0.40, shock:0.0, sunI:0.0, sunDir:[0,0,-1], dust:0.9, curve:1.7 },
+
+  { name:"impact", from:29.8, to:33.2, ease:0.3, mode:0,
+    a:{ro:[19.0, 3.6, 9.0], ta:[0,0,0], fov:1.18, roll:-0.10},
+    b:{ro:[17.0, 2.8, 10.0], ta:[0,0,0], fov:1.10, roll: 0.12},
+    spin:3.0, streak:0.25, shock:1.0, shine:1.25, flash:0.55, shake:0.08,
+    sunI:0.0, sunDir:[0,0,-1], dust:1.3, curve:1.0 },
+
+  { name:"brand", from:33.2, to:38.6, ease:0.35, mode:0,
+    a:{ro:[24.0, 8.2, 12.0], ta:[0,0,0], fov:1.24, roll:-0.06},
+    b:{ro:[20.5, 7.0, 10.2], ta:[0,0,0], fov:1.20, roll:-0.02},
+    spin:1.0, streak:0.0, shock:0.0, sunI:0.8, sunDir:[0.62,0.26,-0.74], dust:0.8, curve:1.0 },
+
+  { name:"nebula-b", from:38.6, to:43.0, ease:0.2, mode:2,
+    rollA:0.30, rollB:-0.18, dir:-1.0, tintA:[0.12,0.06,0.26], tintB:[0.30,0.22,0.05], flash:0.15 },
+
+  { name:"warp-b", from:43.0, to:47.4, ease:0.25, mode:1,
+    speedA:2.60, speedB:0.30, rollA:-0.45, rollB:0.05, flash:0.0, tint:[0.62,0.66,1.0] },
+
+  { name:"orbit", from:47.4, to:52.0, ease:0.12, mode:0,
+    a:{ro:[-16.0, 5.6,-5.0], ta:[0,0.30,0], fov:1.14, roll: 0.26},
+    b:{ro:[  3.6, 4.6,-16.2], ta:[0,0.20,0], fov:1.36, roll:-0.18},
+    spin:2.6, streak:0.20, shock:0.0, sunI:0.0, sunDir:[0,0,-1], dust:1.0, curve:1.0 },
+
+  { name:"outro", from:52.0, to:60.0, ease:0.35, mode:0,
+    a:{ro:[30.0, 11.0, 16.0], ta:[0,0.40,0], fov:1.26, roll: 0.04},
+    b:{ro:[25.0, 9.0, 13.5], ta:[0,0.20,0], fov:1.18, roll:-0.03},
+    spin:0.85, streak:0.0, shock:0.0, sunI:0.6, sunDir:[0.62,0.26,-0.74], dust:0.7, curve:1.0 },
+];
+
+const clamp01 = (v) => Math.max(0, Math.min(1, v));
+const smooth = (p) => p*p*(3-2*p);
+const lerp = (a,b,p) => a + (b-a)*p;
+const lerp3 = (a,b,p) => [lerp(a[0],b[0],p), lerp(a[1],b[1],p), lerp(a[2],b[2],p)];
+
+function shotAt(t) {
+  let s = SHOTS[SHOTS.length-1];
+  for (const c of SHOTS) if (t >= c.from && t < c.to) { s = c; break; }
+
+  const local = clamp01((t - s.from) / (s.to - s.from));
+  const p = Math.pow(clamp01(local), s.curve ?? 1.0);
+  const e = lerp(p, smooth(p), s.ease ?? 0.25);
+
+  if (s.mode === 1) {
+    return { mode:1, local,
+      speed: lerp(s.speedA, s.speedB, e),
+      roll: lerp(s.rollA, s.rollB, e),
+      flash: s.flash ? s.flash*Math.max(0, 1 - local*6) : 0,
+      tint: s.tint, dust: 0 };
+  }
+  if (s.mode === 2) {
+    return { mode:2, local,
+      roll: lerp(s.rollA, s.rollB, e),
+      dir: s.dir,
+      tintA: s.tintA, tintB: s.tintB,
+      flash: s.flash ? s.flash*Math.max(0, 1 - local*5) : 0,
+      dust: 0 };
+  }
+
+  const ro = lerp3(s.a.ro, s.b.ro, e);
+  const ta = lerp3(s.a.ta, s.b.ta, e);
+  const shake = s.shake ?? 0;
+  if (shake > 0) {
+    ro[0] += shake*0.55*Math.sin(t*57.3);
+    ro[1] += shake*0.45*Math.sin(t*61.7 + 1.3);
+    ro[2] += shake*0.50*Math.sin(t*49.1 + 2.6);
+  }
+
+  let sunI = s.sunI ?? 0;
+  let sunDir = s.sunDir ?? [0,0,-1];
+  if (s.sunFollow) sunDir = [-ro[0], -ro[1], -ro[2]];
+
+  const ignite = s.ignite ? smooth(clamp01(local / 0.14)) : 1.0;
+
+  return {
+    mode: 0, local, ro, ta,
+    fov: lerp(s.a.fov, s.b.fov, e),
+    roll: lerp(s.a.roll, s.b.roll, e) + shake*0.5*Math.sin(t*39.0),
+    streak: s.streak ?? 0,
+    spin: s.spin ?? 1,
+    shock: s.shock ? smooth(clamp01(local/0.42)) : 0,
+    shine: (s.shine ?? 1) * ignite,
+    flash: s.flash ? s.flash*Math.max(0, 1 - local*9) : 0,
+    sunI, sunDir, dust: (s.dust ?? 0) * ignite,
+  };
+}
+
+/* -------------------------------------------------------------------- type ---
+ * Copy tracks the edit: a claim, then proof, then the tagline.
+ */
+const CARDS = [
+  { from:0.45, to:2.55, cls:"line",  size:104, text:"NO STILLS" },
+  { from:2.60, to:4.15, cls:"line",  size:104, text:"NO ZOOMS" },
+  { from:4.70, to:7.05, cls:"line",  size:100, text:"JUST LIGHT" },
+  { from:7.10, to:8.55, cls:"line",  size:100, text:"AT SPEED" },
+  { from:8.80, to:10.95,cls:"line",  size:116, text:"BENT" },
+  { from:11.05,to:12.90,cls:"line",  size:96,  text:"BY GRAVITY" },
+  { from:13.30,to:15.45,cls:"line",  size:92,  text:"EVERY PIXEL" },
+  { from:15.55,to:17.10,cls:"line",  size:88,  text:"RAYMARCHED" },
+  { from:17.40,to:19.55,cls:"line",  size:104, text:"EVERY FRAME" },
+  { from:19.65,to:21.25,cls:"line",  size:104, text:"DRAWN" },
+  { from:21.70,to:24.05,cls:"line",  size:96,  text:"NO SHORTCUTS" },
+  { from:25.85,to:27.95,cls:"line",  size:104, text:"5 SECONDS" },
+  { from:28.05,to:29.60,cls:"line",  size:104, text:"TO EARN IT" },
+  { from:30.05,to:32.55,cls:"line",  size:150, text:"IMPACT" },
+  { from:33.65,to:36.30,cls:"brand", size:110, text:"VOIDBUILDS" },
+  { from:36.40,to:38.25,cls:"sub",   size:20,  text:"SITES WITH GRAVITY" },
+  { from:38.90,to:41.20,cls:"line",  size:96,  text:"60 SECONDS" },
+  { from:41.30,to:42.80,cls:"line",  size:96,  text:"ALL OF IT" },
+  { from:43.30,to:45.40,cls:"line",  size:96,  text:"BUILD" },
+  { from:45.50,to:47.20,cls:"line",  size:96,  text:"SOMETHING" },
+  { from:47.70,to:49.80,cls:"line",  size:100, text:"THAT PULLS" },
+  { from:52.60,to:55.30,cls:"brand", size:104, text:"VOIDBUILDS" },
+  { from:55.40,to:58.40,cls:"sub",   size:20,  text:"SITES WITH GRAVITY" },
+];
+
+const typeEl = document.getElementById("type");
+const fadeEl = document.getElementById("fade");
+
+function setType(t) {
+  const card = CARDS.find((c) => t >= c.from && t < c.to);
+  if (!card) { if (typeEl.innerHTML) typeEl.innerHTML = ""; return; }
+  const age = t - card.from;
+  const remain = card.to - t;
+  const inP = clamp01(age / 0.30);
+  const outP = clamp01(remain / 0.22);
+  const e = 1 - Math.pow(1 - inP, 3);
+  const blur = (1 - e) * 10;
+  const op = Math.min(e, outP);
+  typeEl.innerHTML =
+    `<span class="line ${card.cls}" style="font-size:${card.size}px;opacity:${op.toFixed(3)};filter:blur(${blur.toFixed(2)}px);transform:translateY(${((1-e)*30).toFixed(1)}px)">${card.text}</span>`;
+}
+
+function setFade(t) {
+  let f = 0;
+  if (t < 0.30) f = 1 - t/0.30;
+  else if (t > 58.60) f = clamp01((t - 58.60) / 1.30);
+  fadeEl.style.opacity = f.toFixed(3);
+}
+
+/* -------------------------------------------------------------------- draw --- */
+// Page stays at full output size so type is native-res; only the render buffer
+// is 55%, which the compositor upscales.
+const SCALE = 0.55;
+
+function resize() {
+  const w = Math.max(1, Math.round(window.innerWidth * SCALE));
+  const h = Math.max(1, Math.round(window.innerHeight * SCALE));
+  if (canvas.width !== w || canvas.height !== h) {
+    canvas.width = w; canvas.height = h;
+    gl.viewport(0, 0, w, h);
+  }
+  return { w, h };
+}
+
+function draw(t) {
+  const { w, h } = resize();
+  const s = shotAt(t);
+
+  gl.clearColor(0, 0, 0, 1);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.disable(gl.BLEND);
+
+  if (s.mode === 0) {
+    gl.useProgram(HOLE);
+    gl.bindBuffer(gl.ARRAY_BUFFER, U.quad);
+    gl.enableVertexAttribArray(0);
+    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+
+    const u = U.hole;
+    gl.uniform2f(u.res, w, h);
+    gl.uniform1f(u.time, t);
+    gl.uniform3f(u.ro, s.ro[0], s.ro[1], s.ro[2]);
+    gl.uniform3f(u.ta, s.ta[0], s.ta[1], s.ta[2]);
+    gl.uniform1f(u.fov, s.fov);
+    gl.uniform1f(u.roll, s.roll);
+    gl.uniform1f(u.streak, s.streak);
+    gl.uniform1f(u.spin, s.spin);
+    gl.uniform1f(u.shine, s.shine);
+    gl.uniform1f(u.flash, s.flash);
+    gl.uniform1f(u.shock, s.shock);
+    gl.uniform3f(u.sunDir, s.sunDir[0], s.sunDir[1], s.sunDir[2]);
+    gl.uniform1f(u.sunI, s.sunI);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+    if (s.dust > 0.01) {
+      gl.useProgram(DUST);
+      gl.bindBuffer(gl.ARRAY_BUFFER, DUST_VAO);
+      gl.enableVertexAttribArray(U.dustVert.aSeed);
+      gl.vertexAttribPointer(U.dustVert.aSeed, 3, gl.FLOAT, false, 16, 0);
+      gl.enableVertexAttribArray(U.dustVert.aEnd);
+      gl.vertexAttribPointer(U.dustVert.aEnd, 1, gl.FLOAT, false, 16, 12);
+
+      const d = U.dust;
+      gl.uniform3f(d.ro, s.ro[0], s.ro[1], s.ro[2]);
+      gl.uniform3f(d.ta, s.ta[0], s.ta[1], s.ta[2]);
+      gl.uniform1f(d.time, t);
+      gl.uniform1f(d.fov, s.fov);
+      gl.uniform1f(d.roll, s.roll);
+      gl.uniform1f(d.aspect, w/h);
+      gl.uniform1f(d.trail, 0.018 + 0.028*s.streak);
+      gl.uniform1f(d.alpha, s.dust);
+
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+      gl.drawArrays(gl.LINES, 0, U.dustVert.count);
+      gl.disable(gl.BLEND);
+      gl.disableVertexAttribArray(U.dustVert.aSeed);
+      gl.disableVertexAttribArray(U.dustVert.aEnd);
+    }
+  } else if (s.mode === 1) {
+    gl.useProgram(WARP);
+    gl.bindBuffer(gl.ARRAY_BUFFER, U.quad);
+    gl.enableVertexAttribArray(0);
+    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+    const u = U.warp;
+    gl.uniform2f(u.res, w, h);
+    gl.uniform1f(u.time, t);
+    gl.uniform1f(u.roll, s.roll);
+    gl.uniform1f(u.speed, s.speed);
+    gl.uniform1f(u.flash, s.flash);
+    gl.uniform3f(u.tint, s.tint[0], s.tint[1], s.tint[2]);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  } else {
+    gl.useProgram(NEB);
+    gl.bindBuffer(gl.ARRAY_BUFFER, U.quad);
+    gl.enableVertexAttribArray(0);
+    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+    const u = U.neb;
+    gl.uniform2f(u.res, w, h);
+    gl.uniform1f(u.time, t);
+    gl.uniform1f(u.roll, s.roll);
+    gl.uniform1f(u.dir, s.dir);
+    gl.uniform1f(u.flash, s.flash);
+    gl.uniform3f(u.tintA, s.tintA[0], s.tintA[1], s.tintA[2]);
+    gl.uniform3f(u.tintB, s.tintB[0], s.tintB[1], s.tintB[2]);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
+
+  setType(t);
+  setFade(t);
+}
+
+window.setTime = (t) => { draw(t); };
+window.shotAt = shotAt;
+window.CUTS = SHOTS.map((s) => s.from);
+draw(0);
+window.ready = true;
+</script>
+</body>
+</html>
