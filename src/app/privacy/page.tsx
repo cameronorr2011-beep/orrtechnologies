@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import VoidOrb from "@/components/fx/VoidOrb";
 import JsonLd from "@/components/seo/JsonLd";
 import ContactGate from "@/components/site/ContactGate";
 import { SITE } from "@/lib/content";
@@ -38,20 +39,30 @@ export default function PrivacyPage() {
   return (
     <>
       <JsonLd data={jsonLd} />
-    <section className="relative overflow-hidden pt-36 pb-24 sm:pt-44">
-      <div className="absolute inset-0 z-0 opacity-50" aria-hidden="true">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-void/60 to-void" />
+    <section data-nav-theme="dark" className="relative isolate overflow-hidden bg-[#07070a] pt-32 pb-24 sm:pt-40">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="blueprint-invert absolute inset-0 opacity-[0.16]" />
+        <div className="absolute -right-24 -top-16 h-[26rem] w-[26rem] rounded-full bg-[#2f4bff]/18 blur-[120px]" />
       </div>
-      <div className="relative z-10 mx-auto max-w-[760px] px-5 sm:px-8">
-        <span className="font-mono text-[0.62rem] uppercase tracking-[0.32em] text-ember-300/75">
-          Legal
-        </span>
-        <h1 className="font-display mt-6 text-[clamp(2.2rem,5vw,3.6rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-bone">
-          Privacy Policy
-        </h1>
-        <p className="mt-4 font-mono text-[0.72rem] uppercase tracking-[0.2em] text-bone/40">
-          Last updated September 8, 2026
-        </p>
+      <div className="relative z-10 mx-auto flex max-w-[1480px] flex-col gap-8 px-5 sm:px-8 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <span className="font-mono text-[0.62rem] uppercase tracking-[0.32em] text-ember-300/75">
+            Legal
+          </span>
+          <h1 className="display mt-5 text-[clamp(2.2rem,5vw,3.6rem)] leading-[0.95] text-paper">
+            Privacy Policy
+          </h1>
+          <p className="mt-4 font-mono text-[0.72rem] uppercase tracking-[0.2em] text-paper/40">
+            Last updated September 8, 2026
+          </p>
+        </div>
+        <VoidOrb size={300} className="hidden shrink-0 self-center sm:block" />
+      </div>
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-paper" />
+    </section>
+
+    <section className="relative overflow-hidden pb-24">
+      <div className="relative z-10 mx-auto max-w-[760px] px-5 pt-4 sm:px-8">
 
         <div className="mt-12 space-y-10 text-[1rem] leading-relaxed text-bone/70">
           <p>

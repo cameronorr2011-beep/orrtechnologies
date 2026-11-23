@@ -495,3 +495,46 @@ body {
   .marquee-track, .grain::before { animation: none !important; }
   *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
 }
+
+/* ------------------------------------------------------------------
+   VoidOrb — the 3D knot rendered in Blender and finished in Resolve.
+   GIF on purpose: it animates with zero JavaScript. Composited with
+   `screen`, so its black plate drops out and only the metal shows.
+   ------------------------------------------------------------------ */
+.void-orb {
+  position: relative;
+  display: block;
+  max-width: 100%;
+}
+
+.void-orb__art {
+  animation: orbFloat 14s ease-in-out infinite;
+  will-change: transform;
+}
+
+.void-orb--hero .void-orb__art {
+  animation-duration: 19s;
+}
+
+@keyframes orbFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -16px, 0) scale(1.025);
+  }
+}
+
+.blueprint-invert {
+  background-image:
+    linear-gradient(to right, rgba(246, 241, 231, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(246, 241, 231, 0.055) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .void-orb__art {
+    animation: none;
+  }
+}

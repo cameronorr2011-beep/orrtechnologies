@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/fx/Reveal";
 import ActionButton from "@/components/ui/ActionButton";
+import VideoPlayer from "@/components/fx/VideoPlayer";
 import JsonLd from "@/components/seo/JsonLd";
 import { BLOG_POSTS, formatDate, getPostBySlug } from "@/lib/blog";
 import { SITE, purchaseMailto } from "@/lib/content";
@@ -137,6 +138,17 @@ export default async function BlogPostPage({
           <Reveal delay={180}>
             <p className="mt-6 text-[1.08rem] leading-relaxed text-bone/60">{post.description}</p>
           </Reveal>
+          {post.video ? (
+            <Reveal delay={200}>
+              <VideoPlayer
+                className="mt-10"
+                src={post.video.src}
+                poster={post.video.poster}
+                caption={post.video.caption}
+                title={post.title}
+              />
+            </Reveal>
+          ) : null}
           {post.image ? (
             <Reveal delay={220}>
               <div className="relative mt-10 aspect-[16/7] overflow-hidden rounded-3xl border border-royal-300/10">

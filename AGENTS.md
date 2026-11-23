@@ -143,6 +143,61 @@ local engine is a synthesizer, not a producer.
 
 ---
 
+## 3b. Motion assets — the 3D knot
+
+Every route carries the same 3D signature: a chrome torus knot, animated as a
+GIF. It is not stock art and not a CSS trick. The pipeline is:
+
+```
+Blender (3D frames) -> Resolve (timeline + render) -> ffmpeg (GIF/WebM/MP4)
+```
+
+```bash
+# 1. render 40 frames at 640px (~2s/frame on this CPU)
+ROOT="$(pwd -W)"
+./tools/blender/blender-4.4.3-windows-x64/blender.exe --background \
+  --factory-startup --python tools/motion/orb.py -- "$ROOT/studio-out/motion/orb" 40 640
+
+# 2. import the sequence into Resolve and render it back out
+py -3.12 studio-out/resolve/bridge.py call '{"target":"media_pool","method":"ImportMedia","args":[[{"FilePath":"<abs>/orb_%04d.png","StartIndex":1,"EndIndex":40}]]}'
+py -3.12 studio-out/resolve/bridge.py call '{"target":"media_pool","method":"CreateEmptyTimeline","args":["VoidOrb"]}'
+py -3.12 studio-out/resolve/bridge.py call '{"target":"media_pool","method":"AppendToTimeline","args":[[{"__handle__":"h:..."}]]}'
+py -3.12 studio-out/resolve/bridge.py call '{"target":"project","method":"SetCurrentRenderFormatAndCodec","args":["mp4","H264"]}'
+py -3.12 studio-out/resolve/bridge.py call '{"target":"project","method":"SetRenderSettings","args":[{"TargetDir":"C:\\\\Users\\\\Cameron\\\\Movies","CustomName":"void-orb","SelectAllFrames":true}]}'
+py -3.12 studio-out/resolve/bridge.py call '{"target":"project","method":"AddRenderJob","args":[]}'   # note the job id
+py -3.12 studio-out/resolve/bridge.py call '{"target":"project","method":"StartRendering","args":[]}'
+py -3.12 studio-out/resolve/bridge.py call '{"target":"project","method":"GetRenderJobStatus","args":["<job id>"]}'
+
+# 3. finish into the four files the site wants (into public/media/motion)
+node tools/motion/encode.mjs "C:/Users/Cameron/Movies/void-orb.mp4" void-orb --fps 20 --width 480
+```
+
+**Traps that cost time here.**
+
+- `CreateTimelineFromClips` returns `null` on this build and creates nothing.
+  Use `CreateEmptyTimeline` + `SetCurrentTimeline` + `AppendToTimeline`.
+- In Blender, `scene.frame_set()` **re-evaluates the action**. Set the pose
+  *after* it, or every keyframe records frame 1 and you render 40 identical
+  images (byte-identical files are the tell).
+- There is no `primitive_torus_knot_add` operator in stock Blender. The knot is
+  a poly curve sampled from the parametric equation and bevelled.
+- A (2,3) knot maps onto itself every 120°, so the loop turns by exactly one
+  third. That is what makes the GIF wrap with no visible seam.
+- Blender resolves a *relative* output path against `C:\`, not the project.
+  Always pass an absolute path.
+
+**Which file is used where.** `void-orb.gif` is the 3D element (it animates with
+zero JS, and `mix-blend-screen` drops its black plate). `void-orb.webm/.mp4` are
+the lighter, smoother versions. `film.mp4` is the scored 20-second cut the blog
+player uses. Posters are one real frame, so nothing ever shows a grey box.
+
+**Components.** `VoidOrb` renders the knot. `MotionLoop` is a silent looping
+plate that pauses offscreen. `VideoPlayer` is the real controls-and-sound player
+used in articles. `PageHero` puts the whole treatment on every inner route —
+keep new pages on it rather than writing a flat banner.
+
+---
+
 ## 4. DaVinci Resolve is wired up and CAN be driven
 
 Resolve 20.3.2.9 (free edition) is installed and the in-app bridge works. Any

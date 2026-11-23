@@ -5,6 +5,8 @@ import Reveal from "@/components/fx/Reveal";
 import PageHero from "@/components/ui/PageHero";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ActionButton from "@/components/ui/ActionButton";
+import VideoPlayer from "@/components/fx/VideoPlayer";
+import MotionLoop from "@/components/fx/MotionLoop";
 import JsonLd from "@/components/seo/JsonLd";
 import { BLOG_POSTS, formatDate } from "@/lib/blog";
 import { purchaseMailto } from "@/lib/content";
@@ -81,6 +83,27 @@ export default function BlogIndexPage() {
 
       <section className="relative z-10 pb-24">
         <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
+          {/* The blog opens on a moving plate: the same knot that runs through
+              the site, cut down to a band so the index has a pulse too. */}
+          <Reveal>
+            <div className="relative mb-10 overflow-hidden rounded-3xl border border-royal-300/12 bg-[#07070a]">
+              <MotionLoop
+                src="/media/motion/film.mp4"
+                poster="/media/motion/film-poster.jpg"
+                className="aspect-[21/9] w-full object-cover opacity-80"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#07070a] via-[#07070a]/55 to-transparent" />
+              <div className="absolute inset-y-0 left-0 flex max-w-[26rem] flex-col justify-center p-7 sm:p-10">
+                <span className="font-mono text-[0.54rem] uppercase tracking-[0.24em] text-paper/45">
+                  In the studio
+                </span>
+                <p className="font-display mt-3 text-[clamp(1.3rem,2.4vw,1.9rem)] font-semibold leading-snug text-paper">
+                  Every guide here comes from a build we actually shipped.
+                </p>
+              </div>
+            </div>
+          </Reveal>
+
           <Reveal>
             <Link
               href={`/blog/${featured.slug}`}
@@ -106,6 +129,16 @@ export default function BlogIndexPage() {
               <p className="mt-4 max-w-2xl text-[0.95rem] leading-relaxed text-bone/55">
                 {featured.description}
               </p>
+              {featured.video ? (
+                <div className="mt-6 max-w-2xl">
+                  <VideoPlayer
+                    src={featured.video.src}
+                    poster={featured.video.poster}
+                    caption={featured.video.caption}
+                    title={featured.title}
+                  />
+                </div>
+              ) : null}
               <span className="mt-6 inline-flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-ember-200">
                 Read the guide
                 <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>

@@ -8,6 +8,15 @@ export type BlogPost = {
   /** Optional illustration shown on the blog cards and at the top of the article. */
   image?: string;
   imageAlt?: string;
+  /**
+   * Optional short film shown inside the article, with real controls. Files
+   * live in `public/media/motion` and are cut and graded in Resolve.
+   */
+  video?: {
+    src: string;
+    poster: string;
+    caption?: string;
+  };
   /** Rendered as simple sections: heading + paragraphs. */
   sections: { heading: string; paragraphs: string[] }[];
 };
@@ -24,6 +33,11 @@ export const BLOG_POSTS: BlogPost[] = [
     image: "/media/blog-professional-site.svg",
     imageAlt:
       "Illustration of a clean business homepage with a clear headline, one button, and real photos",
+    video: {
+      src: "/media/motion/void-orb.mp4",
+      poster: "/media/motion/void-orb-poster.jpg",
+      caption: "One 3D object, rendered once and used as the site's signature.",
+    },
     sections: [
       {
         heading: "First impressions are made in about 3 seconds",
@@ -213,6 +227,11 @@ export const BLOG_POSTS: BlogPost[] = [
     image: "/media/free-promo-video.svg",
     imageAlt:
       "Illustration of a promo video for a small business, with music and captions, playing inside a video frame",
+    video: {
+      src: "/media/motion/film.mp4",
+      poster: "/media/motion/film-poster.jpg",
+      caption: "A brand film cut and graded in DaVinci Resolve — 20 seconds, scored here.",
+    },
     sections: [
       {
         heading: "People watch before they read",
