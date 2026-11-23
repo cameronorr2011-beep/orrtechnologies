@@ -4,13 +4,14 @@ import Link from "next/link";
 import type { PointerEvent as ReactPointerEvent, ReactNode } from "react";
 import { trackEvent } from "@/lib/track";
 
-type Variant = "primary" | "ghost" | "quiet";
+type Variant = "primary" | "light" | "ghost" | "quiet";
 
 const base =
   "magnetic group relative inline-flex items-center justify-center gap-3 rounded-none px-6 py-4 text-[0.7rem] font-semibold uppercase tracking-[0.2em] active:translate-y-px";
 
 const variants: Record<Variant, string> = {
   primary: `${base} btn-primary`,
+  light: `${base} btn-light`,
   ghost: `${base} btn-ghost text-bone/90`,
   quiet: `${base} px-0 py-1 text-[0.66rem] tracking-[0.2em] text-bone/60 hover:text-ember-300`,
 };

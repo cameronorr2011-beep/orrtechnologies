@@ -93,7 +93,7 @@ export default function PricingPage() {
                   Not sure which one fits?
                 </p>
                 <p className="mt-2 max-w-xl text-[0.9rem] leading-relaxed text-bone/55">
-                  Write to {SITE.emailDisplay} with what the business does. We&apos;ll point you to Starter,
+                  Send a message with what the business does. We&apos;ll point you to Starter,
                   Builder or Premium, usually within one business day.
                 </p>
               </div>

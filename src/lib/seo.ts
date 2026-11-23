@@ -18,6 +18,11 @@ export const DEFAULT_OG_IMAGE = {
 };
 
 export const SITE_KEYWORDS = [
+  "animated website design",
+  "cinematic website design",
+  "3D website design",
+  "scroll animation website",
+  "parallax website design",
   "small business website design",
   "affordable website design",
   "$100 website",
@@ -49,7 +54,14 @@ export function organizationSchema() {
     url: SITE_URL,
     description:
       "VoidBuilds designs and builds custom websites for small businesses. Starter is $100 for one page, Builder is $200 for up to five pages, and Premium starts at $500 for backend work and integrations. Promo videos are included, and the finished code is delivered to the client's GitHub.",
-    email: SITE.email,
+    // No `email` here on purpose: structured data is page source, and the
+    // address is only released through `/api/contact` after a click.
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "sales",
+      url: absoluteUrl("/email"),
+      availableLanguage: "English",
+    },
     image: absoluteUrl(DEFAULT_OG_IMAGE.url),
     logo: {
       "@type": "ImageObject",
@@ -108,6 +120,7 @@ export function webPageSchema({
     isPartOf: { "@id": WEBSITE_ID },
     about: { "@id": ORG_ID },
     inLanguage: "en",
+    dateModified: `${CONTENT_UPDATED}T12:00:00.000Z`,
     primaryImageOfPage: {
       "@type": "ImageObject",
       url: absoluteUrl(DEFAULT_OG_IMAGE.url),
@@ -155,6 +168,35 @@ export function serviceSchema(plans: OfferPlan[]) {
         "@type": "Service",
         name: plan.name,
         description: plan.tagline,
+      },
+    })),
+  };
+}
+
+/**
+ * The two builds shown on the home page, marked up as the rendered work.
+ * Only what actually appears on the page is described here.
+ */
+export function workCollectionSchema(
+  builds: { client: string; headline: string; body: string; url: string; accent: string }[],
+) {
+  const url = pageUrl("/");
+  return {
+    "@type": "ItemList",
+    "@id": `${url}#selected-work`,
+    name: "Selected VoidBuilds website builds",
+    numberOfItems: builds.length,
+    itemListElement: builds.map((build, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "CreativeWork",
+        name: `${build.client} — ${build.headline}`,
+        description: build.body,
+        about: build.client,
+        creator: { "@id": ORG_ID },
+        url: `https://${build.url}`,
+        genre: "Website design",
       },
     })),
   };

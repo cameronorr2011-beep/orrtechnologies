@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import VoidMark from "@/components/brand/VoidMark";
-import { NAV_LINKS, SITE, purchaseMailto } from "@/lib/content";
+import ContactGate from "@/components/site/ContactGate";
+import { NAV_LINKS, SITE } from "@/lib/content";
 import { trackEvent } from "@/lib/track";
 
 const SERVICE_LINKS = [
@@ -158,13 +159,13 @@ export default function Footer() {
 
           <div>
             <h3 className="kicker">Start a build</h3>
-            <a
-              href={purchaseMailto({ planName: "General enquiry" })}
-              onClick={() => trackEvent("purchase_click", "footer_email")}
-              className="mt-5 inline-block font-display text-[1.25rem] font-medium text-bone transition-colors hover:text-ember-300"
-            >
-              {SITE.emailDisplay}
-            </a>
+            <div className="mt-5">
+              <ContactGate
+                variant="link"
+                label="Show the address"
+                className="font-display text-[1.25rem] font-medium text-bone transition-colors hover:text-ember-300"
+              />
+            </div>
             <dl className="mt-8 space-y-5 border-t border-bone/10 pt-6 text-[0.84rem] text-bone/55">
               <div>
                 <dt className="font-mono text-[0.56rem] uppercase tracking-[0.2em] text-bone/35">Payment</dt>
@@ -199,6 +200,13 @@ export default function Footer() {
             <Link href="/terms" className="transition-colors hover:text-bone">
               Terms
             </Link>
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent("ot-consent-open"))}
+              className="uppercase tracking-[0.18em] transition-colors hover:text-bone"
+            >
+              Cookie settings
+            </button>
             <a
               href={SITE.github}
               target="_blank"

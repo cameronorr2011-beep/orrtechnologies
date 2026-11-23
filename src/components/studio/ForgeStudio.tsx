@@ -518,7 +518,7 @@ export default function ForgeStudio({ initial }: { initial: ForgeResult | null }
                     </ActionButton>
                   </div>
                   <p className="mt-4 font-mono text-[0.62rem] uppercase leading-relaxed tracking-[0.14em] text-bone/35">
-                    Invoice + BTC address returned by email from cameronorr2011@gmail.com
+                    Invoice and BTC address returned by email once you send the brief
                   </p>
                 </>
               ) : null}

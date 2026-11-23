@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
         // /checkout is intentionally crawlable but carries a noindex meta tag,
         // so crawlers can read that directive instead of guessing.
-        disallow: ["/console", "/api/"],
+        disallow: ["/console", "/api/", "/email"],
       },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,

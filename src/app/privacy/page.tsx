@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/seo/JsonLd";
+import ContactGate from "@/components/site/ContactGate";
 import { SITE } from "@/lib/content";
 import { DEFAULT_OG_IMAGE, breadcrumbSchema, webPageSchema } from "@/lib/seo";
 
@@ -164,13 +165,8 @@ export default function PrivacyPage() {
             </h2>
             <p className="mt-4">
               You may ask what personal information we hold about you, ask us to correct or delete
-              it, or withdraw consent for optional storage. Email{" "}
-              <a
-                href="mailto:cameronorr2011@gmail.com"
-                className="text-ember-200 underline underline-offset-4"
-              >
-                cameronorr2011@gmail.com
-              </a>{" "}
+              it, or withdraw consent for optional storage.{" "}
+              <ContactGate variant="link" label="Reveal the contact address" />{" "}
               and we will respond promptly. If you are in the UK/EU: our legal basis for the
               strictly necessary choice-record is legitimate interest; optional storage is used only
               with your consent.
@@ -193,12 +189,7 @@ export default function PrivacyPage() {
             </h2>
             <p className="mt-4">
               Questions about this policy:{" "}
-              <a
-                href="mailto:cameronorr2011@gmail.com"
-                className="text-ember-200 underline underline-offset-4"
-              >
-                cameronorr2011@gmail.com
-              </a>
+              <ContactGate variant="link" label="Reveal the contact address" />
             </p>
           </div>
         </div>

@@ -70,7 +70,7 @@ export async function POST(request: Request) {
       },
     });
   } catch {
-    return NextResponse.json({ ok: false, error: "Could not open the invoice. Email cameronorr2011@gmail.com." }, { status: 500 });
+    return NextResponse.json({ ok: false, error: "Could not open the invoice. Please try again in a moment." }, { status: 500 });
   }
 }
 

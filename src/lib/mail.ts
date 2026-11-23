@@ -1,10 +1,14 @@
 import { SITE } from "@/lib/content";
+import { CONTACT_EMAIL } from "@/lib/contact";
 
 /**
  * Where contact-form briefs are delivered. Defaults to the studio inbox, and
  * can be overridden in the host environment without touching code.
+ *
+ * Server-only: `CONTACT_EMAIL` lives in `lib/contact.ts`, never in `content.ts`,
+ * so the address cannot leak into a client bundle through this module.
  */
-export const LEAD_INBOX = process.env.LEAD_INBOX?.trim() || SITE.email;
+export const LEAD_INBOX = process.env.LEAD_INBOX?.trim() || CONTACT_EMAIL;
 
 type Lead = {
   name: string;

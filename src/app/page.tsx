@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
 import Ticker from "@/components/ui/Ticker";
 import Work from "@/components/sections/Work";
+import VoidAct from "@/components/sections/VoidAct";
 import Capabilities from "@/components/sections/Capabilities";
 import Process from "@/components/sections/Process";
 import PricingTable from "@/components/sections/PricingTable";
@@ -12,26 +13,32 @@ import Trust from "@/components/sections/Trust";
 import Contact from "@/components/sections/Contact";
 import JsonLd from "@/components/seo/JsonLd";
 import { getPlans } from "@/db/queries";
-import { FAQ } from "@/lib/content";
+import { BUILDS, FAQ } from "@/lib/content";
 import {
   DEFAULT_OG_IMAGE,
   faqPageSchema,
   serviceSchema,
   webPageSchema,
+  workCollectionSchema,
 } from "@/lib/seo";
 
 // Prices live in Postgres but change rarely; ISR keeps the page fast while the
 // catalog still refreshes without a redeploy.
 export const revalidate = 3600;
 
-const TITLE = "Custom websites for small businesses from $100 | VoidBuilds";
+const TITLE = "Animated, cinematic websites for small businesses from $100 | VoidBuilds";
 const DESCRIPTION =
-  "Custom websites for small businesses. Starter $100, Builder $200, Premium from $500. Paid once, promo video included, code delivered to your GitHub.";
+  "Motion-led websites for small businesses: 3D scenes, scroll animation and a promo film, written and built in 2–6 days. Starter $100, Builder $200, Premium from $500. Paid once, code delivered to your GitHub.";
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },
   description: DESCRIPTION,
   keywords: [
+    "animated website design",
+    "cinematic website design",
+    "3D website design",
+    "scroll animation website",
+    "parallax website",
     "small business website design",
     "affordable website design",
     "$100 website",
@@ -77,6 +84,7 @@ export default async function HomePage() {
         description: DESCRIPTION,
       }),
       serviceSchema(plans),
+      workCollectionSchema(BUILDS),
       faqPageSchema(FAQ),
     ],
   };
@@ -87,6 +95,7 @@ export default async function HomePage() {
       <Hero />
       <Ticker />
       <Work />
+      <VoidAct />
       <Capabilities />
       <Process />
       <PricingTable plans={plans} />

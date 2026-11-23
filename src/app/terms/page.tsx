@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/seo/JsonLd";
+import ContactGate from "@/components/site/ContactGate";
 import { SITE } from "@/lib/content";
 import { DEFAULT_OG_IMAGE, breadcrumbSchema, webPageSchema } from "@/lib/seo";
 
@@ -179,12 +180,7 @@ export default function TermsPage() {
             </h2>
             <p className="mt-4">
               Questions:{" "}
-              <a
-                href="mailto:cameronorr2011@gmail.com"
-                className="text-ember-200 underline underline-offset-4"
-              >
-                cameronorr2011@gmail.com
-              </a>
+              <ContactGate variant="link" label="Reveal the contact address" />
             </p>
           </div>
         </div>

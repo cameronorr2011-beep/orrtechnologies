@@ -201,7 +201,7 @@ export default async function ConsolePage() {
                 </p>
                 <p className="mt-2 max-w-xl text-[0.88rem] text-bone/50">
                   One email a month: what shipped, what broke, what we charged for it. No drip sequence.
-                  Unsubscribe replies to {SITE.emailDisplay}.
+                  Reply to any issue and you are off the list.
                 </p>
               </div>
               <ActionButton href="/#contact" variant="ghost" event={{ name: "nav", label: "console_contact" }}>

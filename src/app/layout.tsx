@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Archivo, JetBrains_Mono } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
+import ConsentAnalytics from "@/components/site/ConsentAnalytics";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
 import CookieConsent from "@/components/site/CookieConsent";
@@ -30,9 +30,9 @@ const monoFont = JetBrains_Mono({
   display: "swap",
 });
 
-const HOME_TITLE = "Custom websites for small businesses from $100 | VoidBuilds";
+const HOME_TITLE = "Animated, cinematic websites for small businesses from $100 | VoidBuilds";
 const HOME_DESCRIPTION =
-  "Custom websites for small businesses. Starter $100, Builder $200, Premium from $500. Paid once, promo video included, code delivered to your GitHub.";
+  "Motion-led websites for small businesses: 3D scenes, scroll animation and a promo film, written and built in 2–6 days. Starter $100, Builder $200, Premium from $500. Paid once, code delivered to your GitHub.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     title: "VoidBuilds — websites that look like your business",
     description:
-      "A custom small business website, written and built for you. Starter $100, Builder $200, Premium from $500. Paid once, with promo videos included.",
+      "An animated small business website, written and built for you. 3D and scroll motion as standard. Starter $100, Builder $200, Premium from $500. Paid once, with promo videos included.",
     images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
@@ -113,7 +113,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <main className="relative z-10">{children}</main>
         <Footer />
         <CookieConsent />
-        <Analytics />
+        <ConsentAnalytics />
       </body>
     </html>
   );

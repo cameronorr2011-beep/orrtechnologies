@@ -47,7 +47,7 @@ export async function POST(request: Request) {
 
     if (!saved && !emailed) {
       return NextResponse.json(
-        { ok: false, error: `Could not send the brief. Email ${SITE.email}.` },
+        { ok: false, error: "Could not send the brief. Please try again in a moment." },
         { status: 500 },
       );
     }
@@ -55,7 +55,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true, saved, emailed });
   } catch {
     return NextResponse.json(
-      { ok: false, error: `Could not send the brief. Email ${SITE.email}.` },
+      { ok: false, error: "Could not send the brief. Please try again in a moment." },
       { status: 500 },
     );
   }

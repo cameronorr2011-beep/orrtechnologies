@@ -11,8 +11,9 @@ export const SITE = {
   domain: new URL(siteUrl).host,
   url: siteUrl,
   github: "https://github.com/cameronorr2011-beep/voidbuilds",
-  email: "cameronorr2011@gmail.com",
-  emailDisplay: "cameronorr2011@gmail.com",
+  // The address deliberately lives in `lib/contact.ts` (server only) and is
+  // released by `/api/contact` after a click. Never add it back here: this
+  // module is imported by client components and would ship it in a bundle.
   tagline:
     "Custom websites, films, ads and posters for small businesses. Starter is $100, Builder is $200, Premium starts at $500. You pay once and own the code.",
   btcNetwork: "Bitcoin",
@@ -172,11 +173,11 @@ export const CREATIVE_SERVICES: CreativeService[] = [
   },
 ];
 
-export const MAILTO = {
-  to: SITE.email,
-  subject: "VoidBuilds — Website Request",
-} as const;
-
+/**
+ * Every email CTA routes through `/email`, which asks the server for the
+ * address on click. That is why this returns an internal path and not a
+ * `mailto:` — an address in an href is an address in the HTML source.
+ */
 export function purchaseMailto(params: {
   planName: string;
   invoiceCode?: string;
@@ -199,11 +200,14 @@ export function purchaseMailto(params: {
     params.notes ? `\nNotes:\n${params.notes}` : "",
   ].filter(Boolean);
 
-  const body = encodeURIComponent(lines.join("\n"));
-  const subject = encodeURIComponent(
-    `Website request — ${params.planName}${params.invoiceCode ? ` (${params.invoiceCode})` : ""}`,
-  );
-  return `mailto:${MAILTO.to}?subject=${subject}&body=${body}`;
+  const query = new URLSearchParams({
+    subject: `Website request — ${params.planName}${
+      params.invoiceCode ? ` (${params.invoiceCode})` : ""
+    }`,
+    body: lines.join("\n"),
+  });
+
+  return `/email?${query.toString()}`;
 }
 
 export type PlanSeed = {
@@ -395,63 +399,8 @@ export const PROCESS = [
   },
 ];
 
-export const CASE_STUDIES = [
-  {
-    slug: "atlas-freight",
-    client: "Atlas Freight Alliance",
-    sector: "Freight company",
-    image: "/media/art/freight.jpg",
-    headline: "More quote requests after replacing their old site",
-    body: "Their old site was hard to use on phones. We rebuilt it around what customers actually ask for, with a clear quote request on every page.",
-    metrics: [
-      { value: "3.1×", label: "more quote requests" },
-      { value: "0.9s", label: "page load time" },
-      { value: "41%", label: "fewer people leaving" },
-    ],
-  },
-  {
-    slug: "veridian-diagnostics",
-    client: "Veridian Diagnostics",
-    sector: "Medical supplier",
-    image: "/media/art/lab.jpg",
-    headline: "A site their customers finally found easy to use",
-    body: "Clear product pages, simple documents, and a site that works for busy clinic staff ordering supplies.",
-    metrics: [
-      { value: "AA", label: "accessibility checked" },
-      { value: "+68%", label: "more sample requests" },
-      { value: "12", label: "documents made easy to find" },
-    ],
-  },
-  {
-    slug: "meridian-capital",
-    client: "Meridian Capital Partners",
-    sector: "Finance firm",
-    image: "/media/art/facade.jpg",
-    headline: "Professional and private, exactly as their clients expect",
-    body: "A calm, dark design with secure client areas and a simple way to share documents with investors.",
-    metrics: [
-      { value: "$1.4B", label: "assets their clients manage" },
-      { value: "6", label: "secure client areas" },
-      { value: "100%", label: "paid in Bitcoin" },
-    ],
-  },
-  {
-    slug: "helio-manufacturing",
-    client: "Helio Manufacturing",
-    sector: "Manufacturer",
-    image: "/media/art/precision.jpg",
-    headline: "2,300 products, one easy-to-browse catalogue",
-    body: "We organised their entire product range into a site that works even on the tablets in their workshop. Quoting went from nine days to two.",
-    metrics: [
-      { value: "2,300", label: "products listed" },
-      { value: "2 days", label: "quote time (was 9)" },
-      { value: "98", label: "Google speed score" },
-    ],
-  },
-];
-
 /* ------------------------------------------------------------------ *
- * The four sites shown on the home page. Each one is a miniature website
+ * The two sites shown on the home page. Each one is a miniature website
  * rendered inside a browser frame, so the work reads as websites at a
  * glance instead of abstract photography.
  * ------------------------------------------------------------------ */
@@ -542,62 +491,7 @@ export const BUILDS: Build[] = [
       imageAlt: "Warm carpenter's workshop with hand tools and wood shavings",
       theme: { bg: "#efe6d2", ink: "#2d2a1f", accent: "#a96a1f", accentText: "#fff8ea" },
     },
-  },
-  {
-    slug: "northside-physio",
-    client: "Northside Physio",
-    sector: "Clinic",
-    url: "northsidephysio.care",
-    headline: "Calm, clear, and easy to book.",
-    body: "Clinic information now leads with the thing patients need: a same-week appointment. Treatment pages, prices and referrals all sit under one navigation.",
-    metrics: [
-      { value: "AA", label: "accessibility checked" },
-      { value: "+62%", label: "online bookings" },
-      { value: "3", label: "clicks to book" },
-    ],
-    accent: "#1fae8a",
-    preview: {
-      brand: "Northside Physio",
-      url: "northsidephysio.care",
-      nav: ["Services", "Team", "Fees"],
-      headline: "Move better, sooner.",
-      sub: "Assessment, treatment and a plan you can keep up with.",
-      cta: "Book now",
-      cards: ["Same-week", "Sports injury", "Central clinic"],
-      badge: "3 slots left",
-      image: "/media/work/physio.jpg",
-      imageAlt: "Mint-green physiotherapy room with a treatment bench and daylight",
-      theme: { bg: "#e4f2ec", ink: "#12312b", accent: "#1fae8a", accentText: "#06251f" },
-    },
-  },
-  {
-    slug: "wild-stem",
-    client: "Wild Stem",
-    sector: "Florist",
-    url: "wildstem.shop",
-    headline: "The shop window, moved online.",
-    body: "Seasonal bouquets with real prices, a same-day cut-off that is impossible to miss, and a workshop page that fills seats without a single DM.",
-    metrics: [
-      { value: "+54%", label: "same-day orders" },
-      { value: "100%", label: "colour photography" },
-      { value: "2 days", label: "build time" },
-    ],
-    accent: "#7c5cff",
-    preview: {
-      brand: "Wild Stem",
-      url: "wildstem.shop",
-      nav: ["Bouquets", "Workshops", "Weddings"],
-      headline: "Flowers with a bit of wild.",
-      sub: "Seasonal bouquets and wedding work from the shop on Mill Lane.",
-      cta: "Order flowers",
-      cards: ["Same-day", "Seasonal", "Workshops"],
-      badge: "Cut-off 2pm",
-      image: "/media/work/florist.jpg",
-      imageAlt: "Coral, pink and yellow flowers in buckets at a florist's shop",
-      theme: { bg: "#fbe9e4", ink: "#3b1d22", accent: "#c53a54", accentText: "#fff7f4" },
-    },
-  },
-];
+  }];
 
 export const TRUST = [
   {

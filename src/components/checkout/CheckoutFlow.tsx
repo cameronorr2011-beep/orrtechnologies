@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Reveal from "@/components/fx/Reveal";
 import ActionButton from "@/components/ui/ActionButton";
-import { PAYMENT_METHODS, SITE, purchaseMailto, type PaymentMethodId } from "@/lib/content";
+import ContactGate from "@/components/site/ContactGate";
+import { PAYMENT_METHODS, purchaseMailto, type PaymentMethodId } from "@/lib/content";
 import type { PlanView } from "@/components/sections/PricingTable";
 import { trackEvent } from "@/lib/track";
 
@@ -178,15 +179,15 @@ export default function CheckoutFlow({ plans }: { plans: PlanView[] }) {
                   <p className="font-mono text-[0.56rem] uppercase tracking-[0.22em] text-bone/40">
                     Questions?
                   </p>
-                  <button
-                    type="button"
-                    onClick={() => void copy(SITE.email, "email")}
-                    className="mt-2 block font-mono text-[0.92rem] text-ember-200 transition-colors hover:text-gold"
-                  >
-                    {SITE.emailDisplay}
-                  </button>
+                  <div className="mt-2">
+                    <ContactGate
+                      variant="link"
+                      label="Show the address"
+                      className="font-mono text-[0.92rem] text-ember-200 transition-colors hover:text-gold"
+                    />
+                  </div>
                   <p className="mt-4 text-[0.84rem] leading-relaxed text-bone/50">
-                    {copied === "email" ? "Copied." : "Click to copy. We reply within one business day."}
+                    We reply within one business day.
                   </p>
                 </div>
               </div>

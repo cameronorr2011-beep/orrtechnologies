@@ -54,6 +54,109 @@
   --animate-scan: scan 5.5s ease-in-out infinite;
 }
 
+/* ------------------------------------------------------------------ *
+ * Cinematic layer — ink stage, kinetic type, CSS 3D stages.
+ * Everything here degrades to a static, legible layout without JS.
+ * ------------------------------------------------------------------ */
+
+/* Static plate behind the WebGL ink field: first paint, no-WebGL fallback. */
+.void-fallback {
+  background:
+    radial-gradient(70% 55% at 22% 18%, #f6f1e7 0%, rgba(246, 241, 231, 0.14) 34%, transparent 62%),
+    radial-gradient(60% 50% at 78% 34%, #2f4bff 0%, rgba(47, 75, 255, 0.12) 40%, transparent 70%),
+    radial-gradient(75% 60% at 50% 88%, #ff5a36 0%, rgba(255, 90, 54, 0.1) 38%, transparent 66%),
+    linear-gradient(160deg, #10100d 0%, #070706 48%, #0b0b09 100%);
+  filter: saturate(1.05);
+}
+
+/* 3D stage: children keep their own translateZ. */
+.scene3d {
+  transform-style: preserve-3d;
+}
+.scene3d__track {
+  backface-visibility: visible;
+}
+
+/* Kinetic hero type: each line rides up out of a mask. */
+.hero-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+.hero-line > span {
+  display: block;
+  opacity: 0;
+  transform: translate3d(0, 112%, 0) rotate(1.6deg);
+  transform-origin: 0% 100%;
+  animation: heroLine 1.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform;
+}
+@keyframes heroLine {
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+
+/* Secondary hero furniture drifts in after the type. */
+.hero-in {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  animation: heroIn 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes heroIn {
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.scroll-rail {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 40px;
+  overflow: hidden;
+  background: rgba(246, 241, 231, 0.16);
+}
+.scroll-rail__dot {
+  position: absolute;
+  left: -1px;
+  top: 0;
+  width: 3px;
+  height: 13px;
+  background: #8fa2ff;
+  animation: railDot 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@keyframes railDot {
+  0% { transform: translateY(-16px); opacity: 0; }
+  22% { opacity: 1; }
+  78% { opacity: 1; }
+  100% { transform: translateY(42px); opacity: 0; }
+}
+
+/* Outlined display type for the dark act: ink-stroke, no fill. */
+.hero-outline {
+  color: transparent;
+  -webkit-text-stroke: clamp(1px, 0.18vw, 2px) var(--color-paper);
+  text-stroke: clamp(1px, 0.18vw, 2px) var(--color-paper);
+  paint-order: stroke fill;
+}
+
+/* Primary button for the dark stage: paper on ink. */
+.btn-light {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  border-radius: 0;
+  box-shadow: 5px 5px 0 0 var(--color-electric);
+  transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.btn-light:hover {
+  background: #fffdf7;
+  box-shadow: 5px 5px 0 0 var(--color-coral);
+}
+
 @keyframes float {
   0%, 100% { transform: translate3d(0, 0, 0); }
   50% { transform: translate3d(0, -12px, 0); }

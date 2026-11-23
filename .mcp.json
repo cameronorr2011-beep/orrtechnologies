@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "orr-studio": {
+      "command": "node",
+      "args": ["./tools/studio-bridge/mcp-server.mjs"]
+    },
+    "ffmpeg-skill": {
+      "command": "python",
+      "args": ["./tools/video-skills/ffmpeg-skill/mcp/server.py"],
+      "env": {
+        "FFMPEG_SKILL_MCP_FULL": "1"
+      }
+    }
+  }
+}

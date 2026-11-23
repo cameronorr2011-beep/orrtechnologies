@@ -4,7 +4,8 @@ import { useState } from "react";
 import Reveal from "@/components/fx/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ActionButton from "@/components/ui/ActionButton";
-import { FAQ, SITE, purchaseMailto } from "@/lib/content";
+import ContactGate from "@/components/site/ContactGate";
+import { FAQ, purchaseMailto } from "@/lib/content";
 
 export default function Contact() {
   const [open, setOpen] = useState<number | null>(0);
@@ -31,7 +32,7 @@ export default function Contact() {
       setForm({ name: "", email: "", company: "", message: "" });
     } catch {
       setState("error");
-      setFeedback(`The form could not send. Email ${SITE.emailDisplay} directly and it will land in the same inbox.`);
+      setFeedback("The form could not send. Use the email link above and it will land in the same inbox.");
     }
   };
 
@@ -60,12 +61,11 @@ export default function Contact() {
                   <p className="font-mono text-[0.52rem] uppercase tracking-[0.18em] text-ink/50">
                     Prefer email?
                   </p>
-                  <a
-                    href={`mailto:${SITE.email}`}
-                    className="font-display mt-1 inline-block text-[1.05rem] font-bold tracking-[-0.01em] text-ink underline decoration-electric decoration-2 underline-offset-4 hover:text-electric"
-                  >
-                    {SITE.emailDisplay}
-                  </a>
+                  <ContactGate
+                    variant="link"
+                    label="Show the address"
+                    className="font-display mt-1 inline-block text-[1.05rem] font-bold tracking-[-0.01em] text-ink decoration-electric decoration-2 underline-offset-4"
+                  />
                 </div>
                 <span className="inline-flex w-fit items-center gap-2 border-2 border-ink bg-paper px-3 py-1.5 font-mono text-[0.5rem] uppercase tracking-[0.14em] text-ink/60">
                   <span className="h-2 w-2 bg-mint" aria-hidden="true" />
@@ -208,7 +208,7 @@ export default function Contact() {
                   </p>
                 ) : (
                   <p className="mt-5 border-l-2 border-ink/15 pl-3 font-mono text-[0.56rem] uppercase leading-relaxed tracking-[0.14em] text-ink/40">
-                    Goes straight to {SITE.emailDisplay}
+                    Goes straight to our inbox
                   </p>
                 )}
               </form>
