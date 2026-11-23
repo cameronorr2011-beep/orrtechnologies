@@ -603,7 +603,9 @@ export async function toMp3(wavPath, mp3Path, { lufs = -14, bitrate = "192k" } =
     "-i",
     wavPath,
     "-af",
-    `loudnorm=I=${lufs}:TP=-1.5:LRA=11`,
+    // TP=-2.0 leaves headroom for the MP3 encoder, which overshoots a single-pass
+    // loudnorm. At -1.5 the encoded file peaked at -0.8 dBTP.
+    `loudnorm=I=${lufs}:TP=-2:LRA=11`,
     "-c:a",
     "libmp3lame",
     "-b:a",

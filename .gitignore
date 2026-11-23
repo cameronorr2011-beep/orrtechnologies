@@ -43,3 +43,6 @@ yarn-error.log*
 
 # drizzle-kit output
 /drizzle
+
+# Demo renders served locally, never committed
+public/media/music/
