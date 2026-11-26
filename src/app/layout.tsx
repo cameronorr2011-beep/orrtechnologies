@@ -6,6 +6,8 @@ import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
 import CookieConsent from "@/components/site/CookieConsent";
 import ScrollProgress from "@/components/fx/ScrollProgress";
+import ScrollDriver from "@/components/fx/ScrollDriver";
+import Cursor from "@/components/fx/Cursor";
 import StudioBackdrop from "@/components/site/StudioBackdrop";
 import JsonLd from "@/components/seo/JsonLd";
 import { SITE } from "@/lib/content";
@@ -108,6 +110,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           }}
         />
         <StudioBackdrop />
+        <ScrollDriver />
+        <Cursor />
         <ScrollProgress />
         <Nav />
         <main className="relative z-10">{children}</main>

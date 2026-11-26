@@ -17,7 +17,7 @@ export default function Ticker() {
 
   return (
     <div className="relative flex items-stretch border-y-2 border-ink bg-ink">
-      <div className="marquee-mask relative flex-1 overflow-hidden">
+      <div className="velocity-skew marquee-mask relative flex-1 overflow-hidden">
         <div
           className={`marquee-track items-center py-4 ${paused ? "is-paused" : ""}`}
           style={{ animationDuration: "38s" }}

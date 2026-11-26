@@ -209,7 +209,7 @@
 
 :root {
   color-scheme: light;
-  --grain-opacity: 0.055;
+  --grain-opacity: 0.04;
   --hairline: rgba(20, 19, 15, 0.14);
   --hairline-strong: rgba(20, 19, 15, 0.34);
 }
@@ -426,7 +426,7 @@ body {
   opacity: var(--grain-opacity);
   mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: drift 18s steps(6) infinite;
+  animation: none;
 }
 
 .vignette::after {
@@ -536,5 +536,149 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .void-orb__art {
     animation: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Motion layer 2026 — the press, the cursor, pointer atmosphere.
+   Everything reads from the four variables ScrollDriver writes on <html>
+   (--scroll, --sv, --mx, --my), so the work stays on the compositor.
+   ------------------------------------------------------------------ */
+
+/* Static plate behind the 3D press: first paint and no-WebGL fallback. */
+.press-fallback {
+  background:
+    radial-gradient(52% 44% at 62% 32%, rgba(47, 75, 255, 0.22) 0%, transparent 62%),
+    radial-gradient(44% 40% at 28% 78%, rgba(255, 90, 54, 0.16) 0%, transparent 66%),
+    radial-gradient(38% 34% at 18% 18%, rgba(246, 241, 231, 0.10) 0%, transparent 70%),
+    linear-gradient(160deg, #101013 0%, #070706 56%, #0a0a09 100%);
+}
+
+/* Pointer atmosphere: the washes ease toward the pointer, nothing else. */
+.aurora-blob {
+  transform: translate3d(calc(var(--mx, 0) * 28px), calc(var(--my, 0) * 22px), 0);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.studio-spot {
+  background: radial-gradient(
+    640px 640px at calc(50% + var(--mx, 0) * 24%)
+      calc(32% + var(--my, 0) * 24%),
+    rgba(47, 75, 255, 0.10),
+    transparent 66%
+  );
+}
+
+/* Scroll velocity, used sparingly on the ticker and section edges. */
+.velocity-skew {
+  transform: skewX(calc(var(--sv, 0) * -3deg));
+  transition: transform 0.18s ease-out;
+}
+
+.marquee-mask:hover .marquee-track,
+.marquee-mask:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Custom cursor — desktop, fine pointer, motion allowed. */
+.void-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90;
+  pointer-events: none;
+  border-radius: 999px;
+  opacity: 0;
+  transition: opacity 0.25s ease, width 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+}
+.void-cursor--dot {
+  width: 6px;
+  height: 6px;
+  background: #f6f1e7;
+  mix-blend-mode: difference;
+}
+.void-cursor--ring {
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgba(246, 241, 231, 0.5);
+  background: transparent;
+  mix-blend-mode: difference;
+}
+.void-cursor--ring[data-big="true"] {
+  width: 56px;
+  height: 56px;
+  border-color: #ffffff;
+}
+.void-cursor--dot[data-big="true"] {
+  width: 9px;
+  height: 9px;
+}
+
+@media (pointer: fine) {
+  html.has-cursor,
+  html.has-cursor * {
+    cursor: none;
+  }
+  html.has-cursor input,
+  html.has-cursor textarea,
+  html.has-cursor select {
+    cursor: auto;
+  }
+}
+
+/* Work: the screenshot drifts inside its crop as the case study passes. */
+.proof-frame {
+  background: #efe8d9;
+}
+.proof-frame__img {
+  transform: translate3d(0, calc((var(--scene, 0.5) - 0.5) * -26px), 0) scale(1.05);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proof-frame__img {
+    transform: none;
+  }
+}
+
+/* The pinned act: three lines settle as the section is held. */
+.pin-line {
+  will-change: transform, opacity;
+  transform-origin: 0% 60%;
+}
+
+/* Pinning is a desktop luxury. Phones and reduced motion get the finished
+   composition in normal flow, decided in CSS so a resize needs no JS. */
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  .pin-wrap {
+    height: auto !important;
+  }
+  .pin-stage {
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    min-height: 100svh;
+    --p: 1 !important;
+    --pc: 0 !important;
+  }
+}
+
+/* Print registration marks used around the dark acts. */
+.reg-mark {
+  width: 14px;
+  height: 14px;
+  border-top: 1px solid currentColor;
+  border-left: 1px solid currentColor;
+  opacity: 0.35;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-blob,
+  .velocity-skew,
+  .void-cursor {
+    transform: none !important;
+    transition: none !important;
   }
 }

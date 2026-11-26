@@ -49,11 +49,13 @@ export default function Work() {
                           className="absolute -inset-x-3 -inset-y-3 border-2 border-ink/15"
                           style={{ transform: "translateZ(-40px)" }}
                         />
-                        <SitePreview
-                          site={build.preview}
-                          sizes="(max-width: 1024px) 100vw, 58vw"
-                          className="shadow-[12px_12px_0_0_#14130f] transition-transform duration-700 group-hover:-translate-y-1.5"
-                        />
+                        <div className="proof-frame overflow-hidden shadow-[12px_12px_0_0_#14130f]">
+                          <SitePreview
+                            site={build.preview}
+                            sizes="(max-width: 1024px) 100vw, 58vw"
+                            className="proof-frame__img transition-transform duration-700 group-hover:-translate-y-1.5"
+                          />
+                        </div>
                       </div>
                     </Parallax>
                   </Scene3D>
