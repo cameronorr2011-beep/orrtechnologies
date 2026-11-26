@@ -99,7 +99,7 @@ export default function Nav() {
               <Link
                 key={l.href}
                 href={l.href}
-                className={`font-mono text-[0.62rem] uppercase tracking-[0.2em] transition-colors ${link}`}
+                className={`nav-link font-mono text-[0.62rem] uppercase tracking-[0.2em] transition-colors ${link}`}
               >
                 {l.label}
               </Link>
